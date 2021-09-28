@@ -5,6 +5,7 @@ export default {
   getters: {
     items: state => state.items,
     ITEM_TYPES: state => state.itemTypes,
+
     datas: state => state.datas,
     dataWithId: state => id => state.datas.find(o => o.id === id),
     DATA_TYPES: state => state.dataTypes
@@ -57,13 +58,15 @@ export default {
   state: {
     items: [],
     itemTypes: [
-      { label: 'Number', dataTypes: ['Integer'] }
+      { label: 'Number', color: '#975', dataTypes: ['Integer'] },
+      { label: 'Image', color: '#579', dataTypes: ['String'] }
     ],
     datas: [],
     dataTypes: [
       { label: 'Integer', value: null },
       { label: 'Float', value: null },
       { label: 'Array', value: [] },
+      { label: 'String', value: null },
       { label: 'Color', value: { r: null, g: null, b: null, a: null } }
     ]
   }

@@ -1,8 +1,8 @@
 <template>
   <q-list style="width:400px">
-    <q-item>
+    <q-item :style="`background:${data.data.color}`">
       <q-item-section avatar>
-        <q-icon name="menu" />
+        <q-icon name="drag_indicator" />
       </q-item-section>
       <q-item-section>
         <Form-input :modelValue="data.label" @update:modelValue="setItem({ id: data.id, key: 'label', value: $event })" />
