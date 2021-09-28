@@ -1,20 +1,24 @@
 <template>
   <q-list style="width:400px">
     <q-item>
+      <q-item-section avatar>
+        <q-icon name="menu" />
+      </q-item-section>
       <q-item-section>
-        <q-input :modelValue="data.name" @update:modelValue="setProp({ id: data.id, key: 'name', value: $event })" outlined dense />
+        <Form-input :modelValue="data.label" @update:modelValue="setItem({ id: data.id, key: 'label', value: $event })" />
       </q-item-section>
       <q-item-section avatar>
-        <Del class="avatar" @click="delItem(data.id)" />
+        <ButtonDel class="avatar" @click="delItem(data.id)" />
       </q-item-section>
     </q-item>
+    <component :is="data.data.label" :data="data.data" />
   </q-list>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import { mapGetters, mapMutations } from 'vuex'
-import Del from 'src/components/Del.vue'
+import Number from 'src/components/Items/Number.vue'
 
 export default defineComponent({
   name: 'Item',
@@ -25,10 +29,10 @@ export default defineComponent({
     ...mapGetters('globals', ['items'])
   },
   methods: {
-    ...mapMutations('globals', ['delItem', 'setProp'])
+    ...mapMutations('globals', ['delItem', 'setItem'])
   },
   components: {
-    Del
+    Number
   }
 })
 </script>
