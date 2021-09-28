@@ -23,7 +23,9 @@ export default defineComponent({
     step: {
       type: Number,
       default: 1
-    }
+    },
+    min: Number,
+    max: Number
   },
   data () {
     return {
@@ -33,7 +35,9 @@ export default defineComponent({
   watch: {
     modelValue: {
       handler (newVal) {
-        this.localValue = '' + newVal
+        this.localValue = '' + this.type === 'string'
+          ? newVal
+          : newVal || 0
       },
       immediate: true
     }
@@ -42,19 +46,29 @@ export default defineComponent({
     updateEmit (newVal) {
       this.$emit('update:modelValue', newVal)
     },
+    inBounds (number) {
+      if (this.min) {
+        number = Math.max(number, this.min)
+      }
+      if (this.max) {
+        number = Math.min(number, this.max)
+      }
+      return number
+    },
     valueChanged (newVal) {
       this.localValue = newVal
       if (this.type === 'number') {
         if (newVal === '-') {
           return
         }
-        this.updateEmit(parseFloat(newVal) || 0)
+        this.updateEmit(this.inBounds(parseFloat(newVal)) || null)
       } else if (this.type === 'integer') {
         if (newVal === '-') {
           return
         }
-        this.updateEmit(parseInt(newVal) || 0)
+        this.updateEmit(this.inBounds(parseInt(newVal)) || null)
       } else {
+        this.localValue = newVal
         this.updateEmit(newVal)
       }
     },
@@ -63,13 +77,13 @@ export default defineComponent({
         // allow only this keys
         if (event.key === 'ArrowUp') {
           event.preventDefault()
-          const nr = this.$math.floatAdd(parseFloat(this.localValue), this.step)
+          const nr = this.inBounds(this.$math.floatAdd(parseFloat(this.localValue), this.step))
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }
         if (event.key === 'ArrowDown') {
           event.preventDefault()
-          const nr = this.$math.floatSub(parseFloat(this.localValue), this.step)
+          const nr = this.inBounds(this.$math.floatSub(parseFloat(this.localValue), this.step))
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }
@@ -90,13 +104,13 @@ export default defineComponent({
         // allow only this keys
         if (event.key === 'ArrowUp') {
           event.preventDefault()
-          const nr = parseFloat(this.localValue) + this.step
+          const nr = this.inBounds(parseFloat(this.localValue) + this.step)
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }
         if (event.key === 'ArrowDown') {
           event.preventDefault()
-          const nr = parseFloat(this.localValue) - this.step
+          const nr = this.inBounds(parseFloat(this.localValue) - this.step)
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }
