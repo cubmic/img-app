@@ -45,8 +45,14 @@ export default defineComponent({
     valueChanged (newVal) {
       this.localValue = newVal
       if (this.type === 'number') {
+        if (newVal === '-') {
+          return
+        }
         this.updateEmit(parseFloat(newVal) || 0)
       } else if (this.type === 'integer') {
+        if (newVal === '-') {
+          return
+        }
         this.updateEmit(parseInt(newVal) || 0)
       } else {
         this.updateEmit(newVal)
@@ -57,13 +63,13 @@ export default defineComponent({
         // allow only this keys
         if (event.key === 'ArrowUp') {
           event.preventDefault()
-          const nr = parseFloat(this.localValue) + this.step
+          const nr = this.$math.floatAdd(parseFloat(this.localValue), this.step)
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }
         if (event.key === 'ArrowDown') {
           event.preventDefault()
-          const nr = parseFloat(this.localValue) - this.step
+          const nr = this.$math.floatSub(parseFloat(this.localValue), this.step)
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }

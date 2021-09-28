@@ -1,5 +1,5 @@
 <template>
-  <q-btn icon="close" size="sm" round outline color="negative" />
+  <q-btn icon="close" round outline color="negative" />
 </template>
 
 <script>

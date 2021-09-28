@@ -1,6 +1,7 @@
 <template>
   <Item bordered v-for="item in items" :key="item.id" :data="item" />
-  <q-select :options="ITEM_TYPES" :modelValue="null" @update:modelValue="addItem" outlined dense />
+  <Form-select :options="ITEM_TYPES" :modelValue="null" @update:modelValue="addItem" />
+
   <pre>{{ items }}</pre>
   <pre>{{ datas }}</pre>
 </template>
