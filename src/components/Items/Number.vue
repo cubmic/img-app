@@ -1,5 +1,5 @@
 <template>
-  <q-item>
+  <q-item style="background:#DB9;">
     <q-item-section avatar>
       In
     </q-item-section>

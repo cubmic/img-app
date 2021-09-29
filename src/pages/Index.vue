@@ -1,9 +1,13 @@
 <template>
-  <Item bordered v-for="item in items" :key="item.id" :data="item" />
-  <Form-select :options="ITEM_TYPES" :modelValue="null" @update:modelValue="addItem" />
+  <div class="q-pa-sm">
+    <Form-select :options="ITEM_TYPES" :modelValue="null" @update:modelValue="addItem" style="width:300px" />
+    <div style="position:relative; height:500px" class="q-mt-sm">
+      <Item bordered v-for="item in items" :key="item.id" :data="item" />
+    </div>
 
-  <pre>{{ items }}</pre>
-  <pre>{{ datas }}</pre>
+    <pre>{{ items }}</pre>
+    <pre>{{ datas }}</pre>
+  </div>
 </template>
 
 <script>

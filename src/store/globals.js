@@ -58,8 +58,8 @@ export default {
   state: {
     items: [],
     itemTypes: [
-      { label: 'Number', color: '#975', dataTypes: ['Integer'] },
-      { label: 'Image', color: '#579', dataTypes: ['String'] }
+      { label: 'Number', dataTypes: ['Integer'] },
+      { label: 'Image', dataTypes: ['String'] }
     ],
     datas: [],
     dataTypes: [
