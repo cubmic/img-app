@@ -4,7 +4,6 @@
     :class="{ 'item-drag': drag }"
     :style="`left:${data.x}px; top:${data.y}px;`"
     v-drag="dragDefs"
-    v-drop="dropDefs"
   >
     <q-icon name="drag_indicator" size="xs" style="pointer-events:none" />
     <q-item class="bg-grey-2" @mousedown.stop>
@@ -32,23 +31,15 @@ export default defineComponent({
     return {
       drag: false,
       dragDefs: {
-        start: (vm) => {
+        start: () => {
           this.drag = true
         },
         drag: (pos) => {
           this.setItem({ id: this.data.id, key: 'x', value: pos.x })
           this.setItem({ id: this.data.id, key: 'y', value: pos.y })
         },
-        end: (vm) => {
+        end: () => {
           this.drag = false
-        },
-        drop: (vm) => {
-          console.log('drag', vm.$el)
-        }
-      },
-      dropDefs: {
-        drop: (vm) => {
-          console.log('drop', vm.$el)
         }
       }
     }

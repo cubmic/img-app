@@ -1,13 +1,13 @@
 <template>
   <q-item style="background:#DB9;">
     <q-item-section avatar>
-      In
+      <In />
     </q-item-section>
     <q-item-section>
       <Form-input v-model="number" type="number" />
     </q-item-section>
     <q-item-section avatar>
-      Out
+      <Out key="test" />
     </q-item-section>
   </q-item>
 </template>
