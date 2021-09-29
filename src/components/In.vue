@@ -1,5 +1,7 @@
 <template>
-  <div class="dot only-allow-out-dot bg-negative" v-drop="dropDefs" />
+  <div class="dot-bg">
+    <div class="dot only-allow-out-dot bg-negative" v-drop="dropDefs" />
+  </div>
 </template>
 
 <script>
@@ -21,6 +23,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.dot-bg {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 .dot {
   position: absolute;
   width: 30px;
