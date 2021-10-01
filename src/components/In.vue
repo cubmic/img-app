@@ -1,18 +1,19 @@
 <template>
-  <div class="dot-bg">
-    <div class="dot only-allow-out-dot bg-negative" v-drop="dropDefs" />
-  </div>
+  <div class="dot bg-negative" :class="`only-allow-out-${type}`" v-drop="dropDefs" />
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'In',
+  props: {
+    type: String
+  },
   data () {
     return {
       dropDefs: {
         drop: (vm) => {
-          if (vm.$el.classList.contains('only-allow-in-dot')) {
+          if (vm.$el.classList.contains([`only-allow-in-${this.type}`])) {
             console.log('drop', vm.$el)
           }
         }
@@ -23,12 +24,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.dot-bg {
-  position: relative;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
 .dot {
   position: absolute;
   width: 30px;

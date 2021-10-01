@@ -1,13 +1,20 @@
 <template>
   <q-item style="background:#9BD;">
     <q-item-section avatar>
-      In
+      <In type="Image" />
     </q-item-section>
     <q-item-section>
       <Form-image v-model="image" />
     </q-item-section>
     <q-item-section avatar>
-      Out
+      <div class="column q-gutter-sm">
+        <div style="width:30px; height:30px">
+          <Out type="Image" />
+        </div>
+        <div style="width:30px; height:30px">
+          <Out type="Integer" />
+        </div>
+      </div>
     </q-item-section>
   </q-item>
 </template>
@@ -19,13 +26,13 @@ import { mapGetters, mapMutations } from 'vuex'
 export default defineComponent({
   name: 'Image',
   props: {
-    data: Object
+    item: Object
   },
   computed: {
     ...mapGetters('globals', ['dataWithId']),
     image: {
-      get () { return this.dataWithId(this.data.dataTypes[0]).value },
-      set (newVal) { this.setData({ id: this.data.dataTypes[0], key: 'value', value: newVal }) }
+      get () { return this.item.dataType.data.image },
+      set (newVal) { this.setData({ id: this.item.id, key: 'image', value: newVal }) }
     }
   },
   methods: {

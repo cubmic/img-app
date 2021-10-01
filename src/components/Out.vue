@@ -1,15 +1,19 @@
 <template>
-  <div class="dot-bg bg-grey-8">
-    <div class="dot only-allow-in-dot bg-positive" :class="{ 'dot-drag': drag }" v-drag="dragDefs" />
-  </div>
+  <div
+    class="dot"
+    :class="{ [`only-allow-in-${type}`]: true, 'dot-drag': drag }"
+    :style="`background:${color}`"
+    v-drag="dragDefs"
+  />
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import { mapGetters } from 'vuex'
 export default defineComponent({
   name: 'Out',
   props: {
-    key: String
+    type: String
   },
   data () {
     return {
@@ -32,7 +36,7 @@ export default defineComponent({
           return false // force animation to back
         },
         drop: (vm) => {
-          if (vm.$el.classList.contains('only-allow-out-dot')) {
+          if (vm.$el.classList.contains(`only-allow-out-${this.type}`)) {
             // this.$math.appendToWithSameGlobalPos(obj, vm.$el)
             console.log('drag', vm.$el)
             this.hit = true
@@ -40,17 +44,18 @@ export default defineComponent({
         }
       }
     }
+  },
+  computed: {
+    ...mapGetters('globals', ['DATA_TYPES']),
+    color () {
+      const t = this.DATA_TYPES.find(o => o.label === this.type)
+      return t ? t.color : '#ccc'
+    }
   }
 })
 </script>
 
 <style scoped>
-.dot-bg {
-  position: relative;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
 .dot {
   position: absolute;
   width: 30px;

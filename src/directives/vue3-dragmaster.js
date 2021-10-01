@@ -169,7 +169,7 @@ export const drag = {
         }
         // end function on drag directive
         if (binding.value.end) {
-          if (binding.value.end(vm) === false) {
+          if (binding.value.end(vm) === false) { // if respond is false bounce back to start position
             const objCopy = obj
             animate(objCopy.offsetLeft, startPos.x, 1, 'easeOutElastic', 50, (value) => {
               objCopy.style.left = value + 'px'
@@ -200,7 +200,6 @@ export const drop = {
     const drop = binding.value ? binding.value.drop : null
     dropVMs.push({ vm, drop })
   },
-  unbind (el) {
-
+  unbind () {
   }
 }

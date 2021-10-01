@@ -5,7 +5,7 @@
     :style="`left:${data.x}px; top:${data.y}px;`"
     v-drag="dragDefs"
   >
-    <q-icon name="drag_indicator" size="xs" style="pointer-events:none" />
+    <q-icon name="drag_indicator" size="xs" style="pointer-events:none; margin-bottom:2px" />
     <q-item class="bg-grey-2" @mousedown.stop>
       <q-item-section>
         <Form-input :modelValue="data.label" @update:modelValue="setItem({ id: data.id, key: 'label', value: $event })" />
@@ -14,7 +14,7 @@
         <ButtonDel class="avatar" @click="delItem(data.id)" />
       </q-item-section>
     </q-item>
-    <component :is="data.data.label" :data="data.data" />
+    <component :is="data.dataType.label" :item="data" />
   </q-list>
 </template>
 
