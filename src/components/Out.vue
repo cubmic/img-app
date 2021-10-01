@@ -1,22 +1,28 @@
 <template>
-  <div
-    class="dot"
-    :class="{ [`only-allow-in-${type}`]: true, 'dot-drag': drag }"
-    :style="`background:${color}`"
-    v-drag="dragDefs"
-  />
+  <div class="dot-bg" :style="`width:${size}px; height:${size}px;`">
+    <div
+      class="dot"
+      :class="{ [`only-allow-in-${type}`]: true, 'dot-drag': drag }"
+      :style="`width:${size}px; height:${size}px; background:${color}`"
+      v-drag="dragDefs"
+    />
+  </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import { mapGetters } from 'vuex'
 export default defineComponent({
   name: 'Out',
   props: {
-    type: String
+    type: String,
+    color: {
+      type: String,
+      default: '#21BA45'
+    }
   },
   data () {
     return {
+      size: 20,
       drag: false,
       hit: false,
       dragDefs: {
@@ -44,13 +50,6 @@ export default defineComponent({
         }
       }
     }
-  },
-  computed: {
-    ...mapGetters('globals', ['DATA_TYPES']),
-    color () {
-      const t = this.DATA_TYPES.find(o => o.label === this.type)
-      return t ? t.color : '#ccc'
-    }
   }
 })
 </script>
@@ -58,8 +57,6 @@ export default defineComponent({
 <style scoped>
 .dot {
   position: absolute;
-  width: 30px;
-  height: 30px;
   border-radius: 50%;
   border: 2px solid #FFF;
   transition: 0.5s box-shadow;
@@ -67,5 +64,9 @@ export default defineComponent({
 }
 .dot-drag {
   box-shadow: 0 0 10px #000;
+}
+.dot-bg {
+  background: #666;
+  border-radius: 50%;
 }
 </style>

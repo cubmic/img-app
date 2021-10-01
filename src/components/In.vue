@@ -1,5 +1,12 @@
 <template>
-  <div class="dot bg-negative" :class="`only-allow-out-${type}`" v-drop="dropDefs" />
+  <div :style="`width:${size}px; height:${size}px;`">
+    <div
+      class="dot"
+      :class="`only-allow-out-${type}`"
+      :style="`width:${size}px; height:${size}px; background:${color}`"
+      v-drop="dropDefs"
+    />
+  </div>
 </template>
 
 <script>
@@ -7,10 +14,15 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'In',
   props: {
-    type: String
+    type: String,
+    color: {
+      type: String,
+      default: '#C10015'
+    }
   },
   data () {
     return {
+      size: 20,
       dropDefs: {
         drop: (vm) => {
           if (vm.$el.classList.contains([`only-allow-in-${this.type}`])) {
@@ -26,8 +38,6 @@ export default defineComponent({
 <style scoped>
 .dot {
   position: absolute;
-  width: 30px;
-  height: 30px;
   border-radius: 50%;
   border: 2px solid #FFF;
   transition: 0.5s box-shadow;
