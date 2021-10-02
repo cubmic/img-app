@@ -42,6 +42,7 @@ export default defineComponent({
           // set parent item back to none drag state
           vm.$el.closest('.item').classList.remove('item-drag')
           if (!this.hit) {
+            this.$emit('changed')
             return false // force animation to back
           }
         },
@@ -54,6 +55,7 @@ export default defineComponent({
                 in: { name: inConnection.name, id: inConnection.id },
                 data: null
               })
+              this.$emit('changed')
               this.hit = true
             }
           }

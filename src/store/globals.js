@@ -41,11 +41,12 @@ export default {
       state.items.find(o => o.id === id).outputs[key] = value
     },
     addConnection: (state, item) => {
+      // delete possible in-connection first
+      state.connections = state.connections.filter(o => `${o.in.id}-${o.in.name}` !== `${item.in.id}-${item.in.name}`)
       item.id = uid()
       state.connections.push(item)
     },
     setConnection: (state, { id, value }) => {
-      console.log(state.connections.find(o => `${o.out.id}-${o.out.name}` === id))
       state.connections.find(o => `${o.out.id}-${o.out.name}` === id).data = value
     }
   },
