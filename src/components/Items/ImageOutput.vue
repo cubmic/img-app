@@ -1,7 +1,7 @@
 <template>
   <q-item :style="`background:${color};`">
     <q-item-section>
-      <img :src="image" v-if="image" style="width:100%" />
+      <img :src="image" v-if="image" style="max-width:200px" />
     </q-item-section>
   </q-item>
   <q-item>

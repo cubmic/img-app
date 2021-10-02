@@ -171,10 +171,10 @@ export const drag = {
         if (binding.value.end) {
           if (binding.value.end(vm) === false) { // if respond is false bounce back to start position
             const objCopy = obj
-            animate(objCopy.offsetLeft, startPos.x, 1, 'easeOutElastic', 50, (value) => {
+            animate(objCopy.offsetLeft, startPos.x, 1, 'easeOutBounce', 50, (value) => {
               objCopy.style.left = value + 'px'
             })
-            animate(objCopy.offsetTop, startPos.y, 1, 'easeOutElastic', 50, (value) => {
+            animate(objCopy.offsetTop, startPos.y, 1, 'easeOutBounce', 50, (value) => {
               objCopy.style.top = value + 'px'
             })
           }
