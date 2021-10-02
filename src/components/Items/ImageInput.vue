@@ -4,7 +4,7 @@
       <Form-image v-model="image" @update:modelValue="updateChannels()" />
     </q-item-section>
   </q-item>
-  <q-item>
+  <q-item v-if="item.expand">
     <q-item-section style="height:100%">
       <div class="column q-gutter-xs justify-start">
         <div class="row q-gutter-xs items-center">

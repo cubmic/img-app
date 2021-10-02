@@ -54,7 +54,7 @@ export default {
   },
   state: {
     items: [],
-    itemDef: { name: 'New Item', x: 0, y: 0, inputs: {}, outputs: {} },
+    itemDef: { name: 'New Item', x: 0, y: 0, expand: true },
 
     itemTypeDefs: [
       { id: 1, label: 'Image Input', component: 'ImageInput', data: { image: { data: null, label: null } } },

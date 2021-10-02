@@ -5,8 +5,18 @@
     :style="`left:${data.x}px; top:${data.y}px;`"
     v-drag="dragDefs"
   >
-    <q-icon name="drag_indicator" size="xs" style="pointer-events:none; margin-bottom:2px" />
-    <q-item class="bg-grey-2" @mousedown.stop>
+    <div class="row q-col-gutter-xs items-center" style="pointer-events:none; margin-bottom:2px">
+      <q-icon name="drag_indicator" size="xs" />
+      <div class="col">{{ data.name }}</div>
+      <q-icon
+        name="expand_more"
+        size="xs"
+        style="pointer-events:all; cursor:pointer; transition:all 1s;"
+        :style="`transform:rotate(${data.expand ? 90 : 0}deg)`"
+        @click="setItem({ id: data.id, key: 'expand', value: !data.expand })"
+      />
+    </div>
+    <q-item class="bg-grey-2" @mousedown.stop v-if="data.expand">
       <q-item-section>
         <Form-input :modelValue="data.name" @update:modelValue="setItem({ id: data.id, key: 'name', value: $event })" />
       </q-item-section>
