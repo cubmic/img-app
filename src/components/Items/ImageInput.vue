@@ -1,39 +1,39 @@
 <template>
   <q-item :style="`background:${color};`">
     <q-item-section>
-      <Form-image v-model="image" />
+      <Form-image v-model="image" @update:modelValue="imgChanged" />
     </q-item-section>
   </q-item>
   <q-item>
-    <q-item-section>
+    <q-item-section style="height:100%">
       <div class="column q-gutter-xs justify-start">
         <div class="row q-gutter-xs items-center">
-          <In type="Image" :color="color" />
+          <In type="Image" name="Image" :id="this.item.id" :color="color" />
           <span>Image</span>
         </div>
       </div>
     </q-item-section>
-    <q-item-section>
+    <q-item-section style="height:100%">
       <div class="column q-gutter-xs justify-start">
         <div class="row q-gutter-xs items-center justify-end">
           <span>Image</span>
-          <Out type="Image" :color="color" />
+          <Out type="Image" name="Image" :id="this.item.id" :color="color" />
         </div>
         <div class="row q-gutter-xs items-center justify-end">
           <span>Red</span>
-          <Out type="Image" color="#F00" />
+          <Out type="Image" name="Red" :id="this.item.id" color="#F00" />
         </div>
         <div class="row q-gutter-xs items-center justify-end">
           <span>Green</span>
-          <Out type="Image" color="#0F0" />
+          <Out type="Image" name="Green" :id="this.item.id" color="#0F0" />
         </div>
         <div class="row q-gutter-xs items-center justify-end">
           <span>Blue</span>
-          <Out type="Image" color="#00F" />
+          <Out type="Image" name="Blue" :id="this.item.id" color="#00F" />
         </div>
         <div class="row q-gutter-xs items-center justify-end">
           <span>Alpha</span>
-          <Out type="Image" color="repeating-linear-gradient(45deg, #CCC, #CCC 11px, #333 11px, #333 22px)" />
+          <Out type="Image" name="Alpha" :id="this.item.id" color="repeating-linear-gradient(45deg, #CCC, #CCC 11px, #333 11px, #333 22px)" />
         </div>
       </div>
     </q-item-section>
@@ -42,10 +42,10 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 
 export default defineComponent({
-  name: 'Image',
+  name: 'ImageInput',
   props: {
     item: Object
   },
@@ -55,14 +55,22 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapGetters('globals', ['dataWithId']),
     image: {
-      get () { return this.item.dataType.data.image },
-      set (newVal) { this.setData({ id: this.item.id, key: 'image', value: newVal }) }
+      get () { return this.item.data.image },
+      set (newVal) {
+        this.setData({ id: this.item.id, key: 'image', value: newVal })
+      }
     }
   },
   methods: {
-    ...mapMutations('globals', ['setData'])
+    ...mapMutations('globals', ['setData', 'setConnection']),
+    imgChanged (src) {
+      if (src) {
+        this.$utils.getChannel(src.data, data => {
+          this.setConnection({ id: `${this.item.id}-Image`, value: data })
+        }, { r: true, g: true, b: true, a: true })
+      }
+    }
   }
 })
 </script>

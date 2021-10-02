@@ -26,6 +26,7 @@ module.exports = configure(function (ctx) {
       'axios',
       'components',
       'directives',
+      'utils',
       'math'
     ],
 

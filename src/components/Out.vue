@@ -2,7 +2,7 @@
   <div class="dot-bg" :style="`width:${size}px; height:${size}px;`">
     <div
       class="dot"
-      :class="{ [`only-allow-in-${type}`]: true, 'dot-drag': drag }"
+      :class="{ 'dot-drag': drag }"
       :style="`width:${size}px; height:${size}px; background:${color}`"
       v-drag="dragDefs"
     />
@@ -11,9 +11,12 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { mapMutations } from 'vuex'
 export default defineComponent({
   name: 'Out',
   props: {
+    id: String,
+    name: String,
     type: String,
     color: {
       type: String,
@@ -38,18 +41,28 @@ export default defineComponent({
           this.drag = false
           // set parent item back to none drag state
           vm.$el.closest('.item').classList.remove('item-drag')
-
-          return false // force animation to back
+          if (!this.hit) {
+            return false // force animation to back
+          }
         },
         drop: (vm) => {
           if (vm.$el.classList.contains(`only-allow-out-${this.type}`)) {
-            // this.$math.appendToWithSameGlobalPos(obj, vm.$el)
-            console.log('drag', vm.$el)
-            this.hit = true
+            const inConnection = vm.getConnection()
+            if (this.type === inConnection.type) {
+              this.addConnection({
+                out: { name: this.name, id: this.id },
+                in: { name: inConnection.name, id: inConnection.id },
+                data: null
+              })
+              this.hit = true
+            }
           }
         }
       }
     }
+  },
+  methods: {
+    ...mapMutations('globals', ['addConnection'])
   }
 })
 </script>

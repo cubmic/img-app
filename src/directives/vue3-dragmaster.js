@@ -151,18 +151,18 @@ export const drag = {
 
       if (obj) {
         // check overlap of all drop elements
-        const dragRect = vm.$el.getBoundingClientRect()
-        for (const obj of dropVMs) {
-          if (obj.vm !== vm && !isParentOfChild(vm.$el, obj.vm.$el)) { // check only other rects and not direct child
-            const dropRect = obj.vm.$el.getBoundingClientRect()
+        const dragRect = obj.getBoundingClientRect()
+        for (const otherVm of dropVMs) {
+          if (otherVm.vm !== vm && !isParentOfChild(obj, otherVm.obj)) { // check only other rects and not direct child
+            const dropRect = otherVm.obj.getBoundingClientRect()
             if (rectOverlap(dragRect, dropRect)) {
               // drop function on drag directive
               if (binding.value.drop) {
-                binding.value.drop(obj.vm)
+                binding.value.drop(otherVm.vm)
               }
               // drop function on drop directive
-              if (obj.drop) {
-                obj.drop(vm)
+              if (otherVm.drop) {
+                otherVm.drop(vm)
               }
             }
           }
@@ -196,9 +196,10 @@ export const drag = {
 
 export const drop = {
   created (el, binding) {
+    const obj = el
     const vm = binding.instance
     const drop = binding.value ? binding.value.drop : null
-    dropVMs.push({ vm, drop })
+    dropVMs.push({ obj, vm, drop })
   },
   unbind () {
   }

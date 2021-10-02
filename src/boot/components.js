@@ -10,7 +10,9 @@ import FormImage from 'src/components/FormImage.vue'
 import In from 'src/components/In.vue'
 import Out from 'src/components/Out.vue'
 
-import Image from 'src/components/Items/Image.vue'
+import Item from 'src/components/Item.vue'
+import ImageInput from 'src/components/Items/ImageInput.vue'
+import ImageOutput from 'src/components/Items/ImageOutput.vue'
 
 export default boot(({ app }) => {
   app.component('ButtonAdd', ButtonAdd)
@@ -23,5 +25,7 @@ export default boot(({ app }) => {
   app.component('In', In)
   app.component('Out', Out)
 
-  app.component('Image', Image)
+  app.component('Item', Item)
+  app.component('ImageInput', ImageInput)
+  app.component('ImageOutput', ImageOutput)
 })

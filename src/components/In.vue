@@ -1,11 +1,6 @@
 <template>
-  <div :style="`width:${size}px; height:${size}px;`">
-    <div
-      class="dot"
-      :class="`only-allow-out-${type}`"
-      :style="`width:${size}px; height:${size}px; background:${color}`"
-      v-drop="dropDefs"
-    />
+  <div :style="`width:${size}px; height:${size}px;`" :class="`only-allow-out-${type}`">
+    <div class="dot" :style="`width:${size}px; height:${size}px; background:${color}`" v-drop />
   </div>
 </template>
 
@@ -14,6 +9,8 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'In',
   props: {
+    id: String,
+    name: String,
     type: String,
     color: {
       type: String,
@@ -22,14 +19,12 @@ export default defineComponent({
   },
   data () {
     return {
-      size: 20,
-      dropDefs: {
-        drop: (vm) => {
-          if (vm.$el.classList.contains([`only-allow-in-${this.type}`])) {
-            console.log('drop', vm.$el)
-          }
-        }
-      }
+      size: 20
+    }
+  },
+  methods: {
+    getConnection () {
+      return { id: this.id, name: this.name, type: this.type }
     }
   }
 })

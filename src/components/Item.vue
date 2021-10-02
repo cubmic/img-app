@@ -8,13 +8,13 @@
     <q-icon name="drag_indicator" size="xs" style="pointer-events:none; margin-bottom:2px" />
     <q-item class="bg-grey-2" @mousedown.stop>
       <q-item-section>
-        <Form-input :modelValue="data.label" @update:modelValue="setItem({ id: data.id, key: 'label', value: $event })" />
+        <Form-input :modelValue="data.name" @update:modelValue="setItem({ id: data.id, key: 'name', value: $event })" />
       </q-item-section>
       <q-item-section avatar>
         <ButtonDel class="avatar" @click="delItem(data.id)" />
       </q-item-section>
     </q-item>
-    <component :is="data.dataType.label" :item="data" />
+    <component :is="data.component" :item="data" />
   </q-list>
 </template>
 

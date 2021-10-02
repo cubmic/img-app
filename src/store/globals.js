@@ -4,78 +4,75 @@ export default {
   namespaced: true,
   getters: {
     items: state => state.items,
-    ITEM_TYPES: state => state.itemTypes,
 
-    datas: state => state.datas,
-    dataWithId: state => id => state.datas.find(o => o.id === id),
-    DATA_TYPES: state => state.dataTypes
+    itemTypes: state => state.itemTypes,
+    ITEM_TYPE_DEFS: state => state.itemTypeDefs,
+
+    connections: state => state.connections,
+    inConnectionWithId: state => id => state.connections.find(o => `${o.in.id}-${o.in.name}` === id),
+    outConnectionWithId: state => id => state.connections.find(o => `${o.out.id}-${o.out.name}` === id)
+    // DATA_DEFS: state => state.dataDefs
   },
   mutations: {
-    /* items */
-    addItem: (state, item) => {
-      // add needed itemtype
-      const dataType = JSON.parse(JSON.stringify(state.itemTypes.find(o => o.id === item.id)))
-      state.items.push({
-        id: uid(),
-        label: 'New Item',
-        x: 0,
-        y: 0,
-        dataType: dataType
-      })
-      console.log(JSON.stringify(state.items, null, 2))
+    addItem: (state, itemType) => {
+      const item = JSON.parse(JSON.stringify(state.itemDef))
+      item.id = uid()
+      // copy item type defs into item
+      item.label = itemType.label
+      item.data = itemType.data
+      item.component = itemType.component
+      item.color = itemType.color
+      state.items.push(item)
     },
     delItem: (state, id) => {
+      state.connections = state.connections.filter(o => o.in.id !== id && o.out.id !== id)
       state.items = state.items.filter(o => o.id !== id)
     },
     setItem: (state, { id, key, value }) => {
       state.items.find(o => o.id === id)[key] = value
     },
-
-    /* data */
     setData: (state, { id, key, value }) => {
-      state.items.find(o => o.id === id).dataType.data[key] = value
+      state.items.find(o => o.id === id).data[key] = value
+    },
+    setInputs: (state, { id, key, value }) => {
+      state.items.find(o => o.id === id).inputs[key] = value
+    },
+    setOutputs: (state, { id, key, value }) => {
+      state.items.find(o => o.id === id).outputs[key] = value
+    },
+    addConnection: (state, item) => {
+      item.id = uid()
+      state.connections.push(item)
+    },
+    setConnection: (state, { id, value }) => {
+      console.log(state.connections.find(o => `${o.out.id}-${o.out.name}` === id))
+      state.connections.find(o => `${o.out.id}-${o.out.name}` === id).data = value
     }
   },
   actions: {
   },
   state: {
     items: [],
-    itemTypes: [
-      {
-        id: 1,
-        label: 'Image',
-        data: {
-          image: {
-            data: null,
-            label: null
-          }
-        }
-      },
-      {
-        id: 2,
-        label: 'Image Resize',
-        data: {
-          image: {
-            data: null,
-            label: null
-          },
-          rect: {
-            left: null,
-            top: null,
-            right: null,
-            bottom: null
-          }
-        }
-      }
+    itemDef: { name: 'New Item', x: 0, y: 0, inputs: {}, outputs: {} },
+
+    itemTypeDefs: [
+      { id: 1, label: 'Image Input', component: 'ImageInput', data: { image: { data: null, label: null } } },
+      { id: 2, label: 'Image Output', component: 'ImageOutput', data: { image: { data: null, label: null } } },
+      { id: 3, label: 'Image Resize', component: 'ImageResize', data: { image: { data: null, label: null } } }
     ],
-    datas: [],
-    dataTypes: [
+
+    connections: [],
+    connectionDef: { id: null, in: { id: null, name: null }, out: { id: null, name: null }, data: null }
+    /*
+    ,
+    dataDefs: [
       { label: 'Integer', value: null, color: '#975' },
       { label: 'Float', value: null, color: '#579' },
       { label: 'Array', value: [], color: '#795' },
       { label: 'String', value: null, color: '#597' },
-      { label: 'Image', value: null, color: '#759' },
+      { label: 'Image', value: { data: null, label: null }, color: '#759' },
       { label: 'Color', value: { r: null, g: null, b: null, a: null }, color: '#957' }
     ]
+    */
   }
 }
