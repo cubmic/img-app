@@ -11,22 +11,6 @@
           <In type="Image" name="Image" :id="this.item.id" :color="color" />
           <span>Image</span>
         </div>
-        <div class="row q-gutter-xs items-center">
-          <In type="Image" name="Red" :id="this.item.id" color="#F00" />
-          <span>Red</span>
-        </div>
-        <div class="row q-gutter-xs items-center">
-          <In type="Image" name="Green" :id="this.item.id" color="#0F0" />
-          <span>Green</span>
-        </div>
-        <div class="row q-gutter-xs items-center">
-          <In type="Image" name="Blue" :id="this.item.id" color="#00F" />
-          <span>Blue</span>
-        </div>
-        <div class="row q-gutter-xs items-center">
-          <In type="Image" name="Alpha" :id="this.item.id" color="repeating-linear-gradient(45deg, #CCC, #CCC 11px, #333 11px, #333 22px)" />
-          <span>Alpha</span>
-        </div>
       </div>
     </q-item-section>
   </q-item>
