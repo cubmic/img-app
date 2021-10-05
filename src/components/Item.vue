@@ -77,7 +77,7 @@ export default defineComponent({
   .item {
     position: absolute;
     background: #CCC;
-    width: 400px;
+    width: 210px;
     z-index: 0;
     transition: 0.5s box-shadow;
   }

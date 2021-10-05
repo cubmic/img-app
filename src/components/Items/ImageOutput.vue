@@ -1,7 +1,7 @@
 <template>
   <q-item class="q-pa-xs" :style="`background:${color};`">
     <q-item-section>
-      <img :src="image" v-if="image" style="max-width:200px" />
+      <q-img :src="image" v-if="image" style="max-width:200px" @load="imgLoaded()" />
     </q-item-section>
   </q-item>
   <q-item class="q-pa-xs" v-if="item.expand">
@@ -18,7 +18,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default defineComponent({
   name: 'ImageOutput',
@@ -30,11 +30,28 @@ export default defineComponent({
       color: '#9BD'
     }
   },
+  watch: {
+    image (newVal) {
+      if (!newVal) {
+        setTimeout(() => {
+          this.updateConnections()
+        }, 0)
+      }
+    }
+  },
   computed: {
     ...mapGetters('globals', ['inConnectionWithId']),
     image () {
       const exists = this.inConnectionWithId(`${this.item.id}-Image`)
       return exists ? exists.data : null
+    }
+  },
+  methods: {
+    ...mapMutations('globals', ['updateConnections']),
+    imgLoaded () {
+      setTimeout(() => {
+        this.updateConnections()
+      }, 0)
     }
   }
 })

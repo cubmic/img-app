@@ -55,13 +55,13 @@ export default {
         {
           const i = document.querySelector(`#in-${connection.in.id}-${connection.in.name}`)
           const rect = i ? i.getBoundingClientRect() : document.querySelector(`#item-${connection.in.id}`).getBoundingClientRect()
-          connection.in.x = (rect.left + rect.right) / 2 + window.scrollX
+          connection.in.x = (i ? (rect.left + rect.right) / 2 : rect.left) + window.scrollX
           connection.in.y = (rect.top + rect.bottom) / 2 + window.scrollY
         }
         {
           const o = document.querySelector(`#out-${connection.out.id}-${connection.out.name}`)
           const rect = o ? o.getBoundingClientRect() : document.querySelector(`#item-${connection.out.id}`).getBoundingClientRect()
-          connection.out.x = (o ? (rect.left + rect.right) / 2 : (rect.right - 10)) + window.scrollX
+          connection.out.x = (o ? (rect.left + rect.right) / 2 : rect.right) + window.scrollX
           connection.out.y = (rect.top + rect.bottom) / 2 + window.scrollY
         }
       }
