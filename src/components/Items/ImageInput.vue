@@ -65,16 +65,16 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations('globals', ['setData', 'setConnection']),
-    setChannel (id, channel) {
-      if (this.outConnectionWithId(`${this.item.id}-${id}`)) {
+    setChannel (name, channel) {
+      if (this.outConnectionWithId(`${this.item.id}-${name}`)) {
         this.$utils.getChannel(this.image.data, data => {
-          this.setConnection({ id: `${this.item.id}-${id}`, value: data })
+          this.setConnection({ id: `${this.item.id}-${name}`, value: data })
         }, channel)
       }
     },
-    resetChannel (id) {
-      if (this.outConnectionWithId(`${this.item.id}-${id}`)) {
-        this.setConnection({ id: `${this.item.id}-${id}`, value: null })
+    resetChannel (name) {
+      if (this.outConnectionWithId(`${this.item.id}-${name}`)) {
+        this.setConnection({ id: `${this.item.id}-${name}`, value: null })
       }
     },
     updateChannels () {

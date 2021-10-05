@@ -42,9 +42,12 @@ export default {
     },
     addConnection: (state, item) => {
       // delete possible in-connection first
-      state.connections = state.connections.filter(o => `${o.in.id}-${o.in.name}` !== `${item.in.id}-${item.in.name}`)
+      state.connections = state.connections.filter(o => !(o.in.id === item.in.id && o.in.name === item.in.name))
       item.id = uid()
       state.connections.push(item)
+    },
+    delConnection: (state, { id, name }) => {
+      state.connections = state.connections.filter(o => o.in.id === id && o.in.name === name)
     },
     setConnection: (state, { id, value }) => {
       state.connections.find(o => `${o.out.id}-${o.out.name}` === id).data = value

@@ -1,5 +1,5 @@
 <template>
-  <div class="dot-bg" :style="`width:${size}px; height:${size}px; position:absolute`">
+  <div class="dot-bg" :style="`width:${size}px; height:${size}px; position:relative`">
     <div
       ref="drag"
       class="dot"
@@ -32,7 +32,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default defineComponent({
   name: 'Out',
   props: {
@@ -72,6 +72,7 @@ export default defineComponent({
               this.posY = value
               obj.style.top = value + 'px'
             })
+            this.delConnection({ id: this.id, name: this.name })
             this.$emit('changed')
           }
           this.drag = false
@@ -94,7 +95,16 @@ export default defineComponent({
       }
     }
   },
+  watch: {
+    hasConnection () {
+      console.log('no connection')
+    }
+  },
   computed: {
+    ...mapGetters('globals', ['outConnectionWithId']),
+    hasNoConnection () {
+      return this.outConnectionWithId(`${this.id}-${this.name}`)
+    },
     width () {
       return Math.max(this.posX, -this.posX)
     },
@@ -103,7 +113,7 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapMutations('globals', ['addConnection'])
+    ...mapMutations('globals', ['addConnection', 'delConnection'])
   },
   mounted () {
     this.nr = this._.uid
