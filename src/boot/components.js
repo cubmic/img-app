@@ -9,6 +9,7 @@ import FormImage from 'src/components/FormImage.vue'
 
 import In from 'src/components/In.vue'
 import Out from 'src/components/Out.vue'
+import Connection from 'src/components/Connection.vue'
 
 import Item from 'src/components/Item.vue'
 import ImageInput from 'src/components/Items/ImageInput.vue'
@@ -24,6 +25,7 @@ export default boot(({ app }) => {
 
   app.component('In', In)
   app.component('Out', Out)
+  app.component('Connection', Connection)
 
   app.component('Item', Item)
   app.component('ImageInput', ImageInput)

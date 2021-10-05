@@ -1,12 +1,12 @@
 <template>
-  <q-item :style="`background:${color};`">
+  <q-item class="q-pa-xs" :style="`background:${color};`">
     <q-item-section>
       <img :src="image" v-if="image" style="max-width:200px" />
     </q-item-section>
   </q-item>
-  <q-item v-if="item.expand">
+  <q-item class="q-pa-xs" v-if="item.expand">
     <q-item-section style="height:100%">
-      <div class="column q-gutter-xs justify-start">
+      <div class="column justify-start">
         <div class="row q-gutter-xs items-center">
           <In type="Image" name="Image" :id="this.item.id" :color="color" />
           <span>Image</span>

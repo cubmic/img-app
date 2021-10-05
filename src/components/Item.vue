@@ -1,5 +1,6 @@
 <template>
   <q-list
+    :id="`item-${data.id}`"
     class="item"
     :class="{ 'item-drag': drag }"
     :style="`left:${data.x}px; top:${data.y}px;`"
@@ -14,11 +15,11 @@
           size="xs"
           style="pointer-events:all; cursor:pointer; transition:all 1s;"
           :style="`transform:rotate(${data.expand ? 90 : 0}deg)`"
-          @click="setItem({ id: data.id, key: 'expand', value: !data.expand })"
+          @click="toggleExpand()"
         />
       </div>
     </div>
-    <q-item class="bg-grey-2" @mousedown.stop v-if="data.expand">
+    <q-item class="bg-grey-2 q-pa-xs" @mousedown.stop v-if="data.expand">
       <q-item-section>
         <Form-input :modelValue="data.name" @update:modelValue="setItem({ id: data.id, key: 'name', value: $event })" />
       </q-item-section>
@@ -49,6 +50,7 @@ export default defineComponent({
         drag: (pos) => {
           this.setItem({ id: this.data.id, key: 'x', value: pos.x })
           this.setItem({ id: this.data.id, key: 'y', value: pos.y })
+          this.updateConnections()
         },
         end: () => {
           this.drag = false
@@ -60,7 +62,13 @@ export default defineComponent({
     ...mapGetters('globals', ['items'])
   },
   methods: {
-    ...mapMutations('globals', ['delItem', 'setItem'])
+    ...mapMutations('globals', ['delItem', 'setItem', 'updateConnections']),
+    toggleExpand () {
+      this.setItem({ id: this.data.id, key: 'expand', value: !this.data.expand })
+      setTimeout(() => {
+        this.updateConnections()
+      }, 0)
+    }
   }
 })
 </script>

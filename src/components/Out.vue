@@ -1,32 +1,13 @@
 <template>
-  <div class="dot-bg" :style="`width:${size}px; height:${size}px; position:relative`">
+  <div class="dot-bg" style="width:20px; height:20px; position:relative; margin-right:-15px;" :id="`out-${id}-${name}`">
     <div
       ref="drag"
       class="dot"
       :class="{ 'dot-drag': drag }"
-      :style="`width:${size}px; height:${size}px; background:${color}`"
+      :style="`background:${color}`"
       v-drag="dragDefs"
+      :id="`in-${id}-${name}`"
     />
-    <!-- line -->
-    <svg
-      style="transform-origin:0 0; pointer-events:none"
-      :style="`margin-left:${size / 2}px; margin-top:${size / 2}px; transform:scaleX(${posX < 0 ? -1 : 1}) scaleY(${posY < 0 ? -1 : 1})`"
-      :width="width"
-      :height="height"
-    >
-      <defs>
-        <linearGradient :id="`gradient-${nr}`" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="#666"/>
-          <stop offset="100%" :stop-color="color"/>
-        </linearGradient>
-      </defs>
-      <path :d="
-        `M0 0
-        C${width / 2 + 1} 0, ${width / 2 + 1} ${height - 2}, ${width} ${height - 2}
-        L${width} ${height}
-        C${width / 2 - 1} ${height}, ${width / 2 - 1} 2, 0 2`
-      " stroke="none" stroke-width="0" :fill="`url(#gradient-${nr})`" />
-    </svg>
   </div>
 </template>
 
@@ -60,6 +41,7 @@ export default defineComponent({
         drag: (pos) => {
           this.posX = pos.x
           this.posY = pos.y
+          this.updateConnections()
         },
         end: (vm) => {
           if (!this.hit) {
@@ -71,8 +53,8 @@ export default defineComponent({
             this.$math.animate(this.posY, 0, 1, 'easeOutElastic', 50, (value) => {
               this.posY = value
               obj.style.top = value + 'px'
+              this.updateConnections()
             })
-            this.delConnection({ id: this.id, name: this.name })
             this.$emit('changed')
           }
           this.drag = false
@@ -87,8 +69,12 @@ export default defineComponent({
                 in: { name: inConnection.name, id: inConnection.id },
                 data: null
               })
+              this.updateConnections()
               this.hit = true
               this.$emit('changed')
+              // reset pos
+              this.$refs.drag.style.top = '0px'
+              this.$refs.drag.style.left = '0px'
             }
           }
         }
@@ -113,7 +99,7 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapMutations('globals', ['addConnection', 'delConnection'])
+    ...mapMutations('globals', ['addConnection', 'delConnection', 'updateConnections'])
   },
   mounted () {
     this.nr = this._.uid
@@ -125,7 +111,9 @@ export default defineComponent({
 .dot {
   position: absolute;
   border-radius: 50%;
-  border: 2px solid #FFF;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
   transition: 0.5s box-shadow;
   cursor: move;
 }

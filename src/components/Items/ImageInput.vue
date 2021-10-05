@@ -1,12 +1,12 @@
 <template>
-  <q-item :style="`background:${color};`">
+  <q-item class="q-pa-xs" :style="`background:${color};`">
     <q-item-section>
       <Form-image v-model="image" @update:modelValue="updateChannels()" />
     </q-item-section>
   </q-item>
-  <q-item v-if="item.expand">
+  <q-item class="q-pa-xs" v-if="item.expand">
     <q-item-section style="height:100%">
-      <div class="column q-gutter-xs justify-start">
+      <div class="column justify-start">
         <div class="row q-gutter-xs items-center">
           <In type="Image" name="Image" :id="this.item.id" :color="color" />
           <span>Image</span>
@@ -66,15 +66,17 @@ export default defineComponent({
   methods: {
     ...mapMutations('globals', ['setData', 'setConnection']),
     setChannel (name, channel) {
-      if (this.outConnectionWithId(`${this.item.id}-${name}`)) {
+      const id = `${this.item.id}-${name}`
+      for (const connection of this.outConnectionWithId(id)) {
         this.$utils.getChannel(this.image.data, data => {
-          this.setConnection({ id: `${this.item.id}-${name}`, value: data })
+          this.setConnection({ id: connection.id, value: data })
         }, channel)
       }
     },
     resetChannel (name) {
-      if (this.outConnectionWithId(`${this.item.id}-${name}`)) {
-        this.setConnection({ id: `${this.item.id}-${name}`, value: null })
+      const id = `${this.item.id}-${name}`
+      for (const connection of this.outConnectionWithId(id)) {
+        this.setConnection({ id: connection.id, value: null })
       }
     },
     updateChannels () {

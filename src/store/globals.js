@@ -10,7 +10,7 @@ export default {
 
     connections: state => state.connections,
     inConnectionWithId: state => id => state.connections.find(o => `${o.in.id}-${o.in.name}` === id),
-    outConnectionWithId: state => id => state.connections.find(o => `${o.out.id}-${o.out.name}` === id)
+    outConnectionWithId: state => id => state.connections.filter(o => `${o.out.id}-${o.out.name}` === id)
     // DATA_DEFS: state => state.dataDefs
   },
   mutations: {
@@ -44,13 +44,33 @@ export default {
       // delete possible in-connection first
       state.connections = state.connections.filter(o => !(o.in.id === item.in.id && o.in.name === item.in.name))
       item.id = uid()
+      item.in.x = null
+      item.in.y = null
+      item.out.x = null
+      item.out.y = null
       state.connections.push(item)
+    },
+    updateConnections: (state) => {
+      for (const connection of state.connections) {
+        {
+          const i = document.querySelector(`#in-${connection.in.id}-${connection.in.name}`)
+          const rect = i ? i.getBoundingClientRect() : document.querySelector(`#item-${connection.in.id}`).getBoundingClientRect()
+          connection.in.x = rect.left
+          connection.in.y = rect.top
+        }
+        {
+          const o = document.querySelector(`#out-${connection.out.id}-${connection.out.name}`)
+          const rect = o ? o.getBoundingClientRect() : document.querySelector(`#item-${connection.out.id}`).getBoundingClientRect()
+          connection.out.x = o ? rect.left : rect.right - 10
+          connection.out.y = rect.top
+        }
+      }
     },
     delConnection: (state, { id, name }) => {
       state.connections = state.connections.filter(o => o.in.id === id && o.in.name === name)
     },
     setConnection: (state, { id, value }) => {
-      state.connections.find(o => `${o.out.id}-${o.out.name}` === id).data = value
+      state.connections.find(o => o.id === id).data = value
     }
   },
   actions: {
@@ -65,18 +85,6 @@ export default {
       { id: 3, label: 'Image Resize', component: 'ImageResize', data: { image: { data: null, label: null } } }
     ],
 
-    connections: [],
-    connectionDef: { id: null, in: { id: null, name: null }, out: { id: null, name: null }, data: null }
-    /*
-    ,
-    dataDefs: [
-      { label: 'Integer', value: null, color: '#975' },
-      { label: 'Float', value: null, color: '#579' },
-      { label: 'Array', value: [], color: '#795' },
-      { label: 'String', value: null, color: '#597' },
-      { label: 'Image', value: { data: null, label: null }, color: '#759' },
-      { label: 'Color', value: { r: null, g: null, b: null, a: null }, color: '#957' }
-    ]
-    */
+    connections: []
   }
 }
