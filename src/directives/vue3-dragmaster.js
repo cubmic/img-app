@@ -1,5 +1,13 @@
 const dropVMs = []
 
+const removeFromArray = function (array, value) {
+  const idx = array.indexOf(value)
+  if (idx !== -1) {
+    array.splice(idx, 1)
+  }
+  return array
+}
+
 export const drag = {
   created (el, binding) {
     const vm = binding.instance
@@ -105,7 +113,7 @@ export const drag = {
     // store to remove on unbind
     el.events = { startDrag, onDrag, stopDrag }
   },
-  unbind (el) {
+  unmounted (el) {
     el.removeEventListener('mousedown', el.events.startDrag)
     el.removeEventListener('touchstart', el.events.startDrag)
     window.removeEventListener('mouseup', el.events.stopDrag)
@@ -119,6 +127,7 @@ export const drop = {
     const drop = binding.value ? binding.value.drop : null
     dropVMs.push({ obj, vm, drop })
   },
-  unbind () {
+  unmounted (el) {
+    removeFromArray(dropVMs, el)
   }
 }

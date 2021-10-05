@@ -9,7 +9,7 @@
     />
     <!-- line -->
     <svg
-      style="transform-origin:0 0;"
+      style="transform-origin:0 0; pointer-events:none"
       :style="`margin-left:${size / 2}px; margin-top:${size / 2}px; transform:scaleX(${posX < 0 ? -1 : 1}) scaleY(${posY < 0 ? -1 : 1})`"
       :width="width"
       :height="height"
@@ -77,7 +77,7 @@ export default defineComponent({
           this.drag = false
         },
         drop: (vm) => {
-          const obj = this.$refs.drag
+          const obj = vm.$el
           if (obj.classList.contains(`only-allow-out-${this.type}`)) {
             const inConnection = vm.getConnection()
             if (this.type === inConnection.type) {
