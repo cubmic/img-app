@@ -67,11 +67,11 @@ export default defineComponent({
     ...mapMutations('globals', ['setData', 'setConnection']),
     setChannel (name, channel) {
       const id = `${this.item.id}-${name}`
-      for (const connection of this.outConnectionWithId(id)) {
-        this.$utils.getChannel(this.image.data, data => {
+      this.$utils.getChannel(this.image.data, data => {
+        for (const connection of this.outConnectionWithId(id)) {
           this.setConnection({ id: connection.id, value: data })
-        }, channel)
-      }
+        }
+      }, channel)
     },
     resetChannel (name) {
       const id = `${this.item.id}-${name}`
@@ -80,7 +80,7 @@ export default defineComponent({
       }
     },
     updateChannels () {
-      if (this.image) {
+      if (this.image && this.image.data) {
         this.setChannel('Image', { r: true, g: true, b: true, a: true })
         this.setChannel('Red', { r: true, g: false, b: false, a: false })
         this.setChannel('Green', { r: false, g: true, b: false, a: false })

@@ -2,10 +2,10 @@
   <div class="q-pa-sm">
     <Form-select :options="ITEM_TYPE_DEFS" :modelValue="null" @update:modelValue="addItem" style="width:300px" />
     <svg
-      style="position:absolute; pointer-events:none; left:10px; top:10px; z-index:0"
+      style="position:absolute; pointer-events:none; left:0; top:0; z-index:0"
       :width="width"
       :height="height"
-      stroke="#666"
+      stroke="#999"
       stroke-width="2"
       fill="transparent"
     >
