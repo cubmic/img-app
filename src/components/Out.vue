@@ -40,6 +40,7 @@ export default defineComponent({
         },
         drag: (pos) => {
           this.pos = pos
+          this.updateConnectionDrag({ out: this.$el, in: this.$refs.drag })
         },
         end: (vm) => {
           if (!this.hit) {
@@ -47,6 +48,10 @@ export default defineComponent({
             this.$math.animate(this.pos, { x: 0, y: 0 }, 0.5, 'easeOutCubic', 30, (value) => {
               obj.style.left = value.x + 'px'
               obj.style.top = value.y + 'px'
+              this.updateConnectionDrag({ out: this.$el, in: obj })
+            },
+            () => {
+              this.resetConnectionDrag()
             })
             this.$emit('changed')
           }
@@ -63,6 +68,7 @@ export default defineComponent({
                 data: null
               })
               this.updateConnections()
+              this.resetConnectionDrag()
               this.hit = true
               this.$emit('changed')
               // reset pos
@@ -82,7 +88,7 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapMutations('globals', ['addConnection', 'delConnection', 'updateConnections'])
+    ...mapMutations('globals', ['addConnection', 'delConnection', 'updateConnections', 'updateConnectionDrag', 'resetConnectionDrag'])
   },
   mounted () {
     this.nr = this._.uid

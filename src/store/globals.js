@@ -9,9 +9,17 @@ export default {
     ITEM_TYPE_DEFS: state => state.itemTypeDefs,
 
     connections: state => state.connections,
+    connectionDrag: state => state.connectionDrag,
+    connectionSize: state => {
+      const dragX = state.connectionDrag ? [state.connectionDrag.in.x, state.connectionDrag.out.x] : [0]
+      const dragY = state.connectionDrag ? [state.connectionDrag.in.y, state.connectionDrag.out.y] : [0]
+      return {
+        width: Math.max(0, ...state.connections.map(o => o.in.x), ...state.connections.map(o => o.out.x), ...dragX),
+        height: Math.max(0, ...state.connections.map(o => o.in.y), ...state.connections.map(o => o.out.y), ...dragY)
+      }
+    },
     inConnectionWithId: state => id => state.connections.find(o => `${o.in.id}-${o.in.name}` === id),
     outConnectionWithId: state => id => state.connections.filter(o => `${o.out.id}-${o.out.name}` === id)
-    // DATA_DEFS: state => state.dataDefs
   },
   mutations: {
     addItem: (state, itemType) => {
@@ -66,6 +74,21 @@ export default {
         }
       }
     },
+    updateConnectionDrag: (state, objects) => {
+      state.connectionDrag = {
+        out: {
+          x: objects.out.getBoundingClientRect().left,
+          y: objects.out.getBoundingClientRect().top + 10
+        },
+        in: {
+          x: objects.in.getBoundingClientRect().left,
+          y: objects.in.getBoundingClientRect().top + 10
+        }
+      }
+    },
+    resetConnectionDrag: (state) => {
+      state.connectionDrag = null
+    },
     delConnection: (state, { id, name }) => {
       state.connections = state.connections.filter(o => o.in.id === id && o.in.name === name)
     },
@@ -85,6 +108,7 @@ export default {
       { id: 3, label: 'Image Resize', component: 'ImageResize', data: { image: { data: null, label: null } } }
     ],
 
-    connections: []
+    connections: [],
+    connectionDrag: null
   }
 }
