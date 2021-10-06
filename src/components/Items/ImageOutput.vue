@@ -1,5 +1,5 @@
 <template>
-  <q-item class="q-pa-xs" :style="`background:${color};`">
+  <q-item class="q-pa-xs">
     <q-item-section>
       <div :class="{ 'bg-black': !alpha, 'img-checker-bg': alpha }">
         <q-img :src="image" v-if="image" @load="imgLoaded()" style="height:200px" fit="scale-down" />
@@ -10,7 +10,13 @@
     <q-item-section style="height:100%">
       <div class="column q-gutter-xs justify-start">
         <div class="row q-gutter-xs items-center">
-          <In type="Image" name="Image" :id="this.item.id" :color="color" />
+          <In type="Image" name="Image" :id="this.item.id"
+            color="
+              linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
+              linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
+              linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
+            "
+          />
           <span>Image</span>
         </div>
       </div>
@@ -29,7 +35,6 @@ export default defineComponent({
   },
   data () {
     return {
-      color: '#9BD',
       alpha: false
     }
   },

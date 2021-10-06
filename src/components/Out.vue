@@ -4,10 +4,11 @@
       ref="drag"
       class="dot"
       :class="{ 'dot-drag': drag }"
-      :style="`background:${color}`"
       v-drag="dragDefs"
       :id="`in-${id}-${name}`"
-    />
+    >
+      <div :style="`background:${color}`" />
+    </div>
   </div>
 </template>
 
@@ -105,6 +106,12 @@ export default defineComponent({
   border: 1px solid #000;
   transition: 0.5s box-shadow;
   cursor: move;
+  background: #FFF;
+}
+.dot div {
+  height: 100%;
+  pointer-events: none;
+  border-radius: 50%;
 }
 .dot-drag {
   box-shadow: 0 0 10px #000;

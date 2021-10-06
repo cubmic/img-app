@@ -103,9 +103,9 @@ export default {
     itemDef: { name: 'New Item', x: 0, y: 0, expand: true },
 
     itemTypeDefs: [
-      { id: 1, label: 'Image Input', component: 'ImageInput', data: { image: { data: null, label: null } } },
-      { id: 2, label: 'Image Output', component: 'ImageOutput', data: { image: { data: null, label: null } } },
-      { id: 3, label: 'Image Resize', component: 'ImageResize', data: { image: { data: null, label: null } } }
+      { id: 1, label: 'Image Input', color: '#9BD', component: 'ImageInput', data: { image: { data: null, label: null } } },
+      { id: 2, label: 'Image Output', color: '#9BD', component: 'ImageOutput', data: { image: { data: null, label: null } } },
+      { id: 3, label: 'Image Resize', color: '#9BD', component: 'ImageResize', data: { image: { data: null, label: null } } }
     ],
 
     connections: [],

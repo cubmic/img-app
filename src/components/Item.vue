@@ -3,7 +3,7 @@
     :id="`item-${data.id}`"
     class="item"
     :class="{ 'item-drag': drag }"
-    :style="`left:${data.x}px; top:${data.y}px;`"
+    :style="`left:${data.x}px; top:${data.y}px; background:${data.color}`"
     v-drag="dragDefs"
   >
     <div class="row q-col-gutter-xs items-center" style="pointer-events:none; margin-bottom:2px">

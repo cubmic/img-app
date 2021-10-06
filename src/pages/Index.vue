@@ -15,9 +15,8 @@
     <div style="position:relative; height:500px" class="q-mt-sm">
       <Item bordered v-for="item in items" :key="item.id" :data="item" />
     </div>
-    <!--
+
     <pre>{{ items }}</pre>
-    -->
     <pre>{{ connections }}</pre>
   </div>
 </template>

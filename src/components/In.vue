@@ -1,6 +1,8 @@
 <template>
   <div style="width:20px; height:20px; margin-left:-15px; position:relative" :class="`only-allow-out-${type}`">
-    <div class="dot" :id="`in-${id}-${name}`" :style="`background:${color}`" v-drop />
+    <div class="dot" :id="`in-${id}-${name}`" v-drop>
+      <div :style="`background:${color}`" />
+    </div>
   </div>
 </template>
 
@@ -38,5 +40,11 @@ export default defineComponent({
   height: 20px;
   border: 1px solid #000;
   transition: 0.5s box-shadow;
+  background: #FFF;
+}
+.dot div {
+  height: 100%;
+  pointer-events: none;
+  border-radius: 50%;
 }
 </style>

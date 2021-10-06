@@ -1,5 +1,5 @@
 <template>
-  <q-item class="q-pa-xs" :style="`background:${color};`">
+  <q-item class="q-pa-xs">
     <q-item-section>
       <Form-image v-model="image" @update:modelValue="updateChannels()" />
     </q-item-section>
@@ -8,7 +8,13 @@
     <q-item-section style="height:100%">
       <div class="column q-gutter-xs justify-start">
         <div class="row q-gutter-xs items-center">
-          <In type="Image" name="Image" :id="this.item.id" :color="color" />
+          <In type="Image" name="Image" :id="this.item.id"
+            color="
+              linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
+              linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
+              linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
+            "
+          />
           <span>Image</span>
         </div>
       </div>
@@ -17,7 +23,13 @@
       <div class="column q-gutter-xs justify-start">
         <div class="row q-gutter-xs items-center justify-end">
           <span>Color</span>
-          <Out type="Image" name="Color" :id="this.item.id" @changed="updateChannels()" :color="color" />
+          <Out type="Image" name="Color" :id="this.item.id" @changed="updateChannels()"
+            color="
+              linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
+              linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
+              linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
+            "
+          />
         </div>
         <div class="row q-gutter-xs items-center justify-end">
           <span>Red</span>
@@ -49,11 +61,6 @@ export default defineComponent({
   props: {
     item: Object
   },
-  data () {
-    return {
-      color: '#9BD'
-    }
-  },
   computed: {
     ...mapGetters('globals', ['outConnectionWithId']),
     image: {
@@ -81,13 +88,13 @@ export default defineComponent({
     },
     updateChannels () {
       if (this.image && this.image.data) {
-        this.setChannel('Image', { r: true, g: true, b: true, a: true })
+        this.setChannel('Color', { r: true, g: true, b: true, a: true })
         this.setChannel('Red', { r: true, g: false, b: false, a: false })
         this.setChannel('Green', { r: false, g: true, b: false, a: false })
         this.setChannel('Blue', { r: false, g: false, b: true, a: false })
         this.setChannel('Alpha', { r: false, g: false, b: false, a: true })
       } else {
-        this.resetChannel('Image')
+        this.resetChannel('Color')
         this.resetChannel('Red')
         this.resetChannel('Green')
         this.resetChannel('Blue')
