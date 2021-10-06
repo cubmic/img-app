@@ -31,7 +31,7 @@ export default defineComponent({
       size: 20,
       drag: false,
       hit: false,
-      posX: 0,
+      pos: { x: null, y: null },
       posY: 0,
       dragDefs: {
         start: (vm) => {
@@ -39,29 +39,22 @@ export default defineComponent({
           this.hit = false
         },
         drag: (pos) => {
-          this.posX = pos.x
-          this.posY = pos.y
-          this.updateConnections()
+          this.pos = pos
         },
         end: (vm) => {
           if (!this.hit) {
             const obj = this.$refs.drag
-            this.$math.animate(this.posX, 0, 1, 'easeOutElastic', 50, (value) => {
-              this.posX = value
-              obj.style.left = value + 'px'
-            })
-            this.$math.animate(this.posY, 0, 1, 'easeOutElastic', 50, (value) => {
-              this.posY = value
-              obj.style.top = value + 'px'
-              this.updateConnections()
+            this.$math.animate(this.pos, { x: 0, y: 0 }, 0.5, 'easeOutCubic', 30, (value) => {
+              obj.style.left = value.x + 'px'
+              obj.style.top = value.y + 'px'
             })
             this.$emit('changed')
           }
           this.drag = false
         },
         drop: (vm) => {
-          const obj = vm.$el
-          if (obj.classList.contains(`only-allow-out-${this.type}`)) {
+          const otherObj = vm.$el
+          if (otherObj.classList.contains(`only-allow-out-${this.type}`)) {
             const inConnection = vm.getConnection()
             if (this.type === inConnection.type) {
               this.addConnection({
@@ -73,29 +66,19 @@ export default defineComponent({
               this.hit = true
               this.$emit('changed')
               // reset pos
-              this.$refs.drag.style.top = '0px'
-              this.$refs.drag.style.left = '0px'
+              const obj = this.$refs.drag
+              obj.style.top = '0px'
+              obj.style.left = '0px'
             }
           }
         }
       }
     }
   },
-  watch: {
-    hasConnection () {
-      console.log('no connection')
-    }
-  },
   computed: {
     ...mapGetters('globals', ['outConnectionWithId']),
     hasNoConnection () {
       return this.outConnectionWithId(`${this.id}-${this.name}`)
-    },
-    width () {
-      return Math.max(this.posX, -this.posX)
-    },
-    height () {
-      return Math.max(this.posY, -this.posY)
     }
   },
   methods: {

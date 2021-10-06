@@ -77,7 +77,15 @@ const methods = {
     if (now < props.endTime) {
       const value = methods.invlerp(props.startTime, props.endTime, now)
       if (props.callback) {
-        props.callback(methods.lerp(props.start, props.end, props.ease(value)), value)
+        if (typeof props.start === 'object') {
+          const obj = {}
+          for (const key of Object.keys(props.start)) {
+            obj[key] = methods.lerp(props.start[key], props.end[key], props.ease(value))
+          }
+          props.callback(obj, value)
+        } else {
+          props.callback(methods.lerp(props.start, props.end, props.ease(value)), value)
+        }
       }
       setTimeout(() => {
         methods.animateLoop(props)
