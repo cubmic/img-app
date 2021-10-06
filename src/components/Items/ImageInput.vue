@@ -6,7 +6,7 @@
   </q-item>
   <q-item class="q-pa-xs" v-if="item.expand">
     <q-item-section style="height:100%">
-      <div class="column justify-start">
+      <div class="column q-gutter-xs justify-start">
         <div class="row q-gutter-xs items-center">
           <In type="Image" name="Image" :id="this.item.id" :color="color" />
           <span>Image</span>
@@ -16,8 +16,8 @@
     <q-item-section style="height:100%">
       <div class="column q-gutter-xs justify-start">
         <div class="row q-gutter-xs items-center justify-end">
-          <span>Image</span>
-          <Out type="Image" name="Image" :id="this.item.id" @changed="updateChannels()" :color="color" />
+          <span>Color</span>
+          <Out type="Image" name="Color" :id="this.item.id" @changed="updateChannels()" :color="color" />
         </div>
         <div class="row q-gutter-xs items-center justify-end">
           <span>Red</span>

@@ -27,6 +27,18 @@ export default boot(({ app }) => {
         })
       })
     },
+    imgHasAlpha (urlData, callback) {
+      this.urlToImgData(urlData, imageData => {
+        let found = false
+        for (let nr = 0; nr < imageData.data.length; nr += 4) {
+          if (imageData.data[nr + 3] < 255) {
+            found = true
+            break
+          }
+        }
+        callback(found)
+      })
+    },
     urlToImgData (urlData, callback) {
       const img = new Image()
       img.src = urlData

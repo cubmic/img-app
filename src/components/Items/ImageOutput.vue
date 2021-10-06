@@ -1,12 +1,14 @@
 <template>
   <q-item class="q-pa-xs" :style="`background:${color};`">
     <q-item-section>
-      <q-img :src="image" v-if="image" @load="imgLoaded()" />
+      <div :class="{ 'bg-black': !alpha, 'img-checker-bg': alpha }">
+        <q-img :src="image" v-if="image" @load="imgLoaded()" style="height:200px" fit="scale-down" />
+      </div>
     </q-item-section>
   </q-item>
   <q-item class="q-pa-xs" v-if="item.expand">
     <q-item-section style="height:100%">
-      <div class="column justify-start">
+      <div class="column q-gutter-xs justify-start">
         <div class="row q-gutter-xs items-center">
           <In type="Image" name="Image" :id="this.item.id" :color="color" />
           <span>Image</span>
@@ -27,7 +29,8 @@ export default defineComponent({
   },
   data () {
     return {
-      color: '#9BD'
+      color: '#9BD',
+      alpha: false
     }
   },
   watch: {
@@ -52,7 +55,22 @@ export default defineComponent({
       setTimeout(() => {
         this.updateConnections()
       }, 0)
+      this.$utils.imgHasAlpha(this.image, value => {
+        this.alpha = value
+      })
     }
   }
 })
 </script>
+
+<style>
+.img-checker-bg {
+  font-size: 0px;
+  background-color: #FFF;
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  background-image: linear-gradient(45deg, #999 25%, transparent 25%, transparent 75%, #999 75%, #999),
+                    linear-gradient(45deg, #999 25%, transparent 25%, transparent 75%, #999 75%, #999);
+  box-shadow: 0 0 10px #000 inset;
+}
+</style>

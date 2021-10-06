@@ -1,5 +1,5 @@
 <template>
-  <div style="width:20px; height:20px; margin-left:-10px; position:relative" :class="`only-allow-out-${type}`">
+  <div style="width:20px; height:20px; margin-left:-15px; position:relative" :class="`only-allow-out-${type}`">
     <div class="dot" :id="`in-${id}-${name}`" :style="`background:${color}`" v-drop />
   </div>
 </template>
