@@ -4,6 +4,7 @@
     @update:modelValue="valueChanged"
     @keydown="keydown"
     outlined dense
+    bg-color="grey-4"
   />
 </template>
 

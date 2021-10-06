@@ -1,8 +1,6 @@
 <template>
   <q-item class="q-pa-xs">
-    <q-item-section>
-      <Form-image v-model="image" @update:modelValue="updateChannels()" />
-    </q-item-section>
+    <Form-image v-model="image" @update:modelValue="updateChannels()" />
   </q-item>
   <q-item class="q-pa-xs" v-if="item.expand">
     <q-item-section style="height:100%">
