@@ -1,7 +1,7 @@
 <template>
   <q-item class="q-pa-xs" :style="`background:${color};`">
     <q-item-section>
-      <q-img :src="image" v-if="image" style="max-width:200px" @load="imgLoaded()" />
+      <q-img :src="image" v-if="image" @load="imgLoaded()" />
     </q-item-section>
   </q-item>
   <q-item class="q-pa-xs" v-if="item.expand">
