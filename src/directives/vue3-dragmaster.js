@@ -87,16 +87,16 @@ export const drag = {
         // check overlap of all drop elements
         const dragRect = obj.getBoundingClientRect()
         for (const otherVm of dropVMs) {
-          if (otherVm.vm !== vm && !isParentOfChild(obj, otherVm.obj)) { // check only other rects and not direct child
+          if (otherVm.obj !== obj && !isParentOfChild(obj, otherVm.obj)) { // check only other rects and not direct child
             const dropRect = otherVm.obj.getBoundingClientRect()
             if (rectOverlap(dragRect, dropRect)) {
               // drop function on drag directive
               if (binding.value.drop) {
-                binding.value.drop(otherVm.vm)
+                binding.value.drop(otherVm.obj, otherVm.vm)
               }
               // drop function on drop directive
               if (otherVm.drop) {
-                otherVm.drop(vm)
+                otherVm.drop(obj, vm)
               }
             }
           }

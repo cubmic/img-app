@@ -16,7 +16,9 @@
       <Item bordered v-for="item in items" :key="item.id" :data="item" />
     </div>
 
+    <!--
     <pre>{{ items }}</pre>
+    -->
     <pre>{{ connections }}</pre>
   </div>
 </template>

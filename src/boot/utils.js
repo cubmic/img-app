@@ -22,9 +22,7 @@ export default boot(({ app }) => {
             imageData.data[nr + 3] = 255 // a
           }
         }
-        this.imgDataToUrl(imageData, urlData => {
-          callback(urlData)
-        })
+        callback(this.imgDataToUrl(imageData))
       })
     },
     imgHasAlpha (urlData, callback) {
@@ -51,13 +49,13 @@ export default boot(({ app }) => {
         callback(ctx.getImageData(0, 0, img.width, img.height))
       }
     },
-    imgDataToUrl (imageData, callback) {
+    imgDataToUrl (imageData) {
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
       canvas.width = imageData.width
       canvas.height = imageData.height
       ctx.putImageData(imageData, 0, 0)
-      callback(canvas.toDataURL())
+      return canvas.toDataURL()
     }
     /*
     resizeImg () {

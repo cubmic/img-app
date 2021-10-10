@@ -1,32 +1,38 @@
 <template>
-  <div style="width:20px; height:20px; margin-left:-15px; position:relative" :class="`only-allow-out-${type}`">
-    <div class="dot" :id="`in-${id}-${name}`" v-drop>
-      <div :style="`background:${color}`" />
+  <div class="col">
+    <div class="row q-gutter-xs items-center">
+      <div class="col-auto">
+        <div class="dot" :id="'k' + data.id" v-drop :class="`only-allow-out-${data.type} dot-${data.color}`" />
+      </div>
+      <div class="col">
+        <Form-image v-model="value" v-if="data.type === 'image'" />
+        <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import { mapMutations } from 'vuex'
+
 export default defineComponent({
   name: 'In',
   props: {
-    id: String,
-    name: String,
-    type: String,
-    color: {
-      type: String,
-      default: '#C10015'
-    }
+    data: Object
   },
-  data () {
-    return {
-      size: 20
+  computed: {
+    value: {
+      get () { return this.data.value },
+      set (newVal) {
+        this.setInputs({ parentId: this.data.parentId, id: this.data.id, value: newVal })
+      }
     }
   },
   methods: {
+    ...mapMutations('globals', ['setInputs']),
     getConnection () {
-      return { id: this.id, name: this.name, type: this.type }
+      return this.data
     }
   }
 })
@@ -34,13 +40,11 @@ export default defineComponent({
 
 <style scoped>
 .dot {
-  position: absolute;
   border-radius: 50%;
   width: 20px;
   height: 20px;
   border: 1px solid #000;
   transition: 0.5s box-shadow;
-  background: #FFF;
 }
 .dot div {
   height: 100%;

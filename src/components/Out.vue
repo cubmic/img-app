@@ -1,13 +1,14 @@
 <template>
-  <div class="dot-bg" style="width:20px; height:20px; position:relative; margin-right:-15px;" :id="`out-${id}-${name}`">
-    <div
-      ref="drag"
-      class="dot"
-      :class="{ 'dot-drag': drag }"
-      v-drag="dragDefs"
-      :id="`in-${id}-${name}`"
-    >
-      <div :style="`background:${color}`" />
+  <div class="row q-gutter-xs items-center justify-end">
+    <span>{{ data.label }}</span>
+    <div class="dot-bg" ref="dotbg" style="width:20px; height:20px; position:relative;">
+      <div
+        ref="drag"
+        class="dot"
+        :class="{ 'dot-drag': drag, [`dot-${data.color}`]: true }"
+        v-drag="dragDefs"
+        :id="'k' + data.id"
+      />
     </div>
   </div>
 </template>
@@ -18,13 +19,7 @@ import { mapGetters, mapMutations } from 'vuex'
 export default defineComponent({
   name: 'Out',
   props: {
-    id: String,
-    name: String,
-    type: String,
-    color: {
-      type: String,
-      default: '#21BA45'
-    }
+    data: Object
   },
   data () {
     return {
@@ -41,15 +36,18 @@ export default defineComponent({
         },
         drag: (pos) => {
           this.pos = pos
-          this.updateConnectionDrag({ out: this.$el, in: this.$refs.drag })
+          const objIn = this.$refs.drag
+          const objOut = this.$refs.dotbg
+          this.updateConnectionDrag({ out: objOut, in: objIn })
         },
         end: (vm) => {
           if (!this.hit) {
-            const obj = this.$refs.drag
+            const objIn = this.$refs.drag
+            const objOut = this.$refs.dotbg
             this.$math.animate(this.pos, { x: 0, y: 0 }, 0.5, 'easeOutCubic', 30, (value) => {
-              obj.style.left = value.x + 'px'
-              obj.style.top = value.y + 'px'
-              this.updateConnectionDrag({ out: this.$el, in: obj })
+              objIn.style.left = value.x + 'px'
+              objIn.style.top = value.y + 'px'
+              this.updateConnectionDrag({ out: objOut, in: objIn })
             },
             () => {
               this.resetConnectionDrag()
@@ -58,18 +56,19 @@ export default defineComponent({
           }
           this.drag = false
         },
-        drop: (vm) => {
-          const otherObj = vm.$el
-          if (otherObj.classList.contains(`only-allow-out-${this.type}`)) {
+        drop: (obj, vm) => {
+          if (obj.classList.contains(`only-allow-out-${this.data.type}`)) {
             const inConnection = vm.getConnection()
-            if (this.type === inConnection.type) {
+            if (this.data.type === inConnection.type) {
               this.addConnection({
-                out: { name: this.name, id: this.id },
-                in: { name: inConnection.name, id: inConnection.id },
+                out: { parentId: this.data.parentId, id: this.data.id },
+                in: { parentId: inConnection.parentId, id: inConnection.id },
                 data: null
               })
-              this.updateConnections()
               this.resetConnectionDrag()
+              setTimeout(() => {
+                this.updateConnections()
+              }, 0)
               this.hit = true
               this.$emit('changed')
               // reset pos
@@ -85,7 +84,7 @@ export default defineComponent({
   computed: {
     ...mapGetters('globals', ['outConnectionWithId']),
     hasNoConnection () {
-      return this.outConnectionWithId(`${this.id}-${this.name}`)
+      return this.outConnectionWithId(`${this.data.id}-${this.data.name}`)
     }
   },
   methods: {
@@ -106,7 +105,6 @@ export default defineComponent({
   border: 1px solid #000;
   transition: 0.5s box-shadow;
   cursor: move;
-  background: #FFF;
 }
 .dot div {
   height: 100%;

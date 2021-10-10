@@ -23,6 +23,7 @@ export default {
   },
   mutations: {
     addItem: (state, itemType) => {
+      itemType = JSON.parse(JSON.stringify(itemType))
       const item = JSON.parse(JSON.stringify(state.itemDef))
       item.id = uid()
       // copy item type defs into item
@@ -30,6 +31,16 @@ export default {
       item.data = itemType.data
       item.component = itemType.component
       item.color = itemType.color
+      item.inputs = itemType.inputs.map((o, i) => {
+        o.parentId = item.id
+        o.id = uid()
+        return o
+      })
+      item.outputs = itemType.outputs.map((o, i) => {
+        o.parentId = item.id
+        o.id = uid()
+        return o
+      })
       state.items.push(item)
     },
     delItem: (state, id) => {
@@ -42,15 +53,15 @@ export default {
     setData: (state, { id, key, value }) => {
       state.items.find(o => o.id === id).data[key] = value
     },
-    setInputs: (state, { id, key, value }) => {
-      state.items.find(o => o.id === id).inputs[key] = value
+    setInputs: (state, { parentId, id, value }) => {
+      state.items.find(o => o.id === parentId).inputs.find(o => o.id === id).value = value
     },
-    setOutputs: (state, { id, key, value }) => {
-      state.items.find(o => o.id === id).outputs[key] = value
+    setOutputs: (state, { parentId, id, value }) => {
+      state.items.find(o => o.id === parentId).inputs.find(o => o.id === id).value = value
     },
     addConnection: (state, item) => {
       // delete possible in-connection first
-      state.connections = state.connections.filter(o => !(o.in.id === item.in.id && o.in.name === item.in.name))
+      state.connections = state.connections.filter(o => !(o.in.parentId === item.in.parentId && o.in.id === item.in.id))
       item.id = uid()
       item.in.x = null
       item.in.y = null
@@ -61,15 +72,15 @@ export default {
     updateConnections: (state) => {
       for (const connection of state.connections) {
         {
-          const i = document.querySelector(`#in-${connection.in.id}-${connection.in.name}`)
-          const rect = i ? i.getBoundingClientRect() : document.querySelector(`#item-${connection.in.id}`).getBoundingClientRect()
-          connection.in.x = (i ? (rect.left + rect.right) / 2 : rect.left) + window.scrollX
+          const i = document.querySelector('#k' + connection.in.id)
+          const rect = i ? i.getBoundingClientRect() : document.querySelector('#k' + connection.in.parentId).getBoundingClientRect()
+          connection.in.x = (rect.left + rect.right) / 2 + window.scrollX
           connection.in.y = (rect.top + rect.bottom) / 2 + window.scrollY
         }
         {
-          const o = document.querySelector(`#out-${connection.out.id}-${connection.out.name}`)
-          const rect = o ? o.getBoundingClientRect() : document.querySelector(`#item-${connection.out.id}`).getBoundingClientRect()
-          connection.out.x = (o ? (rect.left + rect.right) / 2 : rect.right) + window.scrollX
+          const o = document.querySelector('#k' + connection.out.id)
+          const rect = o ? o.getBoundingClientRect() : document.querySelector('#k' + connection.out.parentId).getBoundingClientRect()
+          connection.out.x = (rect.left + rect.right) / 2 + window.scrollX
           connection.out.y = (rect.top + rect.bottom) / 2 + window.scrollY
         }
       }
@@ -89,11 +100,11 @@ export default {
     resetConnectionDrag: (state) => {
       state.connectionDrag = null
     },
-    delConnection: (state, { id, name }) => {
-      state.connections = state.connections.filter(o => o.in.id === id && o.in.name === name)
+    delConnection: (state, { parentId, id }) => {
+      state.connections = state.connections.filter(o => o.in.parentId === parentId && o.in.id === id)
     },
-    setConnection: (state, { id, value }) => {
-      state.connections.find(o => o.id === id).data = value
+    setConnection: (state, { parentId, value }) => {
+      state.connections.find(o => o.parentId === parentId).data = value
     }
   },
   actions: {
@@ -103,9 +114,51 @@ export default {
     itemDef: { name: 'New Item', x: 0, y: 0, expand: true },
 
     itemTypeDefs: [
-      { id: 1, label: 'Image Input', color: '#9BD', component: 'ImageInput', data: { image: { data: null, label: null } } },
-      { id: 2, label: 'Image Output', color: '#9BD', component: 'ImageOutput', data: { image: { data: null, label: null } } },
-      { id: 3, label: 'Image Resize', color: '#9BD', component: 'ImageResize', data: { image: { data: null, label: null } } }
+      {
+        id: 1,
+        label: 'Image Input',
+        color: '#9BD',
+        component: 'ImageInput',
+        data: { image: { data: null, label: null } },
+        inputs: [
+          { type: 'image', color: 'color', label: 'Color', value: null }
+        ],
+        outputs: [
+          { type: 'image', color: 'color', label: 'Color' },
+          { type: 'image', color: 'red', label: 'Red' },
+          { type: 'image', color: 'green', label: 'Green' },
+          { type: 'image', color: 'blue', label: 'Blue' },
+          { type: 'image', color: 'alpha', label: 'Alpha' }
+        ]
+      },
+      {
+        id: 2,
+        label: 'Image Output',
+        color: '#9BD',
+        component: 'ImageOutput',
+        data: { image: { data: null, label: null } },
+        inputs: [
+          { type: 'image', color: 'color', label: 'Color', value: null }
+        ],
+        outputs: []
+      },
+      {
+        id: 3,
+        label: 'Image Resize',
+        color: '#9BD',
+        component: 'ImageResize',
+        data: { image: { data: null, label: null } },
+        inputs: [
+          { type: 'image', color: 'color', label: 'Color', value: null },
+          { type: 'integer', color: 'integer', label: 'Left', value: null },
+          { type: 'integer', color: 'integer', label: 'Top', value: null },
+          { type: 'integer', color: 'integer', label: 'Width', value: null },
+          { type: 'integer', color: 'integer', label: 'Height', value: null }
+        ],
+        outputs: [
+          { type: 'image', color: 'color', label: 'Color' }
+        ]
+      }
     ],
 
     connections: [],

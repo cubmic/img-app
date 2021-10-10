@@ -1,24 +1,8 @@
 <template>
   <q-item class="q-pa-xs">
     <q-item-section>
-      <div :class="{ 'bg-black': !alpha, 'img-checker-bg': alpha }">
+      <div :class="{ 'bg-black': !alpha, 'img-checker-bg': alpha }" style="width:200px; height:200px">
         <q-img :src="image" v-if="image" @load="imgLoaded()" style="height:200px" fit="scale-down" />
-      </div>
-    </q-item-section>
-  </q-item>
-  <q-item class="q-pa-xs" v-if="item.expand">
-    <q-item-section style="height:100%">
-      <div class="column q-gutter-xs justify-start">
-        <div class="row q-gutter-xs items-center">
-          <In type="Image" name="Image" :id="this.item.id"
-            color="
-              linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
-              linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
-              linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
-            "
-          />
-          <span>Image</span>
-        </div>
       </div>
     </q-item-section>
   </q-item>
@@ -35,16 +19,11 @@ export default defineComponent({
   },
   data () {
     return {
-      alpha: false
-    }
-  },
-  watch: {
-    image (newVal) {
-      if (!newVal) {
-        setTimeout(() => {
-          this.updateConnections()
-        }, 0)
-      }
+      alpha: false,
+      inputs: [
+        { type: 'Image', color: 'Color', label: 'Color', id: this.item.id }
+      ],
+      outputs: []
     }
   },
   computed: {
@@ -57,9 +36,6 @@ export default defineComponent({
   methods: {
     ...mapMutations('globals', ['updateConnections']),
     imgLoaded () {
-      setTimeout(() => {
-        this.updateConnections()
-      }, 0)
       this.$utils.imgHasAlpha(this.image, value => {
         this.alpha = value
       })

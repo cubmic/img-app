@@ -1,11 +1,11 @@
 <template>
-  <q-file style="width:100%" dense outlined v-model="img">
-    <template v-slot:prepend v-if="modelValue.data">
-      <img :src="modelValue.data" height="30"/>
+  <q-file dense outlined v-model="img" bg-color="grey-4">
+    <template v-slot:prepend>
+      <img :src="modelValue.data" height="30" v-if="modelValue" />
     </template>
     <template v-slot:append>
-      <q-icon name="close" @click.stop.prevent="$emit('update:modelValue', { data: null, label: null })" class="cursor-pointer" v-if="modelValue.data" />
-      <q-icon name="cloud_upload" @click.stop v-else />
+      <q-icon name="close" class="cursor-pointer" @click.stop.prevent="$emit('update:modelValue', null)" v-if="modelValue" />
+      <q-icon name="cloud_upload" class="cursor-pointer" @click.stop v-else />
     </template>
   </q-file>
 </template>
@@ -20,7 +20,7 @@ export default defineComponent({
   computed: {
     img: {
       get () {
-        return this.modelValue.data ? new File([''], this.modelValue.label) : null
+        return this.modelValue ? new File([''], this.modelValue.label) : null
       },
       set (newVal) {
         this.imgChanged(newVal)

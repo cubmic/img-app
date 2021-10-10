@@ -14,6 +14,7 @@ import Connection from 'src/components/Connection.vue'
 import Item from 'src/components/Item.vue'
 import ImageInput from 'src/components/Items/ImageInput.vue'
 import ImageOutput from 'src/components/Items/ImageOutput.vue'
+import ImageResize from 'src/components/Items/ImageResize.vue'
 
 export default boot(({ app }) => {
   app.component('ButtonAdd', ButtonAdd)
@@ -30,4 +31,5 @@ export default boot(({ app }) => {
   app.component('Item', Item)
   app.component('ImageInput', ImageInput)
   app.component('ImageOutput', ImageOutput)
+  app.component('ImageResize', ImageResize)
 })

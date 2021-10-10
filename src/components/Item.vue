@@ -1,15 +1,15 @@
 <template>
   <div
-    :id="`item-${data.id}`"
+    :id="'k' + data.id"
     class="item"
     :class="{ 'item-drag': drag }"
     :style="`left:${data.x}px; top:${data.y}px; background:${data.color}`"
     v-drag="dragDefs"
   >
     <div class="bg-grey" style="pointer-events:none;">
-      <div class="row q-col-gutter-xs items-center">
+      <div class="row items-center">
         <q-icon name="drag_indicator" size="xs" />
-        <div class="col">{{ data.name }}</div>
+        <div class="col">{{ data.label }}</div>
         <div>
           <q-icon
             name="expand_more"
@@ -21,17 +21,34 @@
         </div>
       </div>
     </div>
-    <div class="q-pa-xs" v-if="data.expand">
-      <div class="row q-col-gutter-xs" @mousedown.stop>
-        <div class="col-9">
-          <Form-input :modelValue="data.name" @update:modelValue="setItem({ id: data.id, key: 'name', value: $event })" />
+
+    <!-- item here -->
+
+    <div v-if="data.expand">
+      <div class="q-pa-xs">
+        <div class="row q-col-gutter-xs" @mousedown.stop>
+          <div class="col-9">
+            <Form-input :modelValue="data.label" @update:modelValue="setItem({ id: data.id, key: 'label', value: $event })" />
+          </div>
+          <div class="col-auto">
+            <ButtonDel class="avatar" @click="delItem(data.id)" />
+          </div>
         </div>
-        <div class="col-auto">
-          <ButtonDel class="avatar" @click="delItem(data.id)" />
+      </div>
+      <!-- connectors -->
+      <div class="row q-ma-xs">
+        <div class="col-6">
+          <div class="column q-gutter-xs justify-start" @mousedown.stop>
+            <In v-for="item in data.inputs" :key="item.id" :data="item" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="column q-gutter-xs justify-start">
+            <Out v-for="item in data.outputs" :key="item.id" :data="item" />
+          </div>
         </div>
       </div>
     </div>
-    <component :is="data.component" :item="data" />
   </div>
 </template>
 
@@ -81,7 +98,7 @@ export default defineComponent({
   .item {
     position: absolute;
     background: #CCC;
-    width: 210px;
+    width: 410px;
     z-index: 0;
     transition: 0.5s box-shadow;
   }
