@@ -1,90 +1,70 @@
 <template>
   <q-item class="q-pa-xs">
-    <Form-image v-model="image" @update:modelValue="updateChannels()" />
+    <!--
+    <pre>
+    {{ data.outputs }}
+    </pre>
+    -->
   </q-item>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import { mapGetters, mapMutations } from 'vuex'
-
 export default defineComponent({
   name: 'ImageInput',
   props: {
-    item: Object
+    data: Object
+  },
+  data () {
+    return {
+      channels: {
+        c: { r: true, g: true, b: true, a: true },
+        r: { r: true, g: false, b: false, a: false },
+        g: { r: false, g: true, b: false, a: false },
+        b: { r: false, g: false, b: true, a: false },
+        a: { r: false, g: false, b: false, a: true }
+      }
+    }
   },
   computed: {
-    ...mapGetters('globals', ['outConnectionWithId']),
-    image: {
-      get () { return this.item.data.image },
-      set (newVal) {
-        this.setData({ id: this.item.id, key: 'image', value: newVal })
-      }
+    ...mapGetters('globals', ['outConnectionWithId', 'allOutConnectionWithItemId']),
+    allOutConnections () {
+      return this.allOutConnectionWithItemId(this.data.id)
     }
   },
   methods: {
-    ...mapMutations('globals', ['setData', 'setConnection']),
-    setChannel (name, channel) {
-      /*
-      this.$utils.getChannel(this.image.data, data => {
-        for (const connection of this.outConnectionWithId(`${this.item.id}-${name}`)) {
-          this.setConnection({ id: connection.id, value: data })
-        }
-      }, channel)
-      */
-    },
-    resetChannel (name) {
-      /*
-      for (const connection of this.outConnectionWithId(`${this.item.id}-${name}`)) {
-        this.setConnection({ id: connection.id, value: null })
-      }
-      */
-    },
-    updateColor () {
-      if (this.image && this.image.data) {
-        this.setChannel('Color', { r: true, g: true, b: true, a: true })
-      } else {
-        this.resetChannel('Color')
-      }
-    },
-    updateRed () {
-      if (this.image && this.image.data) {
-        this.setChannel('Red', { r: true, g: false, b: false, a: false })
-      } else {
-        this.resetChannel('Red')
-      }
-    },
-    updateGreen () {
-      if (this.image && this.image.data) {
-        this.setChannel('Green', { r: false, g: true, b: false, a: false })
-      } else {
-        this.resetChannel('Green')
-      }
-    },
-    updateBlue () {
-      if (this.image && this.image.data) {
-        this.setChannel('Blue', { r: false, g: false, b: true, a: false })
-      } else {
-        this.resetChannel('Blue')
-      }
-    },
-    updateAlpha () {
-      if (this.image && this.image.data) {
-        this.setChannel('Alpha', { r: false, g: false, b: false, a: true })
-      } else {
-        this.resetChannel('Alpha')
-      }
-    },
+    ...mapMutations('globals', ['setData', 'setInputs']),
     updateChannels () {
-      this.updateColor()
-      this.updateRed()
-      this.updateGreen()
-      this.updateBlue()
-      this.updateAlpha()
+      for (const input of this.data.inputs) {
+        // color image
+        if (input.type === 'image' && input.value) {
+          // all outputs
+          for (const output of this.data.outputs) {
+            const connection = this.outConnectionWithId(output.id)
+            if (connection) {
+              this.$utils.getChannel(input.value.data, value => {
+                this.setInputs({ parentId: connection.in.parentId, id: connection.in.id, value: { data: value, label: input.value.label } })
+              }, this.channels[output.key])
+            }
+          }
+        }
+      }
     }
   },
-  mounted () {
-    this.updateChannels()
+  watch: {
+    'data.inputs': {
+      handler () {
+        console.log('update-inputs')
+        this.updateChannels()
+      },
+      deep: true,
+      immediate: true
+    },
+    allOutConnections () {
+      console.log('update-connections')
+      this.updateChannels()
+    }
   }
 })
 </script>

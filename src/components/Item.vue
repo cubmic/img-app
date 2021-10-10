@@ -22,8 +22,6 @@
       </div>
     </div>
 
-    <!-- item here -->
-
     <div v-if="data.expand">
       <div class="q-pa-xs">
         <div class="row q-col-gutter-xs" @mousedown.stop>
@@ -35,6 +33,9 @@
           </div>
         </div>
       </div>
+
+      <component :is="data.component" :data="data" />
+
       <!-- connectors -->
       <div class="row q-ma-xs">
         <div class="col-6">

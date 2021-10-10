@@ -4,7 +4,7 @@
       <div class="col-auto">
         <div class="dot" :id="'k' + data.id" v-drop :class="`only-allow-out-${data.type} dot-${data.color}`" />
       </div>
-      <div class="col">
+      <div class="col" v-if="!inConnectionWithId(data.id)">
         <Form-image v-model="value" v-if="data.type === 'image'" />
         <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" />
       </div>
@@ -14,7 +14,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default defineComponent({
   name: 'In',
@@ -22,6 +22,7 @@ export default defineComponent({
     data: Object
   },
   computed: {
+    ...mapGetters('globals', ['inConnectionWithId']),
     value: {
       get () { return this.data.value },
       set (newVal) {

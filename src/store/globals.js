@@ -18,8 +18,9 @@ export default {
         height: Math.max(0, ...state.connections.map(o => o.in.y), ...state.connections.map(o => o.out.y), ...dragY)
       }
     },
-    inConnectionWithId: state => id => state.connections.find(o => `${o.in.id}-${o.in.name}` === id),
-    outConnectionWithId: state => id => state.connections.filter(o => `${o.out.id}-${o.out.name}` === id)
+    allOutConnectionWithItemId: state => parentId => state.connections.filter(o => o.out.parentId === parentId),
+    outConnectionWithId: state => id => state.connections.find(o => o.out.id === id),
+    inConnectionWithId: state => id => state.connections.find(o => o.in.id === id)
   },
   mutations: {
     addItem: (state, itemType) => {
@@ -44,7 +45,7 @@ export default {
       state.items.push(item)
     },
     delItem: (state, id) => {
-      state.connections = state.connections.filter(o => o.in.id !== id && o.out.id !== id)
+      state.connections = state.connections.filter(o => o.in.parentId !== id && o.out.parentId !== id)
       state.items = state.items.filter(o => o.id !== id)
     },
     setItem: (state, { id, key, value }) => {
@@ -57,7 +58,7 @@ export default {
       state.items.find(o => o.id === parentId).inputs.find(o => o.id === id).value = value
     },
     setOutputs: (state, { parentId, id, value }) => {
-      state.items.find(o => o.id === parentId).inputs.find(o => o.id === id).value = value
+      state.items.find(o => o.id === parentId).outputs.find(o => o.id === id).value = value
     },
     addConnection: (state, item) => {
       // delete possible in-connection first
@@ -74,13 +75,13 @@ export default {
         {
           const i = document.querySelector('#k' + connection.in.id)
           const rect = i ? i.getBoundingClientRect() : document.querySelector('#k' + connection.in.parentId).getBoundingClientRect()
-          connection.in.x = (rect.left + rect.right) / 2 + window.scrollX
+          connection.in.x = rect.left + window.scrollX
           connection.in.y = (rect.top + rect.bottom) / 2 + window.scrollY
         }
         {
           const o = document.querySelector('#k' + connection.out.id)
           const rect = o ? o.getBoundingClientRect() : document.querySelector('#k' + connection.out.parentId).getBoundingClientRect()
-          connection.out.x = (rect.left + rect.right) / 2 + window.scrollX
+          connection.out.x = rect.right + window.scrollX
           connection.out.y = (rect.top + rect.bottom) / 2 + window.scrollY
         }
       }
@@ -103,8 +104,8 @@ export default {
     delConnection: (state, { parentId, id }) => {
       state.connections = state.connections.filter(o => o.in.parentId === parentId && o.in.id === id)
     },
-    setConnection: (state, { parentId, value }) => {
-      state.connections.find(o => o.parentId === parentId).data = value
+    setConnectionWithOutId: (state, { id, value }) => {
+      state.connections.find(o => o.out.id === id).data = value
     }
   },
   actions: {
@@ -124,11 +125,11 @@ export default {
           { type: 'image', color: 'color', label: 'Color', value: null }
         ],
         outputs: [
-          { type: 'image', color: 'color', label: 'Color' },
-          { type: 'image', color: 'red', label: 'Red' },
-          { type: 'image', color: 'green', label: 'Green' },
-          { type: 'image', color: 'blue', label: 'Blue' },
-          { type: 'image', color: 'alpha', label: 'Alpha' }
+          { type: 'image', color: 'color', label: 'Color', key: 'c' },
+          { type: 'image', color: 'red', label: 'Red', key: 'r' },
+          { type: 'image', color: 'green', label: 'Green', key: 'g' },
+          { type: 'image', color: 'blue', label: 'Blue', key: 'b' },
+          { type: 'image', color: 'alpha', label: 'Alpha', key: 'a' }
         ]
       },
       {
@@ -156,7 +157,7 @@ export default {
           { type: 'integer', color: 'integer', label: 'Height', value: null }
         ],
         outputs: [
-          { type: 'image', color: 'color', label: 'Color' }
+          { type: 'image', color: 'color', label: 'Color', key: 'c' }
         ]
       }
     ],
