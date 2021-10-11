@@ -15,7 +15,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 export default defineComponent({
   name: 'Out',
   props: {
@@ -79,12 +79,6 @@ export default defineComponent({
           }
         }
       }
-    }
-  },
-  computed: {
-    ...mapGetters('globals', ['outConnectionWithId']),
-    hasNoConnection () {
-      return this.outConnectionWithId(`${this.data.id}-${this.data.name}`)
     }
   },
   methods: {

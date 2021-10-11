@@ -19,14 +19,14 @@ export default {
       }
     },
     allOutConnectionWithItemId: state => parentId => state.connections.filter(o => o.out.parentId === parentId),
-    outConnectionWithId: state => id => state.connections.find(o => o.out.id === id),
-    inConnectionWithId: state => id => state.connections.find(o => o.in.id === id)
+    connectionsWithOutId: state => id => state.connections.filter(o => o.out.id === id),
+    connectionsWithInId: state => id => state.connections.filter(o => o.in.id === id)
   },
   mutations: {
     addItem: (state, itemType) => {
       itemType = JSON.parse(JSON.stringify(itemType))
       const item = JSON.parse(JSON.stringify(state.itemDef))
-      item.id = uid()
+      item.id = 'item-' + uid()
       // copy item type defs into item
       item.label = itemType.label
       item.data = itemType.data
@@ -34,12 +34,12 @@ export default {
       item.color = itemType.color
       item.inputs = itemType.inputs.map((o, i) => {
         o.parentId = item.id
-        o.id = uid()
+        o.id = 'in-' + uid()
         return o
       })
       item.outputs = itemType.outputs.map((o, i) => {
         o.parentId = item.id
-        o.id = uid()
+        o.id = 'out-' + uid()
         return o
       })
       state.items.push(item)
@@ -62,7 +62,7 @@ export default {
     },
     addConnection: (state, item) => {
       // delete possible in-connection first
-      state.connections = state.connections.filter(o => !(o.in.parentId === item.in.parentId && o.in.id === item.in.id))
+      state.connections = state.connections.filter(o => o.in.id !== item.in.id)
       item.id = uid()
       item.in.x = null
       item.in.y = null
@@ -101,8 +101,8 @@ export default {
     resetConnectionDrag: (state) => {
       state.connectionDrag = null
     },
-    delConnection: (state, { id }) => {
-      state.connections = state.connections.filter(o => o.in.id === id)
+    delConnection: (state, id) => {
+      state.connections = state.connections.filter(o => o.in.id !== id)
     },
     setConnectionWithOutId: (state, { id, value }) => {
       state.connections.find(o => o.out.id === id).data = value
@@ -146,6 +146,21 @@ export default {
       },
       {
         id: 3,
+        label: 'Image HSL',
+        color: '#9BD',
+        component: 'ImageHSL',
+        data: { image: { data: null, label: null } },
+        inputs: [
+          { type: 'image', color: 'color', label: 'Color', value: null }
+        ],
+        outputs: [
+          { type: 'image', color: 'color', label: 'Hue', key: 'h' },
+          { type: 'image', color: 'alpha', label: 'Satuarion', key: 's' },
+          { type: 'image', color: 'alpha', label: 'Lightness', key: 'l' }
+        ]
+      },
+      {
+        id: 4,
         label: 'Image Output',
         color: '#9BD',
         component: 'ImageOutput',
@@ -156,7 +171,7 @@ export default {
         outputs: []
       },
       {
-        id: 4,
+        id: 5,
         label: 'Image Resize',
         color: '#9BD',
         component: 'ImageResize',

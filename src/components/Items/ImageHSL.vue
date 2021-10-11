@@ -6,14 +6,16 @@
 import { defineComponent } from 'vue'
 import { mapGetters, mapMutations } from 'vuex'
 export default defineComponent({
-  name: 'ImageColor',
+  name: 'ImageHSL',
   props: {
     data: Object
   },
   data () {
     return {
       channels: {
-        c: { r: true, g: true, b: true, a: true }
+        h: { h: true, s: false, l: false },
+        s: { h: false, s: true, l: false },
+        l: { h: false, s: false, l: true }
       }
     }
   },
@@ -34,7 +36,7 @@ export default defineComponent({
             const connections = this.connectionsWithOutId(output.id)
             if (connections.length > 0) {
               if (input.value && input.value.data) {
-                this.$utils.getRGBAChannel(input.value.data, value => {
+                this.$utils.getHSLChannel(input.value.data, value => {
                   for (const conn of connections) {
                     this.setInputs({ parentId: conn.in.parentId, id: conn.in.id, value: { data: value, label: input.value.label } })
                   }

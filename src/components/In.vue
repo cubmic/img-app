@@ -1,7 +1,7 @@
 <template>
   <div class="col">
     <div class="row q-gutter-xs items-center">
-      <template v-if="inConnectionWithId(data.id)">
+      <template v-if="connectionsWithInId(data.id).length > 0">
         <div class="dot-bg">
           <div class="dot" :id="'k' + data.id" v-drop v-drag="dragDefs" ref="drag" style="cursor:move;" :class="`only-allow-out-${data.type} dot-${data.color}`" />
         </div>
@@ -50,7 +50,7 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapGetters('globals', ['inConnectionWithId']),
+    ...mapGetters('globals', ['connectionsWithInId']),
     value: {
       get () { return this.data.value },
       set (newVal) {
