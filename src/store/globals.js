@@ -101,8 +101,8 @@ export default {
     resetConnectionDrag: (state) => {
       state.connectionDrag = null
     },
-    delConnection: (state, { parentId, id }) => {
-      state.connections = state.connections.filter(o => o.in.parentId === parentId && o.in.id === id)
+    delConnection: (state, { id }) => {
+      state.connections = state.connections.filter(o => o.in.id === id)
     },
     setConnectionWithOutId: (state, { id, value }) => {
       state.connections.find(o => o.out.id === id).data = value

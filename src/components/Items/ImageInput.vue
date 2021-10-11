@@ -55,14 +55,12 @@ export default defineComponent({
   watch: {
     'data.inputs': {
       handler () {
-        console.log('update-inputs')
         this.updateChannels()
       },
       deep: true,
       immediate: true
     },
     allOutConnections () {
-      console.log('update-connections')
       this.updateChannels()
     }
   }

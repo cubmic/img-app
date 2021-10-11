@@ -10,31 +10,23 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapGetters, mapMutations } from 'vuex'
 
 export default defineComponent({
   name: 'ImageOutput',
   props: {
-    item: Object
+    data: Object
   },
   data () {
     return {
-      alpha: false,
-      inputs: [
-        { type: 'Image', color: 'Color', label: 'Color', id: this.item.id }
-      ],
-      outputs: []
+      alpha: false
     }
   },
   computed: {
-    ...mapGetters('globals', ['inConnectionWithId']),
     image () {
-      const exists = this.inConnectionWithId(`${this.item.id}-Image`)
-      return exists ? exists.data : null
+      return this.data.inputs.length > 0 ? this.data.inputs[0].value.data : null
     }
   },
   methods: {
-    ...mapMutations('globals', ['updateConnections']),
     imgLoaded () {
       this.$utils.imgHasAlpha(this.image, value => {
         this.alpha = value

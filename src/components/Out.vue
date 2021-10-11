@@ -88,7 +88,7 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapMutations('globals', ['addConnection', 'delConnection', 'updateConnections', 'updateConnectionDrag', 'resetConnectionDrag'])
+    ...mapMutations('globals', ['addConnection', 'updateConnections', 'updateConnectionDrag', 'resetConnectionDrag'])
   },
   mounted () {
     this.nr = this._.uid
@@ -105,11 +105,6 @@ export default defineComponent({
   border: 1px solid #000;
   transition: 0.5s box-shadow;
   cursor: move;
-}
-.dot div {
-  height: 100%;
-  pointer-events: none;
-  border-radius: 50%;
 }
 .dot-drag {
   box-shadow: 0 0 10px #000;

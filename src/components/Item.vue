@@ -39,7 +39,7 @@
       <!-- connectors -->
       <div class="row q-ma-xs">
         <div class="col-6">
-          <div class="column q-gutter-xs justify-start" @mousedown.stop>
+          <div class="column q-gutter-xs justify-start">
             <In v-for="item in data.inputs" :key="item.id" :data="item" />
           </div>
         </div>
