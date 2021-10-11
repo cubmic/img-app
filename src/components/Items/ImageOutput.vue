@@ -2,7 +2,7 @@
   <q-item class="q-pa-xs">
     <q-item-section>
       <div :class="{ 'bg-black': !alpha, 'img-checker-bg': alpha }" style="width:200px; height:200px">
-        <q-img :src="image" v-if="image" @load="imgLoaded()" style="height:200px" fit="scale-down" />
+        <q-img :src="image" v-if="image" style="height:200px" fit="scale-down" />
       </div>
     </q-item-section>
   </q-item>
@@ -21,16 +21,29 @@ export default defineComponent({
       alpha: false
     }
   },
-  computed: {
-    image () {
-      return this.data.inputs.length > 0 ? this.data.inputs[0].value.data : null
+  watch: {
+    image: {
+      handler (newVal) {
+        if (newVal) {
+          this.$utils.imgHasAlpha(newVal, value => {
+            this.alpha = value
+          })
+        } else {
+          this.alpha = false
+        }
+      },
+      immediate: true
     }
   },
-  methods: {
-    imgLoaded () {
-      this.$utils.imgHasAlpha(this.image, value => {
-        this.alpha = value
-      })
+  computed: {
+    image () {
+      for (const input of this.data.inputs) {
+        // color image
+        if (input.type === 'image' && input.value) {
+          return input.value.data
+        }
+      }
+      return null
     }
   }
 })

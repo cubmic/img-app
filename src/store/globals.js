@@ -112,20 +112,32 @@ export default {
   },
   state: {
     items: [],
-    itemDef: { name: 'New Item', x: 0, y: 0, expand: true },
+    itemDef: { x: 0, y: 0, expand: true },
 
     itemTypeDefs: [
       {
         id: 1,
-        label: 'Image Input',
+        label: 'Image Color',
         color: '#9BD',
-        component: 'ImageInput',
+        component: 'ImageColor',
         data: { image: { data: null, label: null } },
         inputs: [
           { type: 'image', color: 'color', label: 'Color', value: null }
         ],
         outputs: [
-          { type: 'image', color: 'color', label: 'Color', key: 'c' },
+          { type: 'image', color: 'color', label: 'Color', key: 'c' }
+        ]
+      },
+      {
+        id: 2,
+        label: 'Image RGBA',
+        color: '#9BD',
+        component: 'ImageRGBA',
+        data: { image: { data: null, label: null } },
+        inputs: [
+          { type: 'image', color: 'color', label: 'Color', value: null }
+        ],
+        outputs: [
           { type: 'image', color: 'red', label: 'Red', key: 'r' },
           { type: 'image', color: 'green', label: 'Green', key: 'g' },
           { type: 'image', color: 'blue', label: 'Blue', key: 'b' },
@@ -133,7 +145,7 @@ export default {
         ]
       },
       {
-        id: 2,
+        id: 3,
         label: 'Image Output',
         color: '#9BD',
         component: 'ImageOutput',
@@ -144,7 +156,7 @@ export default {
         outputs: []
       },
       {
-        id: 3,
+        id: 4,
         label: 'Image Resize',
         color: '#9BD',
         component: 'ImageResize',

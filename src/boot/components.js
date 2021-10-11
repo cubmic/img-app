@@ -12,7 +12,8 @@ import Out from 'src/components/Out.vue'
 import Connection from 'src/components/Connection.vue'
 
 import Item from 'src/components/Item.vue'
-import ImageInput from 'src/components/Items/ImageInput.vue'
+import ImageColor from 'src/components/Items/ImageColor.vue'
+import ImageRGBA from 'src/components/Items/ImageRGBA.vue'
 import ImageOutput from 'src/components/Items/ImageOutput.vue'
 import ImageResize from 'src/components/Items/ImageResize.vue'
 
@@ -29,7 +30,8 @@ export default boot(({ app }) => {
   app.component('Connection', Connection)
 
   app.component('Item', Item)
-  app.component('ImageInput', ImageInput)
+  app.component('ImageColor', ImageColor)
+  app.component('ImageRGBA', ImageRGBA)
   app.component('ImageOutput', ImageOutput)
   app.component('ImageResize', ImageResize)
 })

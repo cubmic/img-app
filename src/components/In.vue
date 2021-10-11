@@ -1,13 +1,20 @@
 <template>
   <div class="col">
     <div class="row q-gutter-xs items-center">
-      <div class="dot-bg">
-        <div class="dot" :id="'k' + data.id" v-drop v-drag="dragDefs" ref="drag" :class="`only-allow-out-${data.type} dot-${data.color}`" />
-      </div>
-      <div class="col" v-if="!inConnectionWithId(data.id)" @mousedown.stop>
-        <Form-image v-model="value" v-if="data.type === 'image'" />
-        <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" />
-      </div>
+      <template v-if="inConnectionWithId(data.id)">
+        <div class="dot-bg">
+          <div class="dot" :id="'k' + data.id" v-drop v-drag="dragDefs" ref="drag" style="cursor:move;" :class="`only-allow-out-${data.type} dot-${data.color}`" />
+        </div>
+      </template>
+      <template v-else>
+        <div class="dot-bg">
+          <div class="dot" :id="'k' + data.id" v-drop ref="drag" :class="`only-allow-out-${data.type} dot-${data.color}`" />
+        </div>
+        <div class="col" @mousedown.stop>
+          <Form-image v-model="value" v-if="data.type === 'image'" />
+          <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" />
+        </div>
+      </template>
     </div>
   </div>
 </template>
