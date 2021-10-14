@@ -55,7 +55,13 @@ export default {
       state.items.find(o => o.id === id).data[key] = value
     },
     setInputs: (state, { parentId, id, value }) => {
-      state.items.find(o => o.id === parentId).inputs.find(o => o.id === id).value = value
+      for (const key in state.items) {
+        const found = state.items[key].inputs.find(o => o.id === id)
+        if (found) {
+          found.value = value
+          break
+        }
+      }
     },
     setOutputs: (state, { parentId, id, value }) => {
       state.items.find(o => o.id === parentId).outputs.find(o => o.id === id).value = value
@@ -122,7 +128,7 @@ export default {
         component: 'ImageColor',
         data: { image: { data: null, label: null } },
         inputs: [
-          { type: 'image', color: 'color', label: 'Color', value: null }
+          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
         ],
         outputs: [
           { type: 'image', color: 'color', label: 'Color', key: 'c' }
@@ -135,7 +141,7 @@ export default {
         component: 'ImageRGBA',
         data: { image: { data: null, label: null } },
         inputs: [
-          { type: 'image', color: 'color', label: 'Color', value: null }
+          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
         ],
         outputs: [
           { type: 'image', color: 'red', label: 'Red', key: 'r' },
@@ -151,7 +157,7 @@ export default {
         component: 'ImageHSL',
         data: { image: { data: null, label: null } },
         inputs: [
-          { type: 'image', color: 'color', label: 'Color', value: null }
+          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
         ],
         outputs: [
           { type: 'image', color: 'color', label: 'Hue', key: 'h' },
@@ -166,7 +172,7 @@ export default {
         component: 'ImageOutput',
         data: { image: { data: null, label: null } },
         inputs: [
-          { type: 'image', color: 'color', label: 'Color', value: null }
+          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
         ],
         outputs: []
       },
@@ -177,11 +183,11 @@ export default {
         component: 'ImageResize',
         data: { image: { data: null, label: null } },
         inputs: [
-          { type: 'image', color: 'color', label: 'Color', value: null },
-          { type: 'integer', color: 'integer', label: 'Left', value: null },
-          { type: 'integer', color: 'integer', label: 'Top', value: null },
-          { type: 'integer', color: 'integer', label: 'Width', value: null },
-          { type: 'integer', color: 'integer', label: 'Height', value: null }
+          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null },
+          { type: 'integer', color: 'integer', label: 'Left', key: 'l', value: null },
+          { type: 'integer', color: 'integer', label: 'Top', key: 't', value: null },
+          { type: 'integer', color: 'integer', label: 'Width', key: 'w', value: null },
+          { type: 'integer', color: 'integer', label: 'Height', key: 'h', value: null }
         ],
         outputs: [
           { type: 'image', color: 'color', label: 'Color', key: 'c' }

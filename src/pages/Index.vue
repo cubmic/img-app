@@ -17,8 +17,8 @@
     </div>
     <!--
     <pre>{{ items }}</pre>
-    -->
     <pre>{{ connections }}</pre>
+    -->
   </div>
 </template>
 

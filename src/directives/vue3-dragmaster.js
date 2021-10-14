@@ -28,7 +28,7 @@ export const drag = {
         oldPos.x = event.clientX
         oldPos.y = event.clientY
         // start function on drag directive
-        if (binding.value.start) {
+        if (binding.value && binding.value.start) {
           binding.value.start(vm)
         }
       }
@@ -49,10 +49,19 @@ export const drag = {
         oldPos.y = event.clientY
         actualPos.x = obj.offsetLeft - deltaPos.x
         actualPos.y = obj.offsetTop - deltaPos.y
-        obj.style.left = actualPos.x + 'px'
-        obj.style.top = actualPos.y + 'px'
+        if (binding.value && binding.value.bounds) {
+          const bounds = typeof binding.value.bounds === 'function' ? binding.value.bounds() : binding.value.bounds
+          actualPos.x = Math.max(bounds.left, Math.min(bounds.right, actualPos.x))
+          actualPos.y = Math.max(bounds.top, Math.min(bounds.bottom, actualPos.y))
+        }
+        if (!(binding.value && binding.value.xLock)) {
+          obj.style.left = actualPos.x + 'px'
+        }
+        if (!(binding.value && binding.value.yLock)) {
+          obj.style.top = actualPos.y + 'px'
+        }
         // drag function on drag directive
-        if (binding.value.drag) {
+        if (binding.value && binding.value.drag) {
           binding.value.drag(actualPos)
         }
       }
@@ -91,7 +100,7 @@ export const drag = {
             const dropRect = otherVm.obj.getBoundingClientRect()
             if (rectOverlap(dragRect, dropRect)) {
               // drop function on drag directive
-              if (binding.value.drop) {
+              if (binding.value && binding.value.drop) {
                 binding.value.drop(otherVm.obj, otherVm.vm)
               }
               // drop function on drop directive
@@ -102,7 +111,7 @@ export const drag = {
           }
         }
         // end function on drag directive
-        if (binding.value.end) {
+        if (binding.value && binding.value.end) {
           binding.value.end(vm)
         }
       }

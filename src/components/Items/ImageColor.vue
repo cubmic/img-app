@@ -36,12 +36,12 @@ export default defineComponent({
               if (input.value && input.value.data) {
                 this.$utils.getRGBAChannel(input.value.data, value => {
                   for (const conn of connections) {
-                    this.setInputs({ parentId: conn.in.parentId, id: conn.in.id, value: { data: value, label: input.value.label } })
+                    this.setInputs({ id: conn.in.id, value: { data: value, label: input.value.label } })
                   }
                 }, this.channels[output.key])
               } else {
                 for (const conn of connections) {
-                  this.setInputs({ parentId: conn.in.parentId, id: conn.in.id, value: null })
+                  this.setInputs({ id: conn.in.id, value: null })
                 }
               }
             }

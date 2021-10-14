@@ -1,5 +1,6 @@
 <template>
   <q-input
+    :label="label"
     :modelValue="localValue"
     @update:modelValue="valueChanged"
     @keydown="keydown"
@@ -14,6 +15,7 @@ export default defineComponent({
   name: 'FormInput',
   props: {
     modelValue: [Number, String],
+    label: String,
     type: {
       type: String,
       default: 'text',

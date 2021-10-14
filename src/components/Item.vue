@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <component :is="data.component" :data="data" />
+      <component :is="data.component" :data="data" class="q-mb-md" />
 
       <!-- connectors -->
       <div class="row q-ma-xs">
@@ -99,7 +99,7 @@ export default defineComponent({
   .item {
     position: absolute;
     background: #CCC;
-    width: 360px;
+    width: 350px;
     z-index: 0;
     transition: 0.5s box-shadow;
   }

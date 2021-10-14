@@ -12,7 +12,7 @@
         </div>
         <div class="col" @mousedown.stop>
           <Form-image v-model="value" v-if="data.type === 'image'" />
-          <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" />
+          <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" :label="data.label" />
         </div>
       </template>
     </div>
@@ -54,7 +54,7 @@ export default defineComponent({
     value: {
       get () { return this.data.value },
       set (newVal) {
-        this.setInputs({ parentId: this.data.parentId, id: this.data.id, value: newVal })
+        this.setInputs({ id: this.data.id, value: newVal })
       }
     }
   },
