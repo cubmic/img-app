@@ -101,13 +101,18 @@ export default boot(({ app }) => {
         h /= 6
       }
       return { h, s, l }
+    },
+    resizeImg (urlData, rect, callback) {
+      const img = new Image()
+      img.src = urlData
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      img.onload = () => {
+        canvas.width = rect.w
+        canvas.height = rect.h
+        ctx.drawImage(img, rect.l, rect.t, rect.w, rect.h, 0, 0, rect.w, rect.h)
+        callback(this.imgDataToUrl(ctx.getImageData(0, 0, rect.w, rect.h)))
+      }
     }
-    /*
-    resizeImg () {
-      canvas.width = dstWidth
-      canvas.height = dstHeight
-      ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, dstWidth, dstHeight)
-    }
-    */
   }
 })

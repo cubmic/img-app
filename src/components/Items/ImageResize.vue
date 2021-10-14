@@ -22,7 +22,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default defineComponent({
   name: 'ImageInput',
@@ -57,6 +57,9 @@ export default defineComponent({
           this.t = Math.round(this.top * this.originalHeight / this.prevHeight)
           this.w = Math.round(this.width * this.originalWidth / this.prevWidth)
           this.h = Math.round(this.height * this.originalHeight / this.prevHeight)
+        },
+        end: () => {
+          this.updateChannels()
         }
       },
       dragDefs2: {
@@ -74,6 +77,9 @@ export default defineComponent({
           // update inputs
           this.w = Math.round(this.width * this.originalWidth / this.prevWidth)
           this.h = Math.round(this.height * this.originalHeight / this.prevHeight)
+        },
+        end: () => {
+          this.updateChannels()
         }
       }
     }
@@ -86,8 +92,6 @@ export default defineComponent({
             this.originalWidth = data.width
             this.originalHeight = data.height
             // initial size
-            this.width = this.prevWidth
-            this.height = this.prevHeight
             if (this.l === null) {
               this.l = 0
             }
@@ -108,13 +112,21 @@ export default defineComponent({
             this.top = this.$refs.dot1.offsetTop
             this.width = this.$refs.dot2.offsetLeft - this.$refs.dot1.offsetLeft
             this.height = this.$refs.dot2.offsetTop - this.$refs.dot1.offsetTop
+            this.updateChannels()
           })
         }
       },
       immediate: true
+    },
+    allOutConnections () {
+      this.updateChannels()
     }
   },
   computed: {
+    ...mapGetters('globals', ['connectionsWithOutId', 'allOutConnectionWithItemId']),
+    allOutConnections () {
+      return this.allOutConnectionWithItemId(this.data.id)
+    },
     image () {
       for (const input of this.data.inputs) {
         // color image
@@ -165,7 +177,31 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapMutations('globals', ['setInputs'])
+    ...mapMutations('globals', ['setInputs']),
+    updateChannels () {
+      for (const input of this.data.inputs) {
+        // color image
+        if (input.type === 'image') {
+          // all outputs
+          for (const output of this.data.outputs) {
+            const connections = this.connectionsWithOutId(output.id)
+            if (connections.length > 0) {
+              if (input.value && input.value.data) {
+                this.$utils.resizeImg(input.value.data, { l: this.l, t: this.t, w: this.w, h: this.h }, value => {
+                  for (const conn of connections) {
+                    this.setInputs({ id: conn.in.id, value: { data: value, label: input.value.label } })
+                  }
+                })
+              } else {
+                for (const conn of connections) {
+                  this.setInputs({ id: conn.in.id, value: null })
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 })
 </script>
