@@ -1,12 +1,94 @@
 import { uid } from 'quasar'
 
+const itemTypeDefs = [
+  {
+    id: 1,
+    label: 'Image Color',
+    color: '#9BD',
+    component: 'ImageColor',
+    inputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
+    ],
+    outputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'c' }
+    ]
+  },
+  {
+    id: 2,
+    label: 'Image RGBA',
+    color: '#9BD',
+    component: 'ImageRGBA',
+    inputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
+    ],
+    outputs: [
+      { type: 'image', color: 'red', label: 'Red', key: 'r' },
+      { type: 'image', color: 'green', label: 'Green', key: 'g' },
+      { type: 'image', color: 'blue', label: 'Blue', key: 'b' },
+      { type: 'image', color: 'alpha', label: 'Alpha', key: 'a' }
+    ]
+  },
+  {
+    id: 3,
+    label: 'Image HSL',
+    color: '#9BD',
+    component: 'ImageHSL',
+    inputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
+    ],
+    outputs: [
+      { type: 'image', color: 'color', label: 'Hue', key: 'h' },
+      { type: 'image', color: 'alpha', label: 'Satuarion', key: 's' },
+      { type: 'image', color: 'alpha', label: 'Lightness', key: 'l' }
+    ]
+  },
+  {
+    id: 4,
+    label: 'Image Output',
+    color: '#9BD',
+    component: 'ImageOutput',
+    inputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
+    ],
+    outputs: []
+  },
+  {
+    id: 5,
+    label: 'Image Resize',
+    color: '#9BD',
+    component: 'ImageResize',
+    inputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null },
+      { type: 'integer', color: 'integer', label: 'Left', key: 'l', value: null },
+      { type: 'integer', color: 'integer', label: 'Top', key: 't', value: null },
+      { type: 'integer', color: 'integer', label: 'Width', key: 'w', value: null },
+      { type: 'integer', color: 'integer', label: 'Height', key: 'h', value: null }
+    ],
+    outputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'c' }
+    ]
+  },
+  {
+    id: 6,
+    label: 'Image Gradient',
+    color: '#9BD',
+    component: 'ImageGradient',
+    inputs: [
+      { type: 'image', color: 'alpha', label: 'Lightness', key: 'l', value: null }
+    ],
+    outputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'c' }
+    ]
+  }
+]
+
 export default {
   namespaced: true,
   getters: {
     items: state => state.items,
 
     itemTypes: state => state.itemTypes,
-    ITEM_TYPE_DEFS: state => state.itemTypeDefs,
+    ITEM_TYPE_DEFS: state => itemTypeDefs,
 
     connections: state => state.connections,
     connectionDrag: state => state.connectionDrag,
@@ -119,82 +201,6 @@ export default {
   state: {
     items: [],
     itemDef: { x: 0, y: 0, expand: true },
-
-    itemTypeDefs: [
-      {
-        id: 1,
-        label: 'Image Color',
-        color: '#9BD',
-        component: 'ImageColor',
-        data: { image: { data: null, label: null } },
-        inputs: [
-          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
-        ],
-        outputs: [
-          { type: 'image', color: 'color', label: 'Color', key: 'c' }
-        ]
-      },
-      {
-        id: 2,
-        label: 'Image RGBA',
-        color: '#9BD',
-        component: 'ImageRGBA',
-        data: { image: { data: null, label: null } },
-        inputs: [
-          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
-        ],
-        outputs: [
-          { type: 'image', color: 'red', label: 'Red', key: 'r' },
-          { type: 'image', color: 'green', label: 'Green', key: 'g' },
-          { type: 'image', color: 'blue', label: 'Blue', key: 'b' },
-          { type: 'image', color: 'alpha', label: 'Alpha', key: 'a' }
-        ]
-      },
-      {
-        id: 3,
-        label: 'Image HSL',
-        color: '#9BD',
-        component: 'ImageHSL',
-        data: { image: { data: null, label: null } },
-        inputs: [
-          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
-        ],
-        outputs: [
-          { type: 'image', color: 'color', label: 'Hue', key: 'h' },
-          { type: 'image', color: 'alpha', label: 'Satuarion', key: 's' },
-          { type: 'image', color: 'alpha', label: 'Lightness', key: 'l' }
-        ]
-      },
-      {
-        id: 4,
-        label: 'Image Output',
-        color: '#9BD',
-        component: 'ImageOutput',
-        data: { image: { data: null, label: null } },
-        inputs: [
-          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
-        ],
-        outputs: []
-      },
-      {
-        id: 5,
-        label: 'Image Resize',
-        color: '#9BD',
-        component: 'ImageResize',
-        data: { image: { data: null, label: null } },
-        inputs: [
-          { type: 'image', color: 'color', label: 'Color', key: 'c', value: null },
-          { type: 'integer', color: 'integer', label: 'Left', key: 'l', value: null },
-          { type: 'integer', color: 'integer', label: 'Top', key: 't', value: null },
-          { type: 'integer', color: 'integer', label: 'Width', key: 'w', value: null },
-          { type: 'integer', color: 'integer', label: 'Height', key: 'h', value: null }
-        ],
-        outputs: [
-          { type: 'image', color: 'color', label: 'Color', key: 'c' }
-        ]
-      }
-    ],
-
     connections: [],
     connectionDrag: null
   }
