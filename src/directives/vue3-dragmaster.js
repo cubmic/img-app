@@ -8,6 +8,12 @@ const removeFromArray = function (array, value) {
   return array
 }
 
+const distance = function (pos1, pos2) {
+  const x = pos1.x - pos2.x
+  const y = pos1.y - pos2.y
+  return Math.sqrt(x * x + y * y)
+}
+
 export const drag = {
   created (el, binding) {
     const vm = binding.instance
@@ -113,6 +119,10 @@ export const drag = {
         // end function on drag directive
         if (binding.value && binding.value.end) {
           binding.value.end(vm)
+        }
+        // click if max 2 pixel moved
+        if (binding.value && binding.value.click && distance(startPos, { x: obj.offsetLeft, y: obj.offsetTop }) < 3) {
+          binding.value.click()
         }
       }
       obj = null

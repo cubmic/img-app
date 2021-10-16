@@ -134,6 +134,52 @@ export default boot(({ app }) => {
         ctx.drawImage(img, rect.l, rect.t, rect.w, rect.h, 0, 0, rect.w, rect.h)
         callback(this.imgDataToUrl(ctx.getImageData(0, 0, rect.w, rect.h)))
       }
+    },
+    lerpColor (a, b, amount) {
+      const ah = parseInt(a.replace(/#/g, ''), 16),
+        ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
+        bh = parseInt(b.replace(/#/g, ''), 16),
+        br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
+        rr = ar + amount * (br - ar),
+        rg = ag + amount * (bg - ag),
+        rb = ab + amount * (bb - ab)
+      return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0).toString(16).slice(1)
+    },
+    luminance (r, g, b) {
+      const a = [r, g, b].map(function (v) {
+        v /= 255
+        return v <= 0.03928
+          ? v / 12.92
+          : Math.pow((v + 0.055) / 1.055, 2.4)
+      })
+      return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722
+    },
+    contrast (rgb1, rgb2) {
+      // https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-procedure
+      const lum1 = this.luminance(rgb1.r, rgb1.g, rgb1.b)
+      const lum2 = this.luminance(rgb2.r, rgb2.g, rgb2.b)
+      const brightest = Math.max(lum1, lum2)
+      const darkest = Math.min(lum1, lum2)
+      return (brightest + 0.05) / (darkest + 0.05)
+    },
+    contrastColor (hexString) {
+      const rgb = this.hexToRgb(hexString)
+      return this.contrast(rgb, { r: 255, g: 255, b: 255 }) < 2 ? '#000' : '#fff'
+    },
+    hexToRgb (hex) {
+      const rgb = hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => '#' + r + r + g + g + b + b)
+        .substring(1).match(/.{2}/g)
+        .map(x => parseInt(x, 16))
+      return { r: rgb[0], g: rgb[1], b: rgb[2] }
+    },
+    rgbTohex ({ r, g, b }) {
+      r = Math.round(r)
+      g = Math.round(g)
+      b = Math.round(b)
+      r = Math.min(r, 255)
+      g = Math.min(g, 255)
+      b = Math.min(b, 255)
+      return '#' + [r, g, b].map(c => c.toString(16).padStart(2, '0')).join('')
     }
   }
 })
