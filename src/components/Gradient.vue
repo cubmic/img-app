@@ -13,14 +13,13 @@
         <div class="line" :style="`background: ${$utils.contrastColor(item.color)}`" />
       </div>
     </div>
-    {{ modelValue }}
     <!-- color picker -->
-    <q-popup-proxy :modelValue="selectedItem !== null" v-if="selectedItem">
+    <q-popup-proxy v-model="dialogOpen" v-if="selectedItem">
       <q-card>
-        <q-card-section>
+        <q-card-section class="q-pa-xs">
           <q-color v-model="selectedItem.color" />
         </q-card-section>
-        <q-card-section>
+        <q-card-section class="q-pa-xs q-pt-none">
           <div class="row q-col-gutter-sm">
             <div>
               <q-btn label="cancel" @click="colorCancel()" />
@@ -95,6 +94,16 @@ export default defineComponent({
     gradient () {
       const colors = this.modelValue.map(o => `${o.color} ${o.percent}%`).join(',')
       return `background: linear-gradient(90deg, ${colors})`
+    },
+    dialogOpen: {
+      get () {
+        return this.selectedItem !== null
+      },
+      set (newVal) {
+        if (!newVal) {
+          this.selectedItem = null
+        }
+      }
     }
   },
   methods: {
