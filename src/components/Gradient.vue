@@ -6,13 +6,35 @@
         :key="item.id"
         class="dot"
         :ref="`dot-${item.id}`"
-        :style="`background:${item.color}; border: 1px solid ${$utils.contrastColor(item.color)}`"
+        :style="`left:${this.percentToPos(item.percent)}px; background:${item.color}; border: 1px solid ${$utils.contrastColor(item.color)}`"
         v-drag="dragDefs(item)"
         @click.stop
       >
         <div class="line" :style="`background: ${$utils.contrastColor(item.color)}`" />
       </div>
     </div>
+    {{ modelValue }}
+    <!-- color picker -->
+    <q-popup-proxy :modelValue="selectedItem !== null" v-if="selectedItem">
+      <q-card>
+        <q-card-section>
+          <q-color v-model="selectedItem.color" />
+        </q-card-section>
+        <q-card-section>
+          <div class="row q-col-gutter-sm">
+            <div>
+              <q-btn label="cancel" @click="colorCancel()" />
+            </div>
+            <div>
+              <q-btn label="change" @click="colorChange()" color="primary" />
+            </div>
+            <div>
+              <q-btn label="delete" @click="colorDelete()" color="negative" />
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-popup-proxy>
   </div>
 </template>
 
@@ -28,6 +50,9 @@ export default defineComponent({
   },
   data () {
     return {
+      drag: false,
+      oldColor: null,
+      selectedItem: null,
       width: 0,
       dragDefs: item => {
         return {
@@ -47,13 +72,20 @@ export default defineComponent({
               right: right
             }
           },
+          start: () => {
+            this.drag = true
+          },
           drag: (pos) => {
             const array = [...this.modelValue]
-            array.find(o => o.id === item.id).percent = this.posToPercent(pos.x)
+            array.find(o => o.id === item.id).percent = parseFloat(this.posToPercent(pos.x).toFixed(2))
             this.$emit('update:modelValue', array)
           },
+          end: () => {
+            this.drag = false
+          },
           click: () => {
-            console.log('click')
+            this.oldColor = item.color
+            this.selectedItem = item
           }
         }
       }
@@ -73,22 +105,30 @@ export default defineComponent({
       return percent * this.width / 100 - 10
     },
     addDot (event) {
-      const array = [...this.modelValue]
-      const nextId = Math.max(0, ...array.map(o => o.id)) + 1
-      const percent = this.posToPercent(event.layerX - 10)
-      array.push({ id: nextId, color: '#000', percent: percent })
-      array.sort((a, b) => a.percent - b.percent)
+      if (!this.drag) {
+        const array = [...this.modelValue]
+        const nextId = Math.max(0, ...array.map(o => o.id)) + 1
+        const percent = this.posToPercent(event.layerX - 10)
+        array.push({ id: nextId, color: '#000', percent: percent })
+        array.sort((a, b) => a.percent - b.percent)
+        this.$emit('update:modelValue', array)
+      }
+    },
+    colorCancel () {
+      this.selectedItem.color = this.oldColor
+      this.selectedItem = null
+    },
+    colorChange () {
+      this.selectedItem = null
+    },
+    colorDelete () {
+      const array = this.modelValue.filter(o => o.id !== this.selectedItem.id)
       this.$emit('update:modelValue', array)
-      setTimeout(() => {
-        this.$refs[`dot-${nextId}`].style.left = this.percentToPos(percent) + 'px'
-      }, 0)
+      this.selectedItem = null
     }
   },
   mounted () {
     this.width = this.$refs.gradient.getBoundingClientRect().width
-    this.modelValue.forEach(o => {
-      this.$refs[`dot-${o.id}`].style.left = this.percentToPos(o.percent) + 'px'
-    })
   }
 })
 </script>
