@@ -74,7 +74,8 @@ const itemTypeDefs = [
     color: '#9BD',
     component: 'ImageGradient',
     inputs: [
-      { type: 'image', color: 'alpha', label: 'Lightness', key: 'l', value: null }
+      { type: 'image', color: 'alpha', label: 'Lightness', key: 'l', value: null },
+      { type: 'array', color: 'array', label: 'Gradient', key: 'g', value: [{ id: 1, color: '#000000ff', percent: 0 }, { id: 2, color: '#00000000', percent: 100 }] }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'c' }

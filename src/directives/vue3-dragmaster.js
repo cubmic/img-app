@@ -21,6 +21,7 @@ export const drag = {
     const oldPos = { x: null, y: null }
     const actualPos = { x: null, y: null }
     const startPos = { x: null, y: null }
+    const startMousePos = { x: null, y: null }
 
     // start drag event
     function startDrag (event) {
@@ -33,6 +34,8 @@ export const drag = {
         startPos.y = obj.offsetTop
         oldPos.x = event.clientX
         oldPos.y = event.clientY
+        startMousePos.x = event.pageX
+        startMousePos.y = event.pageY
         // start function on drag directive
         if (binding.value && binding.value.start) {
           binding.value.start(vm)
@@ -113,16 +116,19 @@ export const drag = {
               if (otherVm.drop) {
                 otherVm.drop(obj, vm)
               }
+              break
             }
           }
         }
+
         // end function on drag directive
         if (binding.value && binding.value.end) {
-          binding.value.end(vm)
-        }
-        // click if max 2 pixel moved
-        if (binding.value && binding.value.click && distance(startPos, { x: obj.offsetLeft, y: obj.offsetTop }) < 3) {
-          binding.value.click()
+          const moveDelta = {
+            x: event.pageX - startMousePos.x,
+            y: event.pageY - startMousePos.y
+          }
+          const moveDistance = distance(startMousePos, { x: event.pageX, y: event.pageY })
+          binding.value.end(vm, moveDelta, moveDistance)
         }
       }
       obj = null

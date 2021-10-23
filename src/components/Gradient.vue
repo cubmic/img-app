@@ -1,16 +1,18 @@
 <template>
   <div class="q-ma-sm q-mb-xl">
-    <div class="gradient" :style="gradient" ref="gradient" @click="addDot">
-      <div
-        v-for="item in modelValue"
-        :key="item.id"
-        class="dot"
-        :ref="`dot-${item.id}`"
-        :style="`left:${this.percentToPos(item.percent)}px; background:${item.color}; border: 1px solid ${$utils.contrastColor(item.color)}`"
-        v-drag="dragDefs(item)"
-        @click.stop
-      >
-        <div class="line" :style="`background: ${$utils.contrastColor(item.color)}`" />
+    <div class="gradient img-checker-bg">
+      <div class="gradient" :style="gradient" ref="gradient" @click="addDot">
+        <div
+          v-for="item in modelValue"
+          :key="item.id"
+          class="dot"
+          :ref="`dot-${item.id}`"
+          :style="`left:${this.percentToPos(item.percent)}px; background:${item.color}; border: 1px solid ${$utils.contrastColor(item.color)}`"
+          v-drag="dragDefs(item)"
+          @click.stop
+        >
+          <div class="line" :style="`background: ${$utils.contrastColor(item.color)}`" />
+        </div>
       </div>
     </div>
     <!-- color picker -->
@@ -79,12 +81,18 @@ export default defineComponent({
             array.find(o => o.id === item.id).percent = parseFloat(this.posToPercent(pos.x).toFixed(2))
             this.$emit('update:modelValue', array)
           },
-          end: () => {
+          end: (vm, moveDelta, moveDistance) => {
+            // drag to bottom
+            if (moveDelta.y > 30 && this.modelValue.length > 1) {
+              let array = [...this.modelValue]
+              array = array.filter(o => o.id !== item.id)
+              this.$emit('update:modelValue', array)
+            // or on click
+            } else if (moveDistance < 3) {
+              this.oldColor = item.color
+              this.selectedItem = item
+            }
             this.drag = false
-          },
-          click: () => {
-            this.oldColor = item.color
-            this.selectedItem = item
           }
         }
       }
@@ -93,7 +101,7 @@ export default defineComponent({
   computed: {
     gradient () {
       const colors = this.modelValue.map(o => `${o.color} ${o.percent}%`).join(',')
-      return `background: linear-gradient(90deg, ${colors})`
+      return 'background:' + (this.modelValue.length > 1 ? `linear-gradient(90deg, ${colors})` : this.modelValue[0].color)
     },
     dialogOpen: {
       get () {
@@ -118,7 +126,7 @@ export default defineComponent({
         const array = [...this.modelValue]
         const nextId = Math.max(0, ...array.map(o => o.id)) + 1
         const percent = this.posToPercent(event.layerX - 10)
-        array.push({ id: nextId, color: '#000', percent: percent })
+        array.push({ id: nextId, color: '#00000000', percent: percent })
         array.sort((a, b) => a.percent - b.percent)
         this.$emit('update:modelValue', array)
       }
