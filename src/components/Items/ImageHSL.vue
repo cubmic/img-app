@@ -26,7 +26,7 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapMutations('globals', ['setData', 'setInputs']),
+    ...mapMutations('globals', ['setData', 'setInputWithId']),
     updateChannels () {
       for (const input of this.data.inputs) {
         // color image
@@ -38,12 +38,12 @@ export default defineComponent({
               if (input.value && input.value.data) {
                 this.$utils.getHSLChannel(input.value.data, value => {
                   for (const conn of connections) {
-                    this.setInputs({ id: conn.in.id, value: { data: value, label: input.value.label } })
+                    this.setInputWithId({ id: conn.in.id, value: { data: value, label: input.value.label } })
                   }
                 }, this.channels[output.key])
               } else {
                 for (const conn of connections) {
-                  this.setInputs({ id: conn.in.id, value: null })
+                  this.setInputWithId({ id: conn.in.id, value: null })
                 }
               }
             }

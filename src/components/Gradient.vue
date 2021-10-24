@@ -1,6 +1,6 @@
 <template>
   <div class="q-ma-sm q-mb-xl">
-    <div class="gradient img-checker-bg">
+    <div class="gradient q-color-picker__header-bg">
       <div class="gradient" :style="gradient" ref="gradient" @click="addDot">
         <div
           v-for="item in modelValue"
@@ -153,7 +153,6 @@ export default defineComponent({
 <style scoped>
 .gradient {
   position: relative;
-  border: 1px solid #000;
   height: 20px;
 }
 .dot {

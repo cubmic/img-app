@@ -137,7 +137,7 @@ export default {
     setData: (state, { id, key, value }) => {
       state.items.find(o => o.id === id).data[key] = value
     },
-    setInputs: (state, { parentId, id, value }) => {
+    setInputWithId: (state, { id, value }) => {
       for (const key in state.items) {
         const found = state.items[key].inputs.find(o => o.id === id)
         if (found) {

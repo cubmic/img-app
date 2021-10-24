@@ -142,7 +142,7 @@ export default defineComponent({
       },
       set (newVal) {
         const id = this.data.inputs.find(o => o.key === 'l').id
-        this.setInputs({ id: id, value: newVal })
+        this.setInputWithId({ id: id, value: newVal })
       }
     },
     t: {
@@ -151,7 +151,7 @@ export default defineComponent({
       },
       set (newVal) {
         const id = this.data.inputs.find(o => o.key === 't').id
-        this.setInputs({ id: id, value: newVal })
+        this.setInputWithId({ id: id, value: newVal })
       }
     },
     w: {
@@ -160,7 +160,7 @@ export default defineComponent({
       },
       set (newVal) {
         const id = this.data.inputs.find(o => o.key === 'w').id
-        this.setInputs({ id: id, value: newVal })
+        this.setInputWithId({ id: id, value: newVal })
       }
     },
     h: {
@@ -169,7 +169,7 @@ export default defineComponent({
       },
       set (newVal) {
         const id = this.data.inputs.find(o => o.key === 'h').id
-        this.setInputs({ id: id, value: newVal })
+        this.setInputWithId({ id: id, value: newVal })
       }
     },
     prevHeight () {
@@ -177,7 +177,7 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapMutations('globals', ['setInputs']),
+    ...mapMutations('globals', ['setInputWithId']),
     updateChannels () {
       for (const input of this.data.inputs) {
         // color image
@@ -189,12 +189,12 @@ export default defineComponent({
               if (input.value && input.value.data) {
                 this.$utils.resizeImg(input.value.data, { l: this.l, t: this.t, w: this.w, h: this.h }, value => {
                   for (const conn of connections) {
-                    this.setInputs({ id: conn.in.id, value: { data: value, label: input.value.label } })
+                    this.setInputWithId({ id: conn.in.id, value: { data: value, label: input.value.label } })
                   }
                 })
               } else {
                 for (const conn of connections) {
-                  this.setInputs({ id: conn.in.id, value: null })
+                  this.setInputWithId({ id: conn.in.id, value: null })
                 }
               }
             }

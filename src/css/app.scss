@@ -24,12 +24,6 @@
   background: #666;
 }
 
-.img-checker-bg {
-  font-size: 0px;
-  background-color: #FFF;
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
-  background-image: linear-gradient(45deg, #999 25%, transparent 25%, transparent 75%, #999 75%, #999),
-                    linear-gradient(45deg, #999 25%, transparent 25%, transparent 75%, #999 75%, #999);
-  box-shadow: 0 0 10px #000 inset;
+.q-color-picker__header-bg {
+  box-shadow: 0 0 10px rgba(0,0,0,0.7) inset;
 }

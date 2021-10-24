@@ -1,7 +1,7 @@
 <template>
   <q-item class="q-pa-xs">
     <q-item-section>
-      <div :class="{ 'bg-black': !alpha, 'img-checker-bg': alpha }" style="width:200px; height:200px">
+      <div :class="{ 'bg-black': !alpha, 'q-color-picker__header-bg': alpha }" style="width:200px; height:200px">
         <q-img :src="image" v-if="image" style="height:200px" fit="contain" />
       </div>
     </q-item-section>

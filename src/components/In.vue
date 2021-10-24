@@ -54,12 +54,12 @@ export default defineComponent({
     value: {
       get () { return this.data.value },
       set (newVal) {
-        this.setInputs({ id: this.data.id, value: newVal })
+        this.setInputWithId({ id: this.data.id, value: newVal })
       }
     }
   },
   methods: {
-    ...mapMutations('globals', ['setInputs', 'updateConnections', 'delConnection']),
+    ...mapMutations('globals', ['setInputWithId', 'updateConnections', 'delConnection']),
     getConnection () {
       return this.data
     }

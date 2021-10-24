@@ -18,12 +18,12 @@ export default defineComponent({
       },
       set (newVal) {
         const id = this.data.inputs.find(o => o.key === 'g').id
-        this.setInputs({ id: id, value: newVal })
+        this.setInputWithId({ id: id, value: newVal })
       }
     }
   },
   methods: {
-    ...mapMutations('globals', ['setInputs'])
+    ...mapMutations('globals', ['setInputWithId'])
   }
 })
 </script>
