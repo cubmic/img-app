@@ -3,7 +3,7 @@
     <div class="gradient q-color-picker__header-bg">
       <div class="gradient" :style="gradient" ref="gradient" @click="addDot">
         <div
-          v-for="item in modelValue"
+          v-for="item in localValue"
           :key="item.id"
           class="dot"
           :ref="`dot-${item.id}`"
@@ -49,8 +49,24 @@ export default defineComponent({
       default: () => []
     }
   },
+  watch: {
+    modelValue: {
+      handler (newVal) {
+        if (!this.drag) {
+          const array = []
+          for (const item of newVal) {
+            array.push({ id: item.id, color: item.color, percent: item.percent })
+          }
+          this.localValue = array
+        }
+      },
+      immediate: true,
+      deep: true
+    }
+  },
   data () {
     return {
+      localValue: [],
       drag: false,
       oldColor: null,
       selectedItem: null,
@@ -59,12 +75,12 @@ export default defineComponent({
         return {
           yLock: true,
           bounds: () => {
-            const index = this.modelValue.indexOf(item)
+            const index = this.localValue.indexOf(item)
             const left = index > 0
-              ? this.percentToPos(this.modelValue[index - 1].percent) + 20
+              ? this.percentToPos(this.localValue[index - 1].percent) + 20
               : -10
-            const right = index < this.modelValue.length - 1
-              ? this.percentToPos(this.modelValue[index + 1].percent) - 20
+            const right = index < this.localValue.length - 1
+              ? this.percentToPos(this.localValue[index + 1].percent) - 20
               : this.width - 10
             return {
               left: left,
@@ -77,16 +93,14 @@ export default defineComponent({
             this.drag = true
           },
           drag: (pos) => {
-            const array = [...this.modelValue]
-            array.find(o => o.id === item.id).percent = parseFloat(this.posToPercent(pos.x).toFixed(2))
-            this.$emit('update:modelValue', array)
+            this.localValue.find(o => o.id === item.id).percent = parseFloat(this.posToPercent(pos.x).toFixed(2))
+            this.$emit('update:modelValue', this.localValue)
           },
           end: (vm, moveDelta, moveDistance) => {
             // drag to bottom
-            if (moveDelta.y > 30 && this.modelValue.length > 1) {
-              let array = [...this.modelValue]
-              array = array.filter(o => o.id !== item.id)
-              this.$emit('update:modelValue', array)
+            if (moveDelta.y > 30 && this.localValue.length > 1) {
+              this.localValue = this.localValue.filter(o => o.id !== item.id)
+              this.$emit('update:modelValue', this.localValue)
             // or on click
             } else if (moveDistance < 3) {
               this.oldColor = item.color
@@ -100,8 +114,8 @@ export default defineComponent({
   },
   computed: {
     gradient () {
-      const colors = this.modelValue.map(o => `${o.color} ${o.percent}%`).join(',')
-      return 'background:' + (this.modelValue.length > 1 ? `linear-gradient(90deg, ${colors})` : this.modelValue[0].color)
+      const colors = this.localValue.map(o => `${o.color} ${o.percent}%`).join(',')
+      return 'background:' + (this.localValue.length > 1 ? `linear-gradient(90deg, ${colors})` : this.localValue[0] ? this.localValue[0].color : 'transparent')
     },
     dialogOpen: {
       get () {
@@ -123,12 +137,11 @@ export default defineComponent({
     },
     addDot (event) {
       if (!this.drag) {
-        const array = [...this.modelValue]
-        const nextId = Math.max(0, ...array.map(o => o.id)) + 1
+        const nextId = Math.max(0, ...this.localValue.map(o => o.id)) + 1
         const percent = this.posToPercent(event.layerX - 10)
-        array.push({ id: nextId, color: '#00000000', percent: percent })
-        array.sort((a, b) => a.percent - b.percent)
-        this.$emit('update:modelValue', array)
+        this.localValue.push({ id: nextId, color: '#00000000', percent: percent })
+        this.localValue.sort((a, b) => a.percent - b.percent)
+        this.$emit('update:modelValue', this.localValue)
       }
     },
     colorCancel () {
@@ -136,11 +149,12 @@ export default defineComponent({
       this.selectedItem = null
     },
     colorChange () {
+      this.$emit('update:modelValue', this.localValue)
       this.selectedItem = null
     },
     colorDelete () {
-      const array = this.modelValue.filter(o => o.id !== this.selectedItem.id)
-      this.$emit('update:modelValue', array)
+      this.localValue = this.modelValue.filter(o => o.id !== this.selectedItem.id)
+      this.$emit('update:modelValue', this.localValue)
       this.selectedItem = null
     }
   },

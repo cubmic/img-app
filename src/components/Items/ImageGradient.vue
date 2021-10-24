@@ -14,11 +14,16 @@ export default defineComponent({
   computed: {
     gradient: {
       get () {
-        return this.data.inputs.find(o => o.key === 'g').value
+        const array = []
+        for (const item of this.data.inputs.find(o => o.key === 'g').value) {
+          array.push({ id: item.id, color: item.color, percent: item.percent })
+        }
+        return array
       },
       set (newVal) {
+        const val = JSON.parse(JSON.stringify(newVal))
         const id = this.data.inputs.find(o => o.key === 'g').id
-        this.setInputWithId({ id: id, value: newVal })
+        this.setInputWithId({ id: id, value: val })
       }
     }
   },
