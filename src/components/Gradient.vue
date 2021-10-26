@@ -19,7 +19,7 @@
     <q-popup-proxy v-model="dialogOpen" v-if="selectedItem">
       <q-card>
         <q-card-section class="q-pa-xs">
-          <q-color v-model="selectedItem.color" />
+          <q-color :modelValue="selectedItem.color" @update:modelValue="colorUpdate" />
         </q-card-section>
         <q-card-section class="q-pa-xs q-pt-none">
           <div class="row q-col-gutter-sm">
@@ -75,22 +75,16 @@ export default defineComponent({
         return {
           yLock: true,
           bounds: () => {
-            const index = this.localValue.indexOf(item)
-            const left = index > 0
-              ? this.percentToPos(this.localValue[index - 1].percent) + 20
-              : -10
-            const right = index < this.localValue.length - 1
-              ? this.percentToPos(this.localValue[index + 1].percent) - 20
-              : this.width - 10
             return {
-              left: left,
+              left: -10,
               top: 0,
-              bottom: 50,
-              right: right
+              right: this.width - 10,
+              bottom: 50
             }
           },
           start: () => {
             this.drag = true
+            this.selectedItem = null
           },
           drag: (pos) => {
             this.localValue.find(o => o.id === item.id).percent = parseFloat(this.posToPercent(pos.x).toFixed(2))
@@ -144,12 +138,16 @@ export default defineComponent({
         this.$emit('update:modelValue', this.localValue)
       }
     },
+    colorUpdate (value) {
+      this.localValue.find(o => o.id === this.selectedItem.id).color = value
+      this.$emit('update:modelValue', this.localValue)
+    },
     colorCancel () {
       this.selectedItem.color = this.oldColor
+      this.$emit('update:modelValue', this.localValue)
       this.selectedItem = null
     },
     colorChange () {
-      this.$emit('update:modelValue', this.localValue)
       this.selectedItem = null
     },
     colorDelete () {
