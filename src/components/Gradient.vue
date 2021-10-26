@@ -88,6 +88,7 @@ export default defineComponent({
           },
           drag: (pos) => {
             this.localValue.find(o => o.id === item.id).percent = parseFloat(this.posToPercent(pos.x).toFixed(2))
+            this.localValue.sort((a, b) => a.percent - b.percent)
             this.$emit('update:modelValue', this.localValue)
           },
           end: (vm, moveDelta, moveDistance) => {
