@@ -53,9 +53,6 @@ export default defineComponent({
           this.top = Math.round(t * this.color.height / this.prevHeight)
           this.width = Math.round(w * this.color.width / this.prevWidth)
           this.height = Math.round(h * this.color.height / this.prevHeight)
-        },
-        end: () => {
-          this.updateColor()
         }
       },
       dragDefs2: {
@@ -72,9 +69,6 @@ export default defineComponent({
           const h = this.$refs.dot2.offsetTop - this.$refs.dot1.offsetTop
           this.width = Math.round(w * this.color.width / this.prevWidth)
           this.height = Math.round(h * this.color.height / this.prevHeight)
-        },
-        end: () => {
-          this.updateColor()
         }
       }
     }
@@ -88,19 +82,23 @@ export default defineComponent({
         this.height = newVal.height
         this.updateDots()
       }
-      this.updateColor()
+      this.updateResize()
     },
     left () {
       this.updateDots()
+      this.updateResize()
     },
     top () {
       this.updateDots()
+      this.updateResize()
     },
     width () {
       this.updateDots()
+      this.updateResize()
     },
     height () {
       this.updateDots()
+      this.updateResize()
     }
   },
   computed: {
@@ -121,7 +119,7 @@ export default defineComponent({
     }
   },
   methods: {
-    updateColor () {
+    updateResize () {
       this.$utils.resizeImg(this.color, { left: this.left, top: this.top, width: this.width, height: this.height }, image => {
         this.out.color(image)
       })
