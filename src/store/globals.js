@@ -54,9 +54,9 @@ const itemTypeDefs = [
   },
   {
     id: 5,
-    label: 'Image Resize',
+    label: 'Image Crop',
     color: '#9BD',
-    component: 'ImageResize',
+    component: 'ImageCrop',
     inputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color', value: null },
       { type: 'integer', color: 'integer', label: 'Left', key: 'left', value: null },
@@ -70,6 +70,20 @@ const itemTypeDefs = [
   },
   {
     id: 6,
+    label: 'Image Resize',
+    color: '#9BD',
+    component: 'ImageResize',
+    inputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null },
+      { type: 'integer', color: 'integer', label: 'Width', key: 'width', value: null },
+      { type: 'integer', color: 'integer', label: 'Height', key: 'height', value: null }
+    ],
+    outputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'color' }
+    ]
+  },
+  {
+    id: 7,
     label: 'Image Gradient',
     color: '#9BD',
     component: 'ImageGradient',

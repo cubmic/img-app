@@ -33,7 +33,8 @@ export default defineComponent({
             this.out[channel](image)
           }, this.channels[channel])
         }
-      }
+      },
+      immediate: true
     }
   }
 })

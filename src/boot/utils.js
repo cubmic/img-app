@@ -173,7 +173,7 @@ export default boot(({ app }) => {
       }
       return { r: r * 255, g: g * 255, b: b * 255 }
     },
-    resizeImg (image, rect, callback) {
+    cropImg (image, rect, callback) {
       if (!image) {
         callback(null)
         return
@@ -187,6 +187,23 @@ export default boot(({ app }) => {
         canvas.height = rect.height
         ctx.drawImage(img, rect.left, rect.top, rect.width, rect.height, 0, 0, rect.width, rect.height)
         const newImage = { data: this.imgDataToUrl(ctx.getImageData(0, 0, rect.width, rect.height)), label: image.label }
+        callback(newImage)
+      }
+    },
+    resizeImg (image, size, callback) {
+      if (!image) {
+        callback(null)
+        return
+      }
+      const img = new Image()
+      img.src = image.data
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      img.onload = () => {
+        canvas.width = size.width
+        canvas.height = size.height
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, size.width, size.height)
+        const newImage = { data: this.imgDataToUrl(ctx.getImageData(0, 0, size.width, size.height)), label: image.label }
         callback(newImage)
       }
     },

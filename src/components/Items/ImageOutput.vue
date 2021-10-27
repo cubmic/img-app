@@ -1,8 +1,10 @@
 <template>
   <q-item class="q-pa-xs">
     <q-item-section>
-      <div :class="{ 'bg-black': !alpha, 'q-color-picker__header-bg': alpha }" style="width:200px; height:200px">
-        <q-img :src="color.data" v-if="color" style="height:200px" fit="contain" />
+      <div class="row justify-center">
+        <div :class="{ 'bg-black': !alpha, 'q-color-picker__header-bg': alpha }" style="width:200px; height:200px">
+          <q-img :src="color.data" v-if="color" style="height:200px; image-rendering:pixelated;" fit="contain" />
+        </div>
       </div>
     </q-item-section>
   </q-item>
@@ -31,7 +33,8 @@ export default defineComponent({
         this.$utils.imgHasAlpha(newVal, value => {
           this.alpha = value
         })
-      }
+      },
+      immediate: true
     }
   }
 })

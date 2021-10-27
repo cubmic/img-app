@@ -14,23 +14,34 @@ export default defineComponent({
   props: {
     data: Object
   },
+  data () {
+    return {
+      lock: false
+    }
+  },
   watch: {
     gradient: {
-      handler (newVal) {
+      handler () {
         this.updateOutput()
-      }
+      },
+      immediate: true
     },
     lightness: {
-      handler (newVal) {
+      handler () {
         this.updateOutput()
-      }
+      },
+      immediate: true
     }
   },
   methods: {
     updateOutput () {
-      this.$utils.getImgGradient(this.lightness, image => {
-        this.out.color(image)
-      }, this.gradient)
+      if (!this.lock) {
+        this.lock = true
+        this.$utils.getImgGradient(this.lightness, image => {
+          this.out.color(image)
+          this.lock = false
+        }, this.gradient)
+      }
     }
   }
 })

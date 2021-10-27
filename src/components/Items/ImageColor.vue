@@ -18,7 +18,8 @@ export default defineComponent({
     color: {
       handler (newVal) {
         this.out.color(newVal)
-      }
+      },
+      immediate: true
     }
   }
 })
