@@ -2,6 +2,11 @@ import { boot } from 'quasar/wrappers'
 
 export default boot(({ app }) => {
   app.config.globalProperties.$utils = {
+    clamp: (a, min = 0, max = 1) => Math.min(max, Math.max(min, a)),
+    invlerp (x, y, a) {
+      return this.clamp((a - x) / (y - x))
+    },
+    lerp: (start, end, a) => (1 - a) * start + a * end,
     getRGBAChannel (image, callback, channel = { r: true, g: true, b: true, a: true }) {
       if (!image) {
         callback(null)
@@ -53,6 +58,32 @@ export default boot(({ app }) => {
             imageData.data[nr + 1] = v
             imageData.data[nr + 2] = v
             imageData.data[nr + 3] = 255
+          }
+        }
+        const newImage = { data: this.imgDataToUrl(imageData), label: image.label }
+        callback(newImage)
+      })
+    },
+    getImgGradient (image, callback, gradient) {
+      if (!image) {
+        callback(null)
+        return
+      }
+      this.urlToImgData(image.data, imageData => {
+        for (let nr = 0; nr < imageData.data.length; nr += 4) {
+          const lightness = this.rgbToHsl(imageData.data[nr + 0], imageData.data[nr + 1], imageData.data[nr + 2]).l * 100
+          for (let c = 0; c < gradient.length; c++) {
+            if (gradient[c].percent > lightness) {
+              const min = Math.max(0, c - 1)
+              const pos = this.invlerp(gradient[min].percent, gradient[c].percent, lightness)
+              const rgba1 = this.hexToRgba(gradient[min].color)
+              const rgba2 = this.hexToRgba(gradient[c].color)
+              imageData.data[nr + 0] = this.lerp(rgba1.r, rgba2.r, pos)
+              imageData.data[nr + 1] = this.lerp(rgba1.g, rgba2.g, pos)
+              imageData.data[nr + 2] = this.lerp(rgba1.b, rgba2.b, pos)
+              imageData.data[nr + 3] = this.lerp(rgba1.a, rgba2.a, pos)
+              break
+            }
           }
         }
         const newImage = { data: this.imgDataToUrl(imageData), label: image.label }
@@ -190,6 +221,10 @@ export default boot(({ app }) => {
         .substring(1).match(/.{2}/g)
         .map(x => parseInt(x, 16))
       return { r: rgb[0], g: rgb[1], b: rgb[2] }
+    },
+    hexToRgba (hex) {
+      const [r, g, b, a] = hex.match(/\w\w/g).map(x => parseInt(x, 16))
+      return { r, g, b, a }
     },
     rgbTohex ({ r, g, b }) {
       r = Math.round(r)

@@ -17,13 +17,20 @@ export default defineComponent({
   watch: {
     gradient: {
       handler (newVal) {
-        console.log('gradient', newVal)
+        this.updateOutput()
       }
     },
     lightness: {
       handler (newVal) {
-        console.log('lightness', newVal)
+        this.updateOutput()
       }
+    }
+  },
+  methods: {
+    updateOutput () {
+      this.$utils.getImgGradient(this.lightness, image => {
+        this.out.color(image)
+      }, this.gradient)
     }
   }
 })
