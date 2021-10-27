@@ -21,6 +21,8 @@ import ImageOutput from 'src/components/Items/ImageOutput.vue'
 import ImageResize from 'src/components/Items/ImageResize.vue'
 import ImageCrop from 'src/components/Items/ImageCrop.vue'
 
+import NumberInput from 'src/components/Items/NumberInput.vue'
+
 export default boot(({ app }) => {
   app.component('ButtonAdd', ButtonAdd)
   app.component('ButtonDel', ButtonDel)
@@ -42,4 +44,6 @@ export default boot(({ app }) => {
   app.component('ImageOutput', ImageOutput)
   app.component('ImageResize', ImageResize)
   app.component('ImageCrop', ImageCrop)
+
+  app.component('NumberInput', NumberInput)
 })

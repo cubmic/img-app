@@ -96,6 +96,18 @@ const itemTypeDefs = [
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
     ]
+  },
+  {
+    id: 8,
+    label: 'Number Input',
+    color: '#BD9',
+    component: 'NumberInput',
+    inputs: [
+      { type: 'integer', color: 'integer', label: 'Number', key: 'number', value: null }
+    ],
+    outputs: [
+      { type: 'integer', color: 'integer', label: 'Number', key: 'number' }
+    ]
   }
 ]
 
