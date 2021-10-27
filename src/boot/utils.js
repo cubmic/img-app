@@ -69,13 +69,18 @@ export default boot(({ app }) => {
         callback(null)
         return
       }
+      // copy last gradient color and append it
+      gradient = JSON.parse(JSON.stringify(gradient))
+      gradient.push(JSON.parse(JSON.stringify(gradient[gradient.length - 1])))
+      gradient[gradient.length - 1].percent = 100
+
       this.urlToImgData(image.data, imageData => {
         for (let nr = 0; nr < imageData.data.length; nr += 4) {
           const lightness = this.rgbToHsl(imageData.data[nr + 0], imageData.data[nr + 1], imageData.data[nr + 2]).l * 100
           for (let c = 0; c < gradient.length; c++) {
             if (gradient[c].percent > lightness) {
               const min = Math.max(0, c - 1)
-              const pos = this.invlerp(gradient[min].percent, gradient[c].percent, lightness)
+              const pos = this.invlerp(gradient[min].percent, gradient[c].percent, lightness) // get pos between two gradient colors
               const rgba1 = this.hexToRgba(gradient[min].color)
               const rgba2 = this.hexToRgba(gradient[c].color)
               imageData.data[nr + 0] = this.lerp(rgba1.r, rgba2.r, pos)

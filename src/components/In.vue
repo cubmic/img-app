@@ -4,6 +4,7 @@
       <template v-if="connectionsWithInId(data.id).length > 0">
         <div class="dot-bg">
           <div class="dot" :id="'k' + data.id" v-drop v-drag="dragDefs" ref="drag" style="cursor:move;" :class="`only-allow-out-${data.type} dot-${data.color}`" />
+          <span class="q-ml-lg">{{ data.label }}</span>
         </div>
       </template>
       <template v-else>
