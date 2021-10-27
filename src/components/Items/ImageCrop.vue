@@ -77,10 +77,10 @@ export default defineComponent({
       dragDefsBox: {
         bounds: () => {
           return {
-            left: 0,
-            top: 0,
-            right: this.prevWidth,
-            bottom: this.prevHeight
+            left: 10,
+            top: 10,
+            right: this.prevWidth - this.$refs.box.offsetWidth + 10,
+            bottom: this.prevHeight - this.$refs.box.offsetHeight + 10
           }
         },
         drag: () => {
