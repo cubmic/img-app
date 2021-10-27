@@ -30,8 +30,8 @@ export default defineComponent({
   methods: {
     imgChanged (file) {
       if (file) {
-        this.getBase64(file, data => {
-          this.$emit('update:modelValue', { data, label: file.name })
+        this.getBase64(file, image => {
+          this.$emit('update:modelValue', image)
         })
       } else {
         this.$emit('update:modelValue', null)
@@ -41,7 +41,12 @@ export default defineComponent({
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = function () {
-        resolve(reader.result)
+        const image = new Image()
+        image.src = reader.result
+        image.onload = function () {
+          const newImage = { data: reader.result, label: file.name, width: this.width, height: this.height }
+          resolve(newImage)
+        }
       }
       reader.onerror = function (error) {
         console.log('Error: ', error)

@@ -35,12 +35,6 @@ export default defineComponent({
   data () {
     return {
       prevWidth: 300,
-      l: 0,
-      t: 0,
-      w: 0,
-      h: 0,
-      originalWidth: 0,
-      originalHeight: 0,
       dragDefs1: {
         bounds: () => {
           return {
@@ -51,15 +45,14 @@ export default defineComponent({
           }
         },
         drag: () => {
-          this.l = this.$refs.dot1.offsetLeft
-          this.t = this.$refs.dot1.offsetTop
-          this.w = this.$refs.dot2.offsetLeft - this.$refs.dot1.offsetLeft
-          this.h = this.$refs.dot2.offsetTop - this.$refs.dot1.offsetTop
-          // update inputs
-          this.left = Math.round(this.l * this.originalWidth / this.prevWidth)
-          this.top = Math.round(this.t * this.originalHeight / this.prevHeight)
-          this.width = Math.round(this.w * this.originalWidth / this.prevWidth)
-          this.height = Math.round(this.h * this.originalHeight / this.prevHeight)
+          const l = this.$refs.dot1.offsetLeft
+          const t = this.$refs.dot1.offsetTop
+          const w = this.$refs.dot2.offsetLeft - this.$refs.dot1.offsetLeft
+          const h = this.$refs.dot2.offsetTop - this.$refs.dot1.offsetTop
+          this.left = Math.round(l * this.color.width / this.prevWidth)
+          this.top = Math.round(t * this.color.height / this.prevHeight)
+          this.width = Math.round(w * this.color.width / this.prevWidth)
+          this.height = Math.round(h * this.color.height / this.prevHeight)
         },
         end: () => {
           this.updateColor()
@@ -75,11 +68,10 @@ export default defineComponent({
           }
         },
         drag: () => {
-          this.w = this.$refs.dot2.offsetLeft - this.$refs.dot1.offsetLeft
-          this.h = this.$refs.dot2.offsetTop - this.$refs.dot1.offsetTop
-          // update inputs
-          this.width = Math.round(this.w * this.originalWidth / this.prevWidth)
-          this.height = Math.round(this.h * this.originalHeight / this.prevHeight)
+          const w = this.$refs.dot2.offsetLeft - this.$refs.dot1.offsetLeft
+          const h = this.$refs.dot2.offsetTop - this.$refs.dot1.offsetTop
+          this.width = Math.round(w * this.color.width / this.prevWidth)
+          this.height = Math.round(h * this.color.height / this.prevHeight)
         },
         end: () => {
           this.updateColor()
@@ -88,45 +80,44 @@ export default defineComponent({
     }
   },
   watch: {
-    color: {
-      handler (newVal) {
-        if (newVal) {
-          this.$utils.urlToImgData(newVal.data, data => {
-            this.originalWidth = data.width
-            this.originalHeight = data.height
-            // initial size
-            if (this.l === null) {
-              this.left = 0
-            }
-            if (this.t === null) {
-              this.top = 0
-            }
-            if (this.w === null) {
-              this.width = this.originalWidth
-            }
-            if (this.h === null) {
-              this.height = this.originalHeight
-            }
-            this.$refs.dot1.style.left = (this.left * this.prevWidth / this.originalWidth) + 'px'
-            this.$refs.dot1.style.top = (this.top * this.prevHeight / this.originalHeight) + 'px'
-            this.$refs.dot2.style.left = ((this.left + this.width) * this.prevWidth / this.originalWidth) + 'px'
-            this.$refs.dot2.style.top = ((this.top + this.height) * this.prevHeight / this.originalHeight) + 'px'
-            this.l = this.$refs.dot1.offsetLeft
-            this.t = this.$refs.dot1.offsetTop
-            this.w = this.$refs.dot2.offsetLeft - this.$refs.dot1.offsetLeft
-            this.h = this.$refs.dot2.offsetTop - this.$refs.dot1.offsetTop
-            this.updateColor()
-          })
-        } else {
-          this.out.color(null)
-        }
-      },
-      immediate: true
+    color (newVal) {
+      if (newVal) {
+        this.left = 0
+        this.top = 0
+        this.width = newVal.width
+        this.height = newVal.height
+        this.updateDots()
+      }
+      this.updateColor()
+    },
+    left () {
+      this.updateDots()
+    },
+    top () {
+      this.updateDots()
+    },
+    width () {
+      this.updateDots()
+    },
+    height () {
+      this.updateDots()
     }
   },
   computed: {
     prevHeight () {
-      return this.prevWidth / this.originalWidth * this.originalHeight
+      return this.prevWidth / this.color.width * this.color.height
+    },
+    l () {
+      return Math.round(this.left * this.prevWidth / this.color.width)
+    },
+    t () {
+      return Math.round(this.top * this.prevHeight / this.color.height)
+    },
+    w () {
+      return Math.round(this.width * this.prevWidth / this.color.width)
+    },
+    h () {
+      return Math.round(this.height * this.prevHeight / this.color.height)
     }
   },
   methods: {
@@ -134,6 +125,19 @@ export default defineComponent({
       this.$utils.resizeImg(this.color, { left: this.left, top: this.top, width: this.width, height: this.height }, image => {
         this.out.color(image)
       })
+    },
+    updateDots () {
+      if (this.$refs.dot1) {
+        this.$refs.dot1.style.left = this.l + 'px'
+        this.$refs.dot1.style.top = this.t + 'px'
+        this.$refs.dot2.style.left = (this.l + this.w) + 'px'
+        this.$refs.dot2.style.top = (this.t + this.h) + 'px'
+      }
+    }
+  },
+  mounted () {
+    if (this.color) {
+      this.updateDots()
     }
   }
 })
