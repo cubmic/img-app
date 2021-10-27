@@ -34,6 +34,7 @@ export default defineComponent({
   },
   data () {
     return {
+      lock: false,
       prevWidth: 300,
       dragDefs1: {
         bounds: () => {
@@ -120,9 +121,13 @@ export default defineComponent({
   },
   methods: {
     updateResize () {
-      this.$utils.resizeImg(this.color, { left: this.left, top: this.top, width: this.width, height: this.height }, image => {
-        this.out.color(image)
-      })
+      if (!this.lock) {
+        this.lock = true
+        this.$utils.resizeImg(this.color, { left: this.left, top: this.top, width: this.width, height: this.height }, image => {
+          this.out.color(image)
+          this.lock = false
+        })
+      }
     },
     updateDots () {
       if (this.$refs.dot1) {
