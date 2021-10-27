@@ -7,10 +7,10 @@ const itemTypeDefs = [
     color: '#9BD',
     component: 'ImageColor',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
+      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'c' }
+      { type: 'image', color: 'color', label: 'Color', key: 'color' }
     ]
   },
   {
@@ -19,13 +19,13 @@ const itemTypeDefs = [
     color: '#9BD',
     component: 'ImageRGBA',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
+      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
-      { type: 'image', color: 'red', label: 'Red', key: 'r' },
-      { type: 'image', color: 'green', label: 'Green', key: 'g' },
-      { type: 'image', color: 'blue', label: 'Blue', key: 'b' },
-      { type: 'image', color: 'alpha', label: 'Alpha', key: 'a' }
+      { type: 'image', color: 'red', label: 'Red', key: 'red' },
+      { type: 'image', color: 'green', label: 'Green', key: 'green' },
+      { type: 'image', color: 'blue', label: 'Blue', key: 'blue' },
+      { type: 'image', color: 'alpha', label: 'Alpha', key: 'alpha' }
     ]
   },
   {
@@ -34,12 +34,12 @@ const itemTypeDefs = [
     color: '#9BD',
     component: 'ImageHSL',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
+      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
-      { type: 'image', color: 'color', label: 'Hue', key: 'h' },
-      { type: 'image', color: 'alpha', label: 'Satuarion', key: 's' },
-      { type: 'image', color: 'alpha', label: 'Lightness', key: 'l' }
+      { type: 'image', color: 'color', label: 'Hue', key: 'hue' },
+      { type: 'image', color: 'alpha', label: 'Satuarion', key: 'saturation' },
+      { type: 'image', color: 'alpha', label: 'Lightness', key: 'lightness' }
     ]
   },
   {
@@ -48,7 +48,7 @@ const itemTypeDefs = [
     color: '#9BD',
     component: 'ImageOutput',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null }
+      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: []
   },
@@ -58,14 +58,14 @@ const itemTypeDefs = [
     color: '#9BD',
     component: 'ImageResize',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'c', value: null },
-      { type: 'integer', color: 'integer', label: 'Left', key: 'l', value: null },
-      { type: 'integer', color: 'integer', label: 'Top', key: 't', value: null },
-      { type: 'integer', color: 'integer', label: 'Width', key: 'w', value: null },
-      { type: 'integer', color: 'integer', label: 'Height', key: 'h', value: null }
+      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null },
+      { type: 'integer', color: 'integer', label: 'Left', key: 'left', value: null },
+      { type: 'integer', color: 'integer', label: 'Top', key: 'top', value: null },
+      { type: 'integer', color: 'integer', label: 'Width', key: 'width', value: null },
+      { type: 'integer', color: 'integer', label: 'Height', key: 'height', value: null }
     ],
     outputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'c' }
+      { type: 'image', color: 'color', label: 'Color', key: 'color' }
     ]
   },
   {
@@ -74,11 +74,11 @@ const itemTypeDefs = [
     color: '#9BD',
     component: 'ImageGradient',
     inputs: [
-      { type: 'image', color: 'alpha', label: 'Lightness', key: 'l', value: null },
-      { type: 'array', color: 'array', label: 'Gradient', key: 'g', value: [{ id: 1, color: '#000000ff', percent: 0 }, { id: 2, color: '#00000000', percent: 100 }] }
+      { type: 'image', color: 'alpha', label: 'Lightness', key: 'lightness', value: null },
+      { type: 'array', color: 'array', label: 'Gradient', key: 'gradient', value: [{ id: 1, color: '#000000ff', percent: 0 }, { id: 2, color: '#00000000', percent: 100 }] }
     ],
     outputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'c' }
+      { type: 'image', color: 'color', label: 'Color', key: 'color' }
     ]
   }
 ]

@@ -3,32 +3,28 @@
 </template>
 
 <script>
+import init from 'src/components/Items/ItemInit.js'
 import { defineComponent } from 'vue'
-import { mapMutations } from 'vuex'
 
 export default defineComponent({
   name: 'ImageGradient',
+  setup (props) {
+    return init.setup(props)
+  },
   props: {
     data: Object
   },
-  computed: {
+  watch: {
     gradient: {
-      get () {
-        const array = []
-        for (const item of this.data.inputs.find(o => o.key === 'g').value) {
-          array.push({ id: item.id, color: item.color, percent: item.percent })
-        }
-        return array
-      },
-      set (newVal) {
-        const val = JSON.parse(JSON.stringify(newVal))
-        const id = this.data.inputs.find(o => o.key === 'g').id
-        this.setInputWithId({ id: id, value: val })
+      handler (newVal) {
+        console.log('gradient', newVal)
+      }
+    },
+    lightness: {
+      handler (newVal) {
+        console.log('lightness', newVal)
       }
     }
-  },
-  methods: {
-    ...mapMutations('globals', ['setInputWithId'])
   }
 })
 </script>

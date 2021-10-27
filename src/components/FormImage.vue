@@ -34,7 +34,7 @@ export default defineComponent({
           this.$emit('update:modelValue', { data, label: file.name })
         })
       } else {
-        this.$emit('update:modelValue', { data: null, label: null })
+        this.$emit('update:modelValue', null)
       }
     },
     getBase64 (file, resolve) {

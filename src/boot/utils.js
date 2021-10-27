@@ -2,8 +2,12 @@ import { boot } from 'quasar/wrappers'
 
 export default boot(({ app }) => {
   app.config.globalProperties.$utils = {
-    getRGBAChannel (urlData, callback, channel = { r: true, g: true, b: true, a: true }) {
-      this.urlToImgData(urlData, imageData => {
+    getRGBAChannel (image, callback, channel = { r: true, g: true, b: true, a: true }) {
+      if (!image) {
+        callback(null)
+        return
+      }
+      this.urlToImgData(image.data, imageData => {
         for (let nr = 0; nr < imageData.data.length; nr += 4) {
           // rgba
           if (!(channel.r && channel.g && channel.b && channel.a)) {
@@ -23,11 +27,16 @@ export default boot(({ app }) => {
             imageData.data[nr + 3] = 255 // a
           }
         }
-        callback(this.imgDataToUrl(imageData))
+        const newImage = { data: this.imgDataToUrl(imageData), label: image.label }
+        callback(newImage)
       })
     },
-    getHSLChannel (urlData, callback, channel = { h: false, s: false, l: false }) {
-      this.urlToImgData(urlData, imageData => {
+    getHSLChannel (image, callback, channel = { h: true, s: true, l: true }) {
+      if (!image) {
+        callback(null)
+        return
+      }
+      this.urlToImgData(image.data, imageData => {
         for (let nr = 0; nr < imageData.data.length; nr += 4) {
           // hsl
           if (!(channel.h && channel.s && channel.l)) {
@@ -46,12 +55,17 @@ export default boot(({ app }) => {
             imageData.data[nr + 3] = 255
           }
         }
-        callback(this.imgDataToUrl(imageData))
+        const newImage = { data: this.imgDataToUrl(imageData), label: image.label }
+        callback(newImage)
       })
     },
-    imgHasAlpha (urlData, callback) {
-      this.urlToImgData(urlData, imageData => {
-        let found = false
+    imgHasAlpha (image, callback) {
+      let found = false
+      if (!image) {
+        callback(found)
+        return
+      }
+      this.urlToImgData(image.data, imageData => {
         for (let nr = 0; nr < imageData.data.length; nr += 4) {
           if (imageData.data[nr + 3] < 255) {
             found = true
@@ -123,16 +137,21 @@ export default boot(({ app }) => {
       }
       return { r: r * 255, g: g * 255, b: b * 255 }
     },
-    resizeImg (urlData, rect, callback) {
+    resizeImg (image, rect, callback) {
+      if (!image) {
+        callback(null)
+        return
+      }
       const img = new Image()
-      img.src = urlData
+      img.src = image.data
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
       img.onload = () => {
-        canvas.width = rect.w
-        canvas.height = rect.h
-        ctx.drawImage(img, rect.l, rect.t, rect.w, rect.h, 0, 0, rect.w, rect.h)
-        callback(this.imgDataToUrl(ctx.getImageData(0, 0, rect.w, rect.h)))
+        canvas.width = rect.width
+        canvas.height = rect.height
+        ctx.drawImage(img, rect.left, rect.top, rect.width, rect.height, 0, 0, rect.width, rect.height)
+        const newImage = { data: this.imgDataToUrl(ctx.getImageData(0, 0, rect.width, rect.height)), label: image.label }
+        callback(newImage)
       }
     },
     lerpColor (a, b, amount) {
