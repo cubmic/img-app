@@ -32,7 +32,7 @@ export default defineComponent({
   },
   methods: {
     updateResize () {
-      if (!this.lock) {
+      if (!this.lock && this.width > 0 && this.height > 0) {
         this.lock = true
         this.$utils.resizeImg(this.color, { width: this.width, height: this.height }, image => {
           this.out.color(image)
