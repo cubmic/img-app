@@ -13,6 +13,8 @@
           background-size:${prevWidth}px ${prevHeight}px;
           background-position:-${l}px -${t}px;
         `"
+        v-drag="dragDefsBox"
+        ref="box"
       />
       <div class="dot" v-drag="dragDefs1" ref="dot1" />
       <div class="dot" v-drag="dragDefs2" ref="dot2" />
@@ -71,6 +73,22 @@ export default defineComponent({
           this.width = Math.round(w * this.color.width / this.prevWidth)
           this.height = Math.round(h * this.color.height / this.prevHeight)
         }
+      },
+      dragDefsBox: {
+        bounds: () => {
+          return {
+            left: 0,
+            top: 0,
+            right: this.prevWidth,
+            bottom: this.prevHeight
+          }
+        },
+        drag: () => {
+          const l = this.$refs.box.offsetLeft - 10
+          const t = this.$refs.box.offsetTop - 10
+          this.left = Math.round(l * this.color.width / this.prevWidth)
+          this.top = Math.round(t * this.color.height / this.prevHeight)
+        }
       }
     }
   },
@@ -81,7 +99,9 @@ export default defineComponent({
         this.top = 0
         this.width = newVal.width
         this.height = newVal.height
-        this.updateDots()
+        setTimeout(() => {
+          this.updateDots()
+        }, 0)
       }
       this.updateCrop()
     },
@@ -165,6 +185,7 @@ export default defineComponent({
   position: absolute;
   border: 2px dotted #FFF;
   background-repeat: no-repeat;
+  cursor: grab;
 }
 .img {
   opacity: 0.1;
