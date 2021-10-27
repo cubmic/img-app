@@ -50,7 +50,9 @@ const itemTypeDefs = [
     inputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
-    outputs: []
+    outputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'color' }
+    ]
   },
   {
     id: 5,

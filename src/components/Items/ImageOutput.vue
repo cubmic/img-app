@@ -40,6 +40,7 @@ export default defineComponent({
       this.$utils.imgHasAlpha(this.color, value => {
         this.alpha = value
       })
+      this.out.color(this.color)
     }
   }
 })
