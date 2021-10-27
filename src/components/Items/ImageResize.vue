@@ -39,6 +39,9 @@ export default defineComponent({
           this.lock = false
         })
       }
+    },
+    updateConnection () {
+      this.updateResize()
     }
   }
 })

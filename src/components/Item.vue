@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <component :is="data.component" :data="data" class="q-mb-md" />
+      <component :is="data.component" :data="data" class="q-mb-md" ref="item" />
 
       <!-- connectors -->
       <div class="row q-ma-xs">
@@ -45,7 +45,7 @@
         </div>
         <div class="col-6">
           <div class="column q-gutter-xs justify-start">
-            <Out v-for="item in data.outputs" :key="item.id" :data="item" />
+            <Out v-for="item in data.outputs" :key="item.id" :data="item" @changed="updateConnection" />
           </div>
         </div>
       </div>
@@ -90,6 +90,9 @@ export default defineComponent({
       setTimeout(() => {
         this.updateConnections()
       }, 0)
+    },
+    updateConnection (key) {
+      this.$refs.item.updateConnection(key)
     }
   }
 })

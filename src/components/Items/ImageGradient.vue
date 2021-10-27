@@ -42,6 +42,9 @@ export default defineComponent({
           this.lock = false
         }, this.gradient)
       }
+    },
+    updateConnection () {
+      this.updateOutput()
     }
   }
 })

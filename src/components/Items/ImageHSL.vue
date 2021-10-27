@@ -26,14 +26,19 @@ export default defineComponent({
   watch: {
     color: {
       handler (newVal) {
-        // update all connections
-        for (const channel of Object.keys(this.channels)) {
-          this.$utils.getHSLChannel(newVal, image => {
-            this.out[channel](image)
-          }, this.channels[channel])
-        }
+        this.updateConnection()
       },
       immediate: true
+    }
+  },
+  methods: {
+    updateConnection () {
+      // update all connections
+      for (const channel of Object.keys(this.channels)) {
+        this.$utils.getHSLChannel(this.color, image => {
+          this.out[channel](image)
+        }, this.channels[channel])
+      }
     }
   }
 })

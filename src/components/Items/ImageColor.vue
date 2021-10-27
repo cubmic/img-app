@@ -21,6 +21,11 @@ export default defineComponent({
       },
       immediate: true
     }
+  },
+  methods: {
+    updateConnection () {
+      this.out.color(this.color)
+    }
   }
 })
 </script>

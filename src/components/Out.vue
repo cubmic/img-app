@@ -70,7 +70,7 @@ export default defineComponent({
                 this.updateConnections()
               }, 0)
               this.hit = true
-              this.$emit('changed')
+              this.$emit('changed', this.data.key)
               // reset pos
               const obj = this.$refs.drag
               obj.style.top = '0px'

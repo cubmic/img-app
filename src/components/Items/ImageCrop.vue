@@ -136,6 +136,9 @@ export default defineComponent({
         this.$refs.dot2.style.left = (this.l + this.w) + 'px'
         this.$refs.dot2.style.top = (this.t + this.h) + 'px'
       }
+    },
+    updateConnection () {
+      this.updateCrop()
     }
   },
   mounted () {

@@ -30,11 +30,16 @@ export default defineComponent({
   watch: {
     color: {
       handler (newVal) {
-        this.$utils.imgHasAlpha(newVal, value => {
-          this.alpha = value
-        })
+        this.updateConnection()
       },
       immediate: true
+    }
+  },
+  methods: {
+    updateConnection () {
+      this.$utils.imgHasAlpha(this.color, value => {
+        this.alpha = value
+      })
     }
   }
 })

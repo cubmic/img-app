@@ -26,15 +26,20 @@ export default defineComponent({
   },
   watch: {
     color: {
-      handler (newVal) {
-        // update all connections
-        for (const channel of Object.keys(this.channels)) {
-          this.$utils.getRGBAChannel(newVal, image => {
-            this.out[channel](image)
-          }, this.channels[channel])
-        }
+      handler () {
+        this.updateConnection()
       },
       immediate: true
+    }
+  },
+  methods: {
+    updateConnection () {
+      // update all connections
+      for (const channel of Object.keys(this.channels)) {
+        this.$utils.getRGBAChannel(this.color, image => {
+          this.out[channel](image)
+        }, this.channels[channel])
+      }
     }
   }
 })
