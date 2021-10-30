@@ -10,6 +10,7 @@ export default defineComponent({
   props: {
     modelValue: Object
   },
+  emits: ['uploaded'],
   data () {
     return {
       file: null
