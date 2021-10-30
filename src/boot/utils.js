@@ -4,6 +4,9 @@ export default boot(({ app }) => {
   app.config.globalProperties.$utils = {
     clamp: (a, min = 0, max = 1) => Math.min(max, Math.max(min, a)),
     invlerp (x, y, a) {
+      if (x === y) {
+        return 0.5
+      }
       return this.clamp((a - x) / (y - x))
     },
     lerp: (start, end, a) => (1 - a) * start + a * end,
@@ -78,7 +81,7 @@ export default boot(({ app }) => {
         for (let nr = 0; nr < imageData.data.length; nr += 4) {
           const lightness = this.rgbToHsl(imageData.data[nr + 0], imageData.data[nr + 1], imageData.data[nr + 2]).l * 100
           for (let c = 0; c < gradient.length; c++) {
-            if (gradient[c].percent > lightness) {
+            if (gradient[c].percent >= lightness) {
               const min = Math.max(0, c - 1)
               const pos = this.invlerp(gradient[min].percent, gradient[c].percent, lightness) // get pos between two gradient colors
               const rgba1 = this.hexToRgba(gradient[min].color)
