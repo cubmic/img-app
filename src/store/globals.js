@@ -114,6 +114,12 @@ const itemTypeDefs = [
 export default {
   namespaced: true,
   getters: {
+    download: state => {
+      return {
+        items: state.items,
+        connections: state.connections
+      }
+    },
     items: state => state.items,
 
     itemTypes: state => state.itemTypes,
@@ -134,6 +140,10 @@ export default {
     connectionsWithInId: state => id => state.connections.filter(o => o.in.id === id)
   },
   mutations: {
+    upload: (state, payload) => {
+      state.items = payload.items
+      state.connections = payload.connections
+    },
     addItem: (state, itemType) => {
       itemType = JSON.parse(JSON.stringify(itemType))
       const item = JSON.parse(JSON.stringify(state.itemDef))

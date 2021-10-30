@@ -259,6 +259,15 @@ export default boot(({ app }) => {
       g = Math.min(g, 255)
       b = Math.min(b, 255)
       return '#' + [r, g, b].map(c => c.toString(16).padStart(2, '0')).join('')
+    },
+    exportJSONfromObj (filename, obj) {
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(obj))
+      const downloadAnchorNode = document.createElement('a')
+      downloadAnchorNode.setAttribute('href', dataStr)
+      downloadAnchorNode.setAttribute('download', filename + '.json')
+      document.body.appendChild(downloadAnchorNode) // required for firefox
+      downloadAnchorNode.click()
+      downloadAnchorNode.remove()
     }
   }
 })

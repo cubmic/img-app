@@ -2,8 +2,8 @@
   <div class="q-pa-sm">
     <div class="row q-gutter-sm items-center">
       <Form-select :options="ITEM_TYPE_DEFS" :modelValue="null" @update:modelValue="addItem" style="width:300px" />
-      <IconButton icon="get_app" />
-      <IconButton icon="upload" />
+      <IconButton icon="get_app" @click="$utils.exportJSONfromObj('img-app-data', download)" />
+      <JsonUploadButton @uploaded="upload" />
     </div>
 
     <!-- connection lines -->
@@ -33,10 +33,10 @@ import { mapGetters, mapMutations } from 'vuex'
 export default defineComponent({
   name: 'PageIndex',
   computed: {
-    ...mapGetters('globals', ['items', 'connections', 'connectionSize', 'connectionDrag', 'ITEM_TYPE_DEFS'])
+    ...mapGetters('globals', ['items', 'connections', 'connectionSize', 'connectionDrag', 'ITEM_TYPE_DEFS', 'download'])
   },
   methods: {
-    ...mapMutations('globals', ['addItem'])
+    ...mapMutations('globals', ['addItem', 'upload'])
   }
 })
 </script>

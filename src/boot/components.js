@@ -1,6 +1,7 @@
 import { boot } from 'quasar/wrappers'
 
 import IconButton from '../components/IconButton.vue'
+import JsonUploadButton from '../components/JsonUploadButton.vue'
 import Gradient from 'src/components/Gradient.vue'
 
 import FormInput from 'src/components/FormInput.vue'
@@ -24,6 +25,7 @@ import NumberInput from 'src/components/Items/NumberInput.vue'
 
 export default boot(({ app }) => {
   app.component('IconButton', IconButton)
+  app.component('JsonUploadButton', JsonUploadButton)
   app.component('Gradient', Gradient)
 
   app.component('FormInput', FormInput)
