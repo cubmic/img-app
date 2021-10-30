@@ -1,7 +1,18 @@
 <template>
   <div class="q-pa-sm">
     <div class="row q-gutter-sm items-center">
-      <Form-select :options="ITEM_TYPE_DEFS" :modelValue="null" @update:modelValue="addItem" style="width:300px" />
+      <Form-select :options="ITEM_TYPE_DEFS" :modelValue="null" @update:modelValue="addItem" style="width:300px">
+        <template v-slot:option="scope">
+          <q-item v-bind="scope.itemProps" :style="`background:${scope.opt.color}`">
+            <q-item-section avatar>
+              <q-icon :name="scope.opt.icon" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ scope.opt.label }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </template>
+      </Form-select>
       <IconButton icon="get_app" @click="$utils.exportJSONfromObj('img-app-data', download)" />
       <JsonUploadButton @uploaded="upload" />
     </div>

@@ -5,6 +5,7 @@ const itemTypeDefs = [
     id: 1,
     label: 'Image Color',
     color: '#9BD',
+    icon: 'image',
     component: 'ImageColor',
     inputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
@@ -17,6 +18,7 @@ const itemTypeDefs = [
     id: 2,
     label: 'Image RGBA',
     color: '#9BD',
+    icon: 'palette',
     component: 'ImageRGBA',
     inputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
@@ -32,6 +34,7 @@ const itemTypeDefs = [
     id: 3,
     label: 'Image HSL',
     color: '#9BD',
+    icon: 'palette',
     component: 'ImageHSL',
     inputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
@@ -46,6 +49,7 @@ const itemTypeDefs = [
     id: 4,
     label: 'Image Output',
     color: '#9BD',
+    icon: 'visibility',
     component: 'ImageOutput',
     inputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
@@ -58,6 +62,7 @@ const itemTypeDefs = [
     id: 5,
     label: 'Image Crop',
     color: '#9BD',
+    icon: 'crop',
     component: 'ImageCrop',
     inputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color', value: null },
@@ -74,6 +79,7 @@ const itemTypeDefs = [
     id: 6,
     label: 'Image Resize',
     color: '#9BD',
+    icon: 'aspect_ratio',
     component: 'ImageResize',
     inputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color', value: null },
@@ -88,6 +94,7 @@ const itemTypeDefs = [
     id: 7,
     label: 'Image Gradient',
     color: '#9BD',
+    icon: 'gradient',
     component: 'ImageGradient',
     inputs: [
       { type: 'image', color: 'alpha', label: 'Lightness', key: 'lightness', value: null },
@@ -101,6 +108,7 @@ const itemTypeDefs = [
     id: 8,
     label: 'Number Input',
     color: '#BD9',
+    icon: 'pin',
     component: 'NumberInput',
     inputs: [
       { type: 'integer', color: 'integer', label: 'Number', key: 'number', value: null }
