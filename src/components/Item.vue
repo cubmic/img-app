@@ -24,12 +24,12 @@
 
     <div v-if="data.expand">
       <div class="q-pa-xs">
-        <div class="row q-col-gutter-xs" @mousedown.stop>
+        <div class="row q-col-gutter-xs items-center" @mousedown.stop>
           <div class="col-9">
             <Form-input :modelValue="data.label" @update:modelValue="setItem({ id: data.id, key: 'label', value: $event })" />
           </div>
           <div class="col-auto">
-            <ButtonDel class="avatar" @click="delItem(data.id)" />
+            <IconButton icon="close" color="negative" class="avatar" @click="delItem(data.id)" />
           </div>
         </div>
       </div>

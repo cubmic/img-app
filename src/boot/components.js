@@ -1,7 +1,6 @@
 import { boot } from 'quasar/wrappers'
 
-import ButtonAdd from '../components/ButtonAdd.vue'
-import ButtonDel from '../components/ButtonDel.vue'
+import IconButton from '../components/IconButton.vue'
 import Gradient from 'src/components/Gradient.vue'
 
 import FormInput from 'src/components/FormInput.vue'
@@ -24,8 +23,7 @@ import ImageCrop from 'src/components/Items/ImageCrop.vue'
 import NumberInput from 'src/components/Items/NumberInput.vue'
 
 export default boot(({ app }) => {
-  app.component('ButtonAdd', ButtonAdd)
-  app.component('ButtonDel', ButtonDel)
+  app.component('IconButton', IconButton)
   app.component('Gradient', Gradient)
 
   app.component('FormInput', FormInput)

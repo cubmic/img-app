@@ -1,6 +1,10 @@
 <template>
   <div class="q-pa-sm">
-    <Form-select :options="ITEM_TYPE_DEFS" :modelValue="null" @update:modelValue="addItem" style="width:300px" />
+    <div class="row q-gutter-sm items-center">
+      <Form-select :options="ITEM_TYPE_DEFS" :modelValue="null" @update:modelValue="addItem" style="width:300px" />
+      <IconButton icon="get_app" />
+      <IconButton icon="upload" />
+    </div>
 
     <!-- connection lines -->
     <svg
