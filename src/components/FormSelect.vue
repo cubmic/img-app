@@ -3,6 +3,7 @@
     :options="options"
     :modelValue="modelValue"
     @update:modelValue="$emit('update:modelValue', $event)"
+    bg-color="grey-4"
     outlined dense
   >
     <template v-for="(_, name) in $slots" v-slot:[name]="slotData">
@@ -16,7 +17,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'FormSelect',
   props: {
-    modelValue: Object,
+    modelValue: [String, Object],
     options: Array
   }
 })

@@ -22,6 +22,7 @@ import ImageResize from 'src/components/Items/ImageResize.vue'
 import ImageCrop from 'src/components/Items/ImageCrop.vue'
 
 import NumberInput from 'src/components/Items/NumberInput.vue'
+import NumberMath from 'src/components/Items/NumberMath.vue'
 
 export default boot(({ app }) => {
   app.component('IconButton', IconButton)
@@ -46,4 +47,5 @@ export default boot(({ app }) => {
   app.component('ImageCrop', ImageCrop)
 
   app.component('NumberInput', NumberInput)
+  app.component('NumberMath', NumberMath)
 })

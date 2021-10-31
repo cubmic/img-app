@@ -119,10 +119,10 @@ const itemTypeDefs = [
     icon: 'looks_one',
     component: 'NumberInput',
     inputs: [
-      { type: 'integer', color: 'integer', label: 'Number', key: 'number', value: null }
+      { type: 'integer', color: 'integer', label: 'Integer', key: 'number', value: null }
     ],
     outputs: [
-      { type: 'integer', color: 'integer', label: 'Number', key: 'number' }
+      { type: 'integer', color: 'integer', label: 'Integer', key: 'number' }
     ]
   },
   {
@@ -133,10 +133,26 @@ const itemTypeDefs = [
     icon: 'looks_two',
     component: 'NumberInput',
     inputs: [
-      { type: 'number', color: 'float', label: 'Number', key: 'number', value: null }
+      { type: 'float', color: 'float', label: 'Float', key: 'number', value: null }
     ],
     outputs: [
-      { type: 'number', color: 'float', label: 'Number', key: 'number' }
+      { type: 'float', color: 'float', label: 'Float', key: 'number' }
+    ]
+  },
+  {
+    id: 10,
+    group: 'Number',
+    label: 'Math',
+    color: '#BD9',
+    icon: 'calculate',
+    component: 'NumberMath',
+    inputs: [
+      { type: 'float', color: 'float', label: 'Float', key: 'numberA', value: null },
+      { type: 'float', color: 'float', label: 'Float', key: 'numberB', value: null },
+      { type: 'select', color: 'select', label: 'Function', key: 'func', value: null, options: [{ label: 'Add', value: '+' }, { label: 'Substract', value: '-' }, { label: 'Multiply', value: '*' }, { label: 'Divide', value: '/' }] }
+    ],
+    outputs: [
+      { type: 'float', color: 'float', label: 'Float', key: 'number' }
     ]
   }
 ]

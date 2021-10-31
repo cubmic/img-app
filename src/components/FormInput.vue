@@ -24,7 +24,7 @@ export default defineComponent({
       type: String,
       default: 'text',
       validator: function (value) {
-        return ['text', 'number', 'integer'].indexOf(value) !== -1
+        return ['text', 'float', 'integer'].indexOf(value) !== -1
       }
     },
     step: {
@@ -64,7 +64,7 @@ export default defineComponent({
     },
     valueChanged (newVal) {
       this.localValue = newVal
-      if (this.type === 'number') {
+      if (this.type === 'float') {
         if (newVal === '-') {
           return
         }
@@ -80,7 +80,7 @@ export default defineComponent({
       }
     },
     keydown (event) {
-      if (this.type === 'number') {
+      if (this.type === 'float') {
         // allow only this keys
         if (event.key === 'ArrowUp') {
           event.preventDefault()

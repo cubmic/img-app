@@ -1,6 +1,6 @@
 <template>
   <div class="col">
-    <div class="row q-gutter-xs items-center">
+    <div class="row q-gutter-xs items-center" style="height:45px">
       <template v-if="connectionsWithInId(data.id).length > 0">
         <div class="dot-bg">
           <div class="dot" :id="'k' + data.id" v-drop v-drag="dragDefs" ref="drag" style="cursor:move;" :class="`only-allow-out-${data.type} dot-${data.color}`" />
@@ -14,7 +14,8 @@
         <div class="col" @mousedown.stop>
           <Form-image v-model="value" v-if="data.type === 'image'" />
           <Form-input v-model="value" v-if="data.type === 'integer'" :type="data.type" :label="data.label" />
-          <Form-input v-model="value" v-if="data.type === 'number'" :type="data.type" :label="data.label" />
+          <Form-input v-model="value" v-if="data.type === 'float'" :type="data.type" :label="data.label" />
+          <Form-select v-model="value" v-if="data.type === 'select'" :type="data.type" :options="data.options" :label="data.label" />
         </div>
       </template>
     </div>
