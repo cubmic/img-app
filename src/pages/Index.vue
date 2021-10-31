@@ -1,18 +1,24 @@
 <template>
   <div class="q-pa-sm">
     <div class="row q-gutter-sm items-center">
-      <Form-select :options="ITEM_TYPE_DEFS" :modelValue="null" @update:modelValue="addItem" style="width:300px">
-        <template v-slot:option="scope">
-          <q-item v-bind="scope.itemProps" :style="`background:${scope.opt.color}`">
-            <q-item-section avatar>
-              <q-icon :name="scope.opt.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ scope.opt.label }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-      </Form-select>
+      <IconButton icon="add">
+        <q-popup-proxy transition-show="flip-up" transition-hide="flip-down">
+          <q-list style="width:300px">
+            <q-expansion-item v-for="(group, index) in ITEM_TYPE_DEFS" :key="index" :label="group.name" :header-style="`background:${group.color}`">
+              <q-list>
+                <q-item clickable v-for="item in group.items" :key="item.id" :style="`background:${lighten(item.color, 30)}`" v-close-popup @click="addItem(item)">
+                  <q-item-section avatar>
+                    <q-icon :name="item.icon" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>{{ item.label }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-expansion-item>
+          </q-list>
+        </q-popup-proxy>
+      </IconButton>
       <IconButton icon="get_app" @click="$utils.exportJSONfromObj('img-app-data', download)" />
       <JsonUploadButton @uploaded="upload" />
     </div>
@@ -40,6 +46,8 @@
 <script>
 import { defineComponent } from 'vue'
 import { mapGetters, mapMutations } from 'vuex'
+import { colors } from 'quasar'
+const { lighten } = colors
 
 export default defineComponent({
   name: 'PageIndex',
@@ -47,7 +55,8 @@ export default defineComponent({
     ...mapGetters('globals', ['items', 'connections', 'connectionSize', 'connectionDrag', 'ITEM_TYPE_DEFS', 'download'])
   },
   methods: {
-    ...mapMutations('globals', ['addItem', 'upload'])
+    ...mapMutations('globals', ['addItem', 'upload']),
+    lighten: lighten
   }
 })
 </script>

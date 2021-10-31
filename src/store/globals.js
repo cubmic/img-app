@@ -3,6 +3,7 @@ import { uid } from 'quasar'
 const itemTypeDefs = [
   {
     id: 1,
+    group: 'Image',
     label: 'Image Color',
     color: '#9BD',
     icon: 'image',
@@ -16,6 +17,7 @@ const itemTypeDefs = [
   },
   {
     id: 2,
+    group: 'Image',
     label: 'Image RGBA',
     color: '#9BD',
     icon: 'palette',
@@ -32,6 +34,7 @@ const itemTypeDefs = [
   },
   {
     id: 3,
+    group: 'Image',
     label: 'Image HSL',
     color: '#9BD',
     icon: 'palette',
@@ -47,6 +50,7 @@ const itemTypeDefs = [
   },
   {
     id: 4,
+    group: 'Image',
     label: 'Image Output',
     color: '#9BD',
     icon: 'visibility',
@@ -60,6 +64,7 @@ const itemTypeDefs = [
   },
   {
     id: 5,
+    group: 'Image',
     label: 'Image Crop',
     color: '#9BD',
     icon: 'crop',
@@ -77,6 +82,7 @@ const itemTypeDefs = [
   },
   {
     id: 6,
+    group: 'Image',
     label: 'Image Resize',
     color: '#9BD',
     icon: 'aspect_ratio',
@@ -92,6 +98,7 @@ const itemTypeDefs = [
   },
   {
     id: 7,
+    group: 'Image',
     label: 'Image Gradient',
     color: '#9BD',
     icon: 'gradient',
@@ -106,6 +113,7 @@ const itemTypeDefs = [
   },
   {
     id: 8,
+    group: 'Number',
     label: 'Number Input',
     color: '#BD9',
     icon: 'pin',
@@ -131,7 +139,13 @@ export default {
     items: state => state.items,
 
     itemTypes: state => state.itemTypes,
-    ITEM_TYPE_DEFS: state => itemTypeDefs,
+    ITEM_TYPE_DEF_GROUPS: state => [...new Set(itemTypeDefs.map(o => o.group))],
+    ITEM_TYPE_DEFS: state => {
+      return [...new Set(itemTypeDefs.map(o => o.group))].map(o => {
+        const items = itemTypeDefs.filter(e => e.group === o)
+        return { name: o, items: items, color: items[0].color }
+      })
+    },
 
     connections: state => state.connections,
     connectionDrag: state => state.connectionDrag,
