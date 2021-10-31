@@ -84,22 +84,22 @@ export default defineComponent({
         // allow only this keys
         if (event.key === 'ArrowUp') {
           event.preventDefault()
-          const nr = this.inBounds(this.$math.floatAdd(parseFloat(this.localValue), this.step))
+          const nr = this.inBounds(this.$math.floatAdd(parseFloat(this.localValue) || 0, this.step))
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }
         if (event.key === 'ArrowDown') {
           event.preventDefault()
-          const nr = this.inBounds(this.$math.floatSub(parseFloat(this.localValue), this.step))
+          const nr = this.inBounds(this.$math.floatSub(parseFloat(this.localValue) || 0, this.step))
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }
         // only one time allowed
-        if (event.key === '.' && this.localValue.includes('.')) {
+        if (event.key === '.' && (this.localValue + '').includes('.')) {
           event.preventDefault()
         }
         // only at beginning
-        if (event.key === '-' && this.localValue !== '') {
+        if (event.key === '-' && (this.localValue + '') !== '') {
           event.preventDefault()
         }
         // allow only this keys
