@@ -4,7 +4,7 @@ const itemTypeDefs = [
   {
     id: 1,
     group: 'Image',
-    label: 'Image Color',
+    label: 'Select',
     color: '#9BD',
     icon: 'image',
     component: 'ImageColor',
@@ -18,7 +18,7 @@ const itemTypeDefs = [
   {
     id: 2,
     group: 'Image',
-    label: 'Image RGBA',
+    label: 'RGBA',
     color: '#9BD',
     icon: 'palette',
     component: 'ImageRGBA',
@@ -35,7 +35,7 @@ const itemTypeDefs = [
   {
     id: 3,
     group: 'Image',
-    label: 'Image HSL',
+    label: 'HSL',
     color: '#9BD',
     icon: 'palette',
     component: 'ImageHSL',
@@ -51,7 +51,7 @@ const itemTypeDefs = [
   {
     id: 4,
     group: 'Image',
-    label: 'Image Output',
+    label: 'Preview',
     color: '#9BD',
     icon: 'visibility',
     component: 'ImageOutput',
@@ -65,7 +65,7 @@ const itemTypeDefs = [
   {
     id: 5,
     group: 'Image',
-    label: 'Image Crop',
+    label: 'Crop',
     color: '#9BD',
     icon: 'crop',
     component: 'ImageCrop',
@@ -83,7 +83,7 @@ const itemTypeDefs = [
   {
     id: 6,
     group: 'Image',
-    label: 'Image Resize',
+    label: 'Resize',
     color: '#9BD',
     icon: 'aspect_ratio',
     component: 'ImageResize',
@@ -99,7 +99,7 @@ const itemTypeDefs = [
   {
     id: 7,
     group: 'Image',
-    label: 'Image Gradient',
+    label: 'Gradient',
     color: '#9BD',
     icon: 'gradient',
     component: 'ImageGradient',
@@ -114,15 +114,29 @@ const itemTypeDefs = [
   {
     id: 8,
     group: 'Number',
-    label: 'Number Input',
+    label: 'Integer',
     color: '#BD9',
-    icon: 'pin',
+    icon: 'looks_one',
     component: 'NumberInput',
     inputs: [
       { type: 'integer', color: 'integer', label: 'Number', key: 'number', value: null }
     ],
     outputs: [
       { type: 'integer', color: 'integer', label: 'Number', key: 'number' }
+    ]
+  },
+  {
+    id: 9,
+    group: 'Number',
+    label: 'Float',
+    color: '#BD9',
+    icon: 'looks_two',
+    component: 'NumberInput',
+    inputs: [
+      { type: 'number', color: 'float', label: 'Number', key: 'number', value: null }
+    ],
+    outputs: [
+      { type: 'number', color: 'float', label: 'Number', key: 'number' }
     ]
   }
 ]

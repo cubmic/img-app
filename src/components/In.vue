@@ -13,7 +13,8 @@
         </div>
         <div class="col" @mousedown.stop>
           <Form-image v-model="value" v-if="data.type === 'image'" />
-          <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" :label="data.label" />
+          <Form-input v-model="value" v-if="data.type === 'integer'" :type="data.type" :label="data.label" />
+          <Form-input v-model="value" v-if="data.type === 'number'" :type="data.type" :label="data.label" />
         </div>
       </template>
     </div>

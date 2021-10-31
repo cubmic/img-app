@@ -1,10 +1,15 @@
 <template>
   <div class="q-pa-sm">
     <div class="row q-gutter-sm items-center">
-      <IconButton icon="add">
+      <IconButton icon="add" color="positive">
         <q-popup-proxy transition-show="flip-up" transition-hide="flip-down">
           <q-list style="width:300px">
-            <q-expansion-item v-for="(group, index) in ITEM_TYPE_DEFS" :key="index" :label="group.name" :header-style="`background:${group.color}`">
+            <q-expansion-item
+              v-for="(group, index) in ITEM_TYPE_DEFS" :key="index"
+              :label="group.name"
+              :header-style="`background:${group.color}`"
+              group="group"
+            >
               <q-list>
                 <q-item clickable v-for="item in group.items" :key="item.id" :style="`background:${lighten(item.color, 30)}`" v-close-popup @click="addItem(item)">
                   <q-item-section avatar>
