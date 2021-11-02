@@ -25,7 +25,7 @@
     <div v-if="data.expand">
       <div class="q-pa-xs">
         <div class="row q-col-gutter-xs items-center" @mousedown.stop>
-          <div class="col-9">
+          <div class="col">
             <Form-input :modelValue="data.label" @update:modelValue="setItem({ id: data.id, key: 'label', value: $event })" />
           </div>
           <div class="col-auto">
