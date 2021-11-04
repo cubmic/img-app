@@ -6,7 +6,7 @@
     :style="`left:${data.x}px; top:${data.y}px; background:${data.color}`"
     v-drag="dragDefs"
   >
-    <div class="bg-grey" style="pointer-events:none;">
+    <div class="bg-grey-4" style="pointer-events:none;">
       <div class="row items-center">
         <q-icon name="drag_indicator" size="xs" />
         <div class="col">{{ data.label }}</div>

@@ -1,12 +1,12 @@
 <template>
   <div>
 
-    <q-toolbar class="text-primary bg-grey-3 ">
+    <q-toolbar class="text-primary bg-grey-4 shadow-2">
       <q-toolbar-title>
         Img-App {{ appVersion }}
       </q-toolbar-title>
-      <IconButton icon="add" color="positive">
-        <q-popup-proxy transition-show="flip-up" transition-hide="flip-down">
+      <IconButton icon="add" color="positive" class="q-mr-xs">
+        <q-popup-proxy>
           <q-list style="width:300px">
             <q-expansion-item
               v-for="(group, index) in ITEM_TYPE_DEFS" :key="index"
@@ -28,7 +28,7 @@
           </q-list>
         </q-popup-proxy>
       </IconButton>
-      <IconButton icon="get_app" @click="$utils.exportJSONfromObj('img-app-data', download)" />
+      <IconButton icon="get_app" @click="$utils.exportJSONfromObj('img-app-data', download)" class="q-mr-xs" />
       <JsonUploadButton @uploaded="upload" />
     </q-toolbar>
 
