@@ -33,6 +33,7 @@ export default defineComponent({
         start: (vm) => {
           this.drag = true
           this.hit = false
+          this.$parent.$data.drag = true
         },
         drag: (pos) => {
           this.pos = pos
@@ -55,6 +56,7 @@ export default defineComponent({
             this.$emit('changed')
           }
           this.drag = false
+          this.$parent.$data.drag = false
         },
         drop: (obj, vm) => {
           if (obj.classList.contains(`only-allow-out-${this.data.type}`)) {
