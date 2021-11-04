@@ -2,6 +2,8 @@
 
 A Quasar Framework app
 
+Demo [img-app](https://cubmic.ch/img-app).
+
 ## Install the dependencies
 ```bash
 npm install
