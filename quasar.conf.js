@@ -10,6 +10,23 @@
 const ESLintPlugin = require('eslint-webpack-plugin')
 const { configure } = require('quasar/wrappers')
 
+const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
+const gitRevisionPlugin = new GitRevisionPlugin({ versionCommand: 'describe --always --tags --dirty' })
+
+function getAppVersion () {
+  return JSON.stringify(gitRevisionPlugin.version())
+}
+
+function getShortAppVersion () {
+  const version = gitRevisionPlugin.version()
+  const versionArray = version.split('-')
+  let versionShort = versionArray[0]
+  if (versionArray[1]) {
+    versionShort = versionShort + '-' + versionArray[1]
+  }
+  return JSON.stringify(versionShort).replace(/"/g, '')
+}
+
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli/supporting-ts
@@ -52,7 +69,10 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-
+      env: {
+        APP_VERSION: getAppVersion(),
+        APP_VERSION_SHORT: getShortAppVersion()
+      },
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)

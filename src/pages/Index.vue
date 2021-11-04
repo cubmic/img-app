@@ -1,6 +1,10 @@
 <template>
-  <div class="q-pa-sm">
-    <div class="row q-gutter-sm items-center">
+  <div>
+
+    <q-toolbar class="text-primary bg-grey-3 ">
+      <q-toolbar-title>
+        Img-App {{ appVersion }}
+      </q-toolbar-title>
       <IconButton icon="add" color="positive">
         <q-popup-proxy transition-show="flip-up" transition-hide="flip-down">
           <q-list style="width:300px">
@@ -26,7 +30,7 @@
       </IconButton>
       <IconButton icon="get_app" @click="$utils.exportJSONfromObj('img-app-data', download)" />
       <JsonUploadButton @uploaded="upload" />
-    </div>
+    </q-toolbar>
 
     <!-- connection lines -->
     <svg
@@ -57,7 +61,10 @@ const { lighten } = colors
 export default defineComponent({
   name: 'PageIndex',
   computed: {
-    ...mapGetters('globals', ['items', 'connections', 'connectionSize', 'connectionDrag', 'ITEM_TYPE_DEFS', 'download'])
+    ...mapGetters('globals', ['items', 'connections', 'connectionSize', 'connectionDrag', 'ITEM_TYPE_DEFS', 'download']),
+    appVersion () {
+      return process.env.APP_VERSION_SHORT
+    }
   },
   methods: {
     ...mapMutations('globals', ['addItem', 'upload']),
