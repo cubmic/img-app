@@ -39,13 +39,13 @@ const methods = {
     const fa = ('' + a).replace(/^[^.]*./, '').length
     const fb = ('' + b).replace(/^[^.]*./, '').length
     const f = Math.max(fa, fb)
-    return (a + b).toFixed(f)
+    return parseFloat((a + b).toFixed(f))
   },
   floatSub (a, b) {
     const fa = ('' + a).replace(/^[^.]*./, '').length
     const fb = ('' + b).replace(/^[^.]*./, '').length
     const f = Math.max(fa, fb)
-    return (a - b).toFixed(f)
+    return parseFloat((a - b).toFixed(f))
   },
   appendToWithSameGlobalPos (obj, newParent) {
     const objRect = obj.getBoundingClientRect()
