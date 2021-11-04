@@ -44,22 +44,7 @@ export default defineComponent({
   methods: {
     updateConnection () {
       if (this.func) {
-        switch (this.func.value) {
-          case '+':
-            this.preview = this.numberA + this.numberB
-            break
-          case '-':
-            this.preview = this.numberA - this.numberB
-            break
-          case '*':
-            this.preview = this.numberA * this.numberB
-            break
-          case '/':
-            this.preview = this.numberA / this.numberB
-            break
-          default:
-            this.preview = null
-        }
+        this.preview = this.$math.floatOperations(this.numberA, this.numberB, this.func.value)
         this.out.number(this.preview)
       }
     }

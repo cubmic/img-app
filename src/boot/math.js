@@ -35,17 +35,29 @@ const EasingFunctions = {
 }
 
 const methods = {
-  floatAdd (a, b) {
+  floatOperations (a, b, op) {
     const fa = ('' + a).replace(/^[^.]*./, '').length
     const fb = ('' + b).replace(/^[^.]*./, '').length
-    const f = Math.max(fa, fb)
-    return parseFloat((a + b).toFixed(f))
-  },
-  floatSub (a, b) {
-    const fa = ('' + a).replace(/^[^.]*./, '').length
-    const fb = ('' + b).replace(/^[^.]*./, '').length
-    const f = Math.max(fa, fb)
-    return parseFloat((a - b).toFixed(f))
+    const factor = Math.max(fa, fb)
+    const multiply = Math.pow(10, factor)
+    a = Math.round(a * multiply)
+    b = Math.round(b * multiply)
+    let result = null
+    switch (op) {
+      case '+':
+        result = (a + b) / multiply
+        break
+      case '-':
+        result = (a - b) / multiply
+        break
+      case '*':
+        result = a * b / Math.pow(multiply, 2)
+        break
+      case '/':
+        result = a / b
+        break
+    }
+    return result
   },
   appendToWithSameGlobalPos (obj, newParent) {
     const objRect = obj.getBoundingClientRect()
