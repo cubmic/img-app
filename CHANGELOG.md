@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/cubmic/img-app/compare/v0.0.2...v0.5.0) (2021-11-04)
+
 ### 0.0.2 (2021-11-04)
 
 

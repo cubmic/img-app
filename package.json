@@ -1,6 +1,6 @@
 {
   "name": "img-app",
-  "version": "0.0.2",
+  "version": "0.5.0",
   "description": "A Quasar Framework app",
   "productName": "Quasar App",
   "author": "mail@cubmic.ch",
@@ -13,6 +13,7 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "git-revision-webpack-plugin": "^5.0.0",
     "quasar": "^2.0.0",
     "v-drag-drop": "^4.0.0",
     "vue-i18n": "^9.0.0",
