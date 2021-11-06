@@ -9,7 +9,7 @@ const itemTypeDefs = [
     icon: 'image',
     component: 'ImageColor',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
+      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -23,7 +23,7 @@ const itemTypeDefs = [
     icon: 'palette',
     component: 'ImageRGBA',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
+      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
       { type: 'image', color: 'red', label: 'Red', key: 'red' },
@@ -40,7 +40,7 @@ const itemTypeDefs = [
     icon: 'palette',
     component: 'ImageHSL',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
+      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Hue', key: 'hue' },
@@ -56,7 +56,7 @@ const itemTypeDefs = [
     icon: 'visibility',
     component: 'ImageOutput',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
+      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -70,11 +70,11 @@ const itemTypeDefs = [
     icon: 'crop',
     component: 'ImageCrop',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null },
-      { type: 'integer', color: 'integer', label: 'Left', key: 'left', value: null },
-      { type: 'integer', color: 'integer', label: 'Top', key: 'top', value: null },
-      { type: 'integer', color: 'integer', label: 'Width', key: 'width', value: null },
-      { type: 'integer', color: 'integer', label: 'Height', key: 'height', value: null }
+      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null },
+      { types: ['integer'], color: 'integer', label: 'Left', key: 'left', value: null },
+      { types: ['integer'], color: 'integer', label: 'Top', key: 'top', value: null },
+      { types: ['integer'], color: 'integer', label: 'Width', key: 'width', value: null },
+      { types: ['integer'], color: 'integer', label: 'Height', key: 'height', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -88,9 +88,9 @@ const itemTypeDefs = [
     icon: 'aspect_ratio',
     component: 'ImageResize',
     inputs: [
-      { type: 'image', color: 'color', label: 'Color', key: 'color', value: null },
-      { type: 'integer', color: 'integer', label: 'Width', key: 'width', value: null },
-      { type: 'integer', color: 'integer', label: 'Height', key: 'height', value: null }
+      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null },
+      { types: ['integer'], color: 'integer', label: 'Width', key: 'width', value: null },
+      { types: ['integer'], color: 'integer', label: 'Height', key: 'height', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -104,8 +104,8 @@ const itemTypeDefs = [
     icon: 'gradient',
     component: 'ImageGradient',
     inputs: [
-      { type: 'image', color: 'alpha', label: 'Lightness', key: 'lightness', value: null },
-      { type: 'array', color: 'array', label: 'Gradient', key: 'gradient', value: [{ id: 1, color: '#000000ff', percent: 0 }, { id: 2, color: '#00000000', percent: 100 }] }
+      { types: ['image'], color: 'alpha', label: 'Lightness', key: 'lightness', value: null },
+      { types: ['array'], color: 'array', label: 'Gradient', key: 'gradient', value: [{ id: 1, color: '#000000ff', percent: 0 }, { id: 2, color: '#00000000', percent: 100 }] }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -115,11 +115,11 @@ const itemTypeDefs = [
     id: 8,
     group: 'Number',
     label: 'Integer',
-    color: '#BD9',
+    color: '#ADD',
     icon: 'looks_one',
     component: 'NumberInput',
     inputs: [
-      { type: 'integer', color: 'integer', label: 'Integer', key: 'number', value: null }
+      { types: ['integer'], color: 'integer', label: 'Integer', key: 'number', value: null }
     ],
     outputs: [
       { type: 'integer', color: 'integer', label: 'Integer', key: 'number' }
@@ -129,11 +129,11 @@ const itemTypeDefs = [
     id: 9,
     group: 'Number',
     label: 'Float',
-    color: '#BD9',
+    color: '#DDA',
     icon: 'looks_two',
     component: 'NumberInput',
     inputs: [
-      { type: 'float', color: 'float', label: 'Float', key: 'number', value: null }
+      { types: ['float'], color: 'float', label: 'Float', key: 'number', value: null }
     ],
     outputs: [
       { type: 'float', color: 'float', label: 'Float', key: 'number' }
@@ -143,13 +143,13 @@ const itemTypeDefs = [
     id: 10,
     group: 'Number',
     label: 'Math',
-    color: '#BD9',
+    color: '#DAA',
     icon: 'calculate',
     component: 'NumberMath',
     inputs: [
-      { type: 'float', color: 'float', label: 'Float', key: 'numberA', value: null },
-      { type: 'float', color: 'float', label: 'Float', key: 'numberB', value: null },
-      { type: 'select', color: 'select', label: 'Function', key: 'func', value: null, options: [{ label: 'Add', value: '+' }, { label: 'Substract', value: '-' }, { label: 'Multiply', value: '*' }, { label: 'Divide', value: '/' }] }
+      { types: ['integer', 'float'], color: 'number', label: 'Float', key: 'numberA', value: null },
+      { types: ['integer', 'float'], color: 'number', label: 'Float', key: 'numberB', value: null },
+      { types: ['select'], color: 'select', label: 'Function', key: 'func', value: null, options: [{ label: 'Add', value: '+' }, { label: 'Substract', value: '-' }, { label: 'Multiply', value: '*' }, { label: 'Divide', value: '/' }] }
     ],
     outputs: [
       { type: 'float', color: 'float', label: 'Float', key: 'number' }
@@ -189,7 +189,7 @@ export default {
     },
     allOutConnectionWithItemId: state => parentId => state.connections.filter(o => o.out.parentId === parentId),
     connectionsWithOutId: state => id => state.connections.filter(o => o.out.id === id),
-    connectionsWithInId: state => id => state.connections.filter(o => o.in.id === id)
+    connectionWithInId: state => id => state.connections.find(o => o.in.id === id)
   },
   mutations: {
     upload: (state, payload) => {

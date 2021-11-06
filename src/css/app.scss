@@ -18,13 +18,16 @@
   background: #579;
 }
 .dot-alpha {
-  background: linear-gradient(45deg, #CCC, #CCC 11px, #333 11px, #333 22px);
+  background: linear-gradient(45deg, #CCC, #CCC 12px, #333 12px, #333 24px);
 }
 .dot-integer {
-  background: #666;
+  background: #599;
 }
 .dot-float {
-  background: #777;
+  background: #995;
+}
+.dot-number {
+  background: linear-gradient(45deg, #599, #599 12px, #995 12px, #995 24px);
 }
 
 .q-color-picker__header-bg {

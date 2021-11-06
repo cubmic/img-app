@@ -1,21 +1,21 @@
 <template>
   <div class="col">
     <div class="row q-gutter-xs items-center" style="height:45px">
-      <template v-if="connectionsWithInId(data.id).length > 0">
+      <template v-if="connection">
         <div class="dot-bg">
-          <div class="dot" :id="'k' + data.id" v-drop v-drag="dragDefs" ref="drag" style="cursor:move;" :class="`only-allow-out-${data.type} dot-${data.color}`" />
-          <span class="q-ml-lg">{{ data.label }}</span>
+          <div class="dot" :id="'k' + data.id" v-drop v-drag="dragDefs" ref="drag" style="cursor:move;" :class="dotClass + ` dot-${connection.color}`" />
+          <span class="q-ml-lg">{{ connection.label }}</span>
         </div>
       </template>
       <template v-else>
         <div class="dot-bg">
-          <div class="dot" :id="'k' + data.id" v-drop ref="drag" :class="`only-allow-out-${data.type} dot-${data.color}`" />
+          <div class="dot" :id="'k' + data.id" v-drop ref="drag" :class="dotClass + ` dot-${this.data.color}`" />
         </div>
         <div class="col" @mousedown.stop>
-          <Form-image v-model="value" v-if="data.type === 'image'" />
-          <Form-input v-model="value" v-if="data.type === 'integer'" :type="data.type" :label="data.label" />
-          <Form-input v-model="value" v-if="data.type === 'float'" :type="data.type" :label="data.label" />
-          <Form-select v-model="value" v-if="data.type === 'select'" :type="data.type" :options="data.options" :label="data.label" />
+          <Form-image v-model="value" v-if="data.types[0] === 'image'" />
+          <Form-input v-model="value" v-if="data.types[0] === 'integer'" type="integer" :label="data.label" />
+          <Form-input v-model="value" v-if="data.types[0] === 'float'" type="float" :label="data.label" />
+          <Form-select v-model="value" v-if="data.types[0] === 'select'" :type="data.type" :options="data.options" :label="data.label" />
         </div>
       </template>
     </div>
@@ -53,7 +53,13 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapGetters('globals', ['connectionsWithInId']),
+    ...mapGetters('globals', ['connectionWithInId']),
+    dotClass () {
+      return this.data.types.map(o => `only-allow-out-${o}`).join(' ')
+    },
+    connection () {
+      return this.connectionWithInId(this.data.id)
+    },
     value: {
       get () { return this.data.value },
       set (newVal) {

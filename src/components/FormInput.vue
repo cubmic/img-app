@@ -111,13 +111,13 @@ export default defineComponent({
         // allow only this keys
         if (event.key === 'ArrowUp') {
           event.preventDefault()
-          const nr = this.inBounds(parseFloat(this.localValue) + this.step)
+          const nr = this.inBounds(parseInt(this.localValue) + this.step)
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }
         if (event.key === 'ArrowDown') {
           event.preventDefault()
-          const nr = this.inBounds(parseFloat(this.localValue) - this.step)
+          const nr = this.inBounds(parseInt(this.localValue) - this.step)
           this.localValue = '' + nr
           this.$emit('update:modelValue', nr)
         }

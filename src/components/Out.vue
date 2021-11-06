@@ -61,23 +61,22 @@ export default defineComponent({
         drop: (obj, vm) => {
           if (obj.classList.contains(`only-allow-out-${this.data.type}`)) {
             const inConnection = vm.getConnection()
-            if (this.data.type === inConnection.type) {
-              this.addConnection({
-                out: { parentId: this.data.parentId, id: this.data.id },
-                in: { parentId: inConnection.parentId, id: inConnection.id },
-                data: null
-              })
-              this.resetConnectionDrag()
-              setTimeout(() => {
-                this.updateConnections()
-              }, 0)
-              this.hit = true
-              this.$emit('changed', this.data.key)
-              // reset pos
-              const obj = this.$refs.drag
-              obj.style.top = '0px'
-              obj.style.left = '0px'
-            }
+            this.addConnection({
+              out: { parentId: this.data.parentId, id: this.data.id },
+              in: { parentId: inConnection.parentId, id: inConnection.id },
+              label: this.data.label,
+              color: this.data.color
+            })
+            this.resetConnectionDrag()
+            setTimeout(() => {
+              this.updateConnections()
+            }, 0)
+            this.hit = true
+            this.$emit('changed', this.data.key)
+            // reset pos
+            const obj = this.$refs.drag
+            obj.style.top = '0px'
+            obj.style.left = '0px'
           }
         }
       }
