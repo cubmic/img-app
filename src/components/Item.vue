@@ -3,7 +3,7 @@
     :id="'k' + data.id"
     class="item"
     :class="{ 'item-drag': drag }"
-    :style="`left:${data.x}px; top:${data.y}px; background:${data.color}`"
+    :style="`left:${data.x}px; top:${data.y}px; background:${data.color}; width:${data.width}px`"
     v-drag="dragDefs"
   >
     <div :class="data.expand ? 'bg-grey-4' : ''" style="transition: 0.5s all; pointer-events:none;">
@@ -102,7 +102,6 @@ export default defineComponent({
   .item {
     position: absolute;
     background: #CCC;
-    width: 350px;
     z-index: 0;
     transition: 0.5s box-shadow;
   }

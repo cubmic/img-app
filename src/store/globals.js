@@ -4,6 +4,7 @@ const itemTypeDefs = [
   {
     id: 1,
     group: 'Image',
+    width: 350,
     label: 'Select',
     color: '#9BD',
     icon: 'image',
@@ -18,6 +19,7 @@ const itemTypeDefs = [
   {
     id: 2,
     group: 'Image',
+    width: 350,
     label: 'RGBA',
     color: '#9BD',
     icon: 'palette',
@@ -35,6 +37,7 @@ const itemTypeDefs = [
   {
     id: 3,
     group: 'Image',
+    width: 350,
     label: 'HSL',
     color: '#9BD',
     icon: 'palette',
@@ -51,6 +54,7 @@ const itemTypeDefs = [
   {
     id: 4,
     group: 'Image',
+    width: 350,
     label: 'Preview',
     color: '#9BD',
     icon: 'visibility',
@@ -65,6 +69,7 @@ const itemTypeDefs = [
   {
     id: 5,
     group: 'Image',
+    width: 350,
     label: 'Crop',
     color: '#9BD',
     icon: 'crop',
@@ -83,6 +88,7 @@ const itemTypeDefs = [
   {
     id: 6,
     group: 'Image',
+    width: 350,
     label: 'Resize',
     color: '#9BD',
     icon: 'aspect_ratio',
@@ -99,6 +105,7 @@ const itemTypeDefs = [
   {
     id: 7,
     group: 'Image',
+    width: 350,
     label: 'Gradient',
     color: '#9BD',
     icon: 'gradient',
@@ -114,6 +121,7 @@ const itemTypeDefs = [
   {
     id: 8,
     group: 'Number',
+    width: 200,
     label: 'Integer',
     color: '#ADD',
     icon: 'looks_one',
@@ -128,6 +136,7 @@ const itemTypeDefs = [
   {
     id: 9,
     group: 'Number',
+    width: 200,
     label: 'Float',
     color: '#DDA',
     icon: 'looks_two',
@@ -142,6 +151,7 @@ const itemTypeDefs = [
   {
     id: 10,
     group: 'Number',
+    width: 200,
     label: 'Math',
     color: '#DAA',
     icon: 'calculate',
@@ -203,6 +213,7 @@ export default {
       // copy item type defs into item
       item.label = itemType.label
       item.data = itemType.data
+      item.width = itemType.width
       item.component = itemType.component
       item.color = itemType.color
       item.inputs = itemType.inputs.map((o, i) => {
