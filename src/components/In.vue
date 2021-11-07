@@ -12,10 +12,10 @@
           <div class="dot" :id="'k' + data.id" v-drop ref="drag" :class="dotClass + ` dot-${this.data.color}`" />
         </div>
         <div class="col" @mousedown.stop>
-          <Form-image v-model="value" v-if="data.types[0] === 'image'" />
-          <Form-input v-model="value" v-if="data.types[0] === 'integer'" type="integer" :label="data.label" />
-          <Form-input v-model="value" v-if="data.types[0] === 'float'" type="float" :label="data.label" />
-          <Form-select v-model="value" v-if="data.types[0] === 'select'" :type="data.type" :options="data.options" :label="data.label" />
+          <Form-image v-model="value" v-if="data.type === 'image'" />
+          <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" :label="data.label" />
+          <Form-input v-model="value" v-if="data.type === 'float'" type="float" :label="data.label" />
+          <Form-select v-model="value" v-if="data.type === 'select'" :type="data.type" :options="data.options" :label="data.label" />
         </div>
       </template>
     </div>
@@ -55,7 +55,7 @@ export default defineComponent({
   computed: {
     ...mapGetters('globals', ['connectionWithInId']),
     dotClass () {
-      return this.data.types.map(o => `only-allow-out-${o}`).join(' ')
+      return this.data.allow.map(o => `only-allow-out-${o}`).join(' ')
     },
     connection () {
       return this.connectionWithInId(this.data.id)

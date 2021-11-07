@@ -9,7 +9,7 @@ const itemTypeDefs = [
     icon: 'image',
     component: 'ImageColor',
     inputs: [
-      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null }
+      { allow: ['image'], type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -23,7 +23,7 @@ const itemTypeDefs = [
     icon: 'palette',
     component: 'ImageRGBA',
     inputs: [
-      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null }
+      { allow: ['image'], type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
       { type: 'image', color: 'red', label: 'Red', key: 'red' },
@@ -40,7 +40,7 @@ const itemTypeDefs = [
     icon: 'palette',
     component: 'ImageHSL',
     inputs: [
-      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null }
+      { allow: ['image'], type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Hue', key: 'hue' },
@@ -56,7 +56,7 @@ const itemTypeDefs = [
     icon: 'visibility',
     component: 'ImageOutput',
     inputs: [
-      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null }
+      { allow: ['image'], type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -70,11 +70,11 @@ const itemTypeDefs = [
     icon: 'crop',
     component: 'ImageCrop',
     inputs: [
-      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null },
-      { types: ['integer'], color: 'integer', label: 'Left', key: 'left', value: null },
-      { types: ['integer'], color: 'integer', label: 'Top', key: 'top', value: null },
-      { types: ['integer'], color: 'integer', label: 'Width', key: 'width', value: null },
-      { types: ['integer'], color: 'integer', label: 'Height', key: 'height', value: null }
+      { allow: ['image'], type: 'image', color: 'color', label: 'Color', key: 'color', value: null },
+      { allow: ['integer'], type: 'integer', color: 'integer', label: 'Left', key: 'left', value: null },
+      { allow: ['integer'], type: 'integer', color: 'integer', label: 'Top', key: 'top', value: null },
+      { allow: ['integer'], type: 'integer', color: 'integer', label: 'Width', key: 'width', value: null },
+      { allow: ['integer'], type: 'integer', color: 'integer', label: 'Height', key: 'height', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -88,9 +88,9 @@ const itemTypeDefs = [
     icon: 'aspect_ratio',
     component: 'ImageResize',
     inputs: [
-      { types: ['image'], color: 'color', label: 'Color', key: 'color', value: null },
-      { types: ['integer'], color: 'integer', label: 'Width', key: 'width', value: null },
-      { types: ['integer'], color: 'integer', label: 'Height', key: 'height', value: null }
+      { allow: ['image'], type: 'image', color: 'color', label: 'Color', key: 'color', value: null },
+      { allow: ['integer'], type: 'integer', color: 'integer', label: 'Width', key: 'width', value: null },
+      { allow: ['integer'], type: 'integer', color: 'integer', label: 'Height', key: 'height', value: null }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -104,8 +104,8 @@ const itemTypeDefs = [
     icon: 'gradient',
     component: 'ImageGradient',
     inputs: [
-      { types: ['image'], color: 'alpha', label: 'Lightness', key: 'lightness', value: null },
-      { types: ['array'], color: 'array', label: 'Gradient', key: 'gradient', value: [{ id: 1, color: '#000000ff', percent: 0 }, { id: 2, color: '#00000000', percent: 100 }] }
+      { allow: ['image'], type: 'image', color: 'alpha', label: 'Lightness', key: 'lightness', value: null },
+      { allow: ['array'], type: 'array', color: 'array', label: 'Gradient', key: 'gradient', value: [{ id: 1, color: '#000000ff', percent: 0 }, { id: 2, color: '#00000000', percent: 100 }] }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -119,7 +119,7 @@ const itemTypeDefs = [
     icon: 'looks_one',
     component: 'NumberInput',
     inputs: [
-      { types: ['integer'], color: 'integer', label: 'Integer', key: 'number', value: null }
+      { allow: ['integer', 'float'], type: 'integer', color: 'number', label: 'Integer', key: 'number', value: null }
     ],
     outputs: [
       { type: 'integer', color: 'integer', label: 'Integer', key: 'number' }
@@ -133,7 +133,7 @@ const itemTypeDefs = [
     icon: 'looks_two',
     component: 'NumberInput',
     inputs: [
-      { types: ['float'], color: 'float', label: 'Float', key: 'number', value: null }
+      { allow: ['float', 'integer'], type: 'float', color: 'number', label: 'Float', key: 'number', value: null }
     ],
     outputs: [
       { type: 'float', color: 'float', label: 'Float', key: 'number' }
@@ -147,9 +147,9 @@ const itemTypeDefs = [
     icon: 'calculate',
     component: 'NumberMath',
     inputs: [
-      { types: ['integer', 'float'], color: 'number', label: 'Float', key: 'numberA', value: null },
-      { types: ['integer', 'float'], color: 'number', label: 'Float', key: 'numberB', value: null },
-      { types: ['select'], color: 'select', label: 'Function', key: 'func', value: null, options: [{ label: 'Add', value: '+' }, { label: 'Substract', value: '-' }, { label: 'Multiply', value: '*' }, { label: 'Divide', value: '/' }] }
+      { allow: ['integer', 'float'], type: 'float', color: 'number', label: 'Float', key: 'numberA', value: null },
+      { allow: ['integer', 'float'], type: 'float', color: 'number', label: 'Float', key: 'numberB', value: null },
+      { allow: ['select'], type: 'select', color: 'select', label: 'Function', key: 'func', value: { label: 'Add', value: '+' }, options: [{ label: 'Add', value: '+' }, { label: 'Substract', value: '-' }, { label: 'Multiply', value: '*' }, { label: 'Divide', value: '/' }] }
     ],
     outputs: [
       { type: 'float', color: 'float', label: 'Float', key: 'number' }
