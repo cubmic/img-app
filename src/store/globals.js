@@ -112,7 +112,17 @@ const itemTypeDefs = [
     component: 'ImageGradient',
     inputs: [
       { allow: ['image'], type: 'image', color: 'alpha', label: 'Lightness', key: 'lightness', value: null },
-      { allow: ['array'], type: 'array', color: 'array', label: 'Gradient', key: 'gradient', value: [{ id: 1, color: '#000000ff', percent: 0 }, { id: 2, color: '#00000000', percent: 100 }] }
+      {
+        allow: ['array'],
+        type: 'array',
+        color: 'array',
+        label: 'Gradient',
+        key: 'gradient',
+        value: [
+          { id: 1, color: '#000000ff', percent: 0 },
+          { id: 2, color: '#00000000', percent: 100 }
+        ]
+      }
     ],
     outputs: [
       { type: 'image', color: 'color', label: 'Color', key: 'color' }
@@ -159,7 +169,24 @@ const itemTypeDefs = [
     inputs: [
       { allow: ['integer', 'float'], type: 'float', color: 'number', label: 'Float', key: 'numberA', value: null },
       { allow: ['integer', 'float'], type: 'float', color: 'number', label: 'Float', key: 'numberB', value: null },
-      { allow: ['select'], type: 'select', color: 'select', label: 'Function', key: 'func', value: { label: 'Add', value: '+' }, options: [{ label: 'Add', value: '+' }, { label: 'Substract', value: '-' }, { label: 'Multiply', value: '*' }, { label: 'Divide', value: '/' }] }
+      {
+        allow: ['select'],
+        type: 'select',
+        color: 'select',
+        label: 'Function',
+        key: 'func',
+        value: { label: 'Add', value: '+' },
+        options: [
+          { label: 'Add', value: '+' },
+          { label: 'Substract', value: '-' },
+          { label: 'Multiply', value: 'x' },
+          { label: 'Divide', value: '÷' },
+          { label: 'Percent', value: '%' },
+          { label: 'Max', value: '>' },
+          { label: 'Min', value: '<' },
+          { label: 'Mid', value: '=' }
+        ]
+      }
     ],
     outputs: [
       { type: 'float', color: 'float', label: 'Float', key: 'number' }

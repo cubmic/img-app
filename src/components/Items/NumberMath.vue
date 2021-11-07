@@ -1,6 +1,8 @@
 <template>
   <div class="q-pa-sm">
-    {{ numberA || 0 }} {{ func.value }} {{ numberB || 0 }} = {{ preview }}
+    <template v-if="['+', '-', 'x', '÷', '%'].includes(func.value)">
+      {{ numberA || 0 }} {{ func.value }} {{ numberB || 0 }}
+    </template> = {{ preview }}
   </div>
 </template>
 

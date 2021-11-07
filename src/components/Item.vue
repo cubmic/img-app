@@ -38,12 +38,12 @@
 
       <!-- connectors -->
       <div class="row q-ma-xs">
-        <div class="col-6">
+        <div class="col-7">
           <div class="column q-gutter-xs justify-start">
             <In v-for="item in data.inputs" :key="item.id" :data="item" />
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-5">
           <div class="column q-gutter-xs justify-start">
             <Out v-for="item in data.outputs" :key="item.id" :data="item" @changed="updateConnection" />
           </div>

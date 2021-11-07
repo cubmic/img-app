@@ -40,21 +40,33 @@ const methods = {
     const fb = ('' + b).replace(/^[^.]*./, '').length
     const factor = Math.max(fa, fb)
     const multiply = Math.pow(10, factor)
-    a = Math.round(a * multiply)
-    b = Math.round(b * multiply)
+    const a2 = Math.round(a * multiply)
+    const b2 = Math.round(b * multiply)
     let result = null
     switch (op) {
       case '+':
-        result = (a + b) / multiply
+        result = (a2 + b2) / multiply
         break
       case '-':
-        result = (a - b) / multiply
+        result = (a2 - b2) / multiply
         break
-      case '*':
-        result = a * b / Math.pow(multiply, 2)
+      case 'x':
+        result = a2 * b2 / Math.pow(multiply, 2)
         break
-      case '/':
-        result = a / b
+      case '÷':
+        result = a2 / b2
+        break
+      case '%':
+        result = a2 * b2 / Math.pow(multiply, 2) / 100
+        break
+      case '>':
+        result = Math.max(a, b)
+        break
+      case '<':
+        result = Math.min(a, b)
+        break
+      case '=':
+        result = (a2 + b2) / multiply / 2
         break
     }
     return result
