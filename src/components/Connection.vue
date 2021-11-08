@@ -1,5 +1,6 @@
 <template>
-  <path :d="`M${l} ${t} C${l + w / 2} ${t}, ${l + w / 2} ${b}, ${r} ${b - 2}`" />
+  <path :d="`M${l} ${t} C${l + Math.min(w / 2, -50)} ${t}, ${r - Math.min(w / 2, -50)} ${b}, ${r} ${b}`" />
+  <!--  <path :d="`M${l},${t} Q${l + w * 0.4},${t} ${l + w * 0.5},${(b + t) / 2} T${r},${b - 2}`" /> -->
 </template>
 
 <script>

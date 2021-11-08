@@ -220,8 +220,8 @@ export default {
       const dragX = state.connectionDrag ? [state.connectionDrag.in.x, state.connectionDrag.out.x] : [0]
       const dragY = state.connectionDrag ? [state.connectionDrag.in.y, state.connectionDrag.out.y] : [0]
       return {
-        width: Math.max(0, ...state.connections.map(o => o.in.x), ...state.connections.map(o => o.out.x), ...dragX),
-        height: Math.max(0, ...state.connections.map(o => o.in.y), ...state.connections.map(o => o.out.y), ...dragY)
+        width: Math.max(0, ...state.connections.map(o => o.in.x), ...state.connections.map(o => o.out.x), ...dragX) + 50,
+        height: Math.max(0, ...state.connections.map(o => o.in.y), ...state.connections.map(o => o.out.y), ...dragY) + 50
       }
     },
     allOutConnectionWithItemId: state => parentId => state.connections.filter(o => o.out.parentId === parentId),
