@@ -29,7 +29,7 @@ export default defineComponent({
   },
   watch: {
     color: {
-      handler (newVal) {
+      handler () {
         this.updateConnection()
       },
       immediate: true

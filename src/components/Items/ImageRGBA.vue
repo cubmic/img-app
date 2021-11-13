@@ -35,6 +35,7 @@ export default defineComponent({
   methods: {
     updateConnection () {
       // update all connections
+      this.out.color(this.color)
       for (const channel of Object.keys(this.channels)) {
         this.$utils.getRGBAChannel(this.color, image => {
           this.out[channel](image)

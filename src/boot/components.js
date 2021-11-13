@@ -17,6 +17,7 @@ import ImageColor from 'src/components/Items/ImageColor.vue'
 import ImageGradient from 'src/components/Items/ImageGradient.vue'
 import ImageRGBA from 'src/components/Items/ImageRGBA.vue'
 import ImageHSL from 'src/components/Items/ImageHSL.vue'
+import ImageMixer from 'src/components/Items/ImageMixer.vue'
 import ImageOutput from 'src/components/Items/ImageOutput.vue'
 import ImageResize from 'src/components/Items/ImageResize.vue'
 import ImageCrop from 'src/components/Items/ImageCrop.vue'
@@ -42,6 +43,7 @@ export default boot(({ app }) => {
   app.component('ImageGradient', ImageGradient)
   app.component('ImageRGBA', ImageRGBA)
   app.component('ImageHSL', ImageHSL)
+  app.component('ImageMixer', ImageMixer)
   app.component('ImageOutput', ImageOutput)
   app.component('ImageResize', ImageResize)
   app.component('ImageCrop', ImageCrop)

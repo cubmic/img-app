@@ -79,8 +79,19 @@ const methods = {
     obj.style.top = (objRect.top - newParentRect.top) + 'px'
   },
   clamp: (a, min = 0, max = 1) => Math.min(max, Math.max(min, a)),
-  invlerp: (x, y, a) => methods.clamp((a - x) / (y - x)),
+  invlerp (x, y, a) {
+    if (x === y) {
+      return 0.5
+    }
+    return this.clamp((a - x) / (y - x))
+  },
   lerp: (start, end, a) => (1 - a) * start + a * end,
+  radiansToDegrees (radians) {
+    return radians * (180 / Math.PI)
+  },
+  degreesToRadians (degrees) {
+    return degrees / (180 / Math.PI)
+  },
   animate (start, end, duration = 1.0, ease = 'linear', fps = 30, callback, completed) {
     const now = Date.now()
     const props = {

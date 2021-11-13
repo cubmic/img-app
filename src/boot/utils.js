@@ -2,37 +2,18 @@ import { boot } from 'quasar/wrappers'
 
 export default boot(({ app }) => {
   app.config.globalProperties.$utils = {
-    clamp: (a, min = 0, max = 1) => Math.min(max, Math.max(min, a)),
-    invlerp (x, y, a) {
-      if (x === y) {
-        return 0.5
-      }
-      return this.clamp((a - x) / (y - x))
-    },
-    lerp: (start, end, a) => (1 - a) * start + a * end,
     getRGBAChannel (image, callback, channel = { r: true, g: true, b: true, a: true }) {
       if (!image) {
         callback(null)
         return
       }
       this.urlToImgData(image.data, imageData => {
-        for (let nr = 0; nr < imageData.data.length; nr += 4) {
-          // rgba
-          if (!(channel.r && channel.g && channel.b && channel.a)) {
-            let k = null
-            if (channel.r) {
-              k = 0
-            } else if (channel.g) {
-              k = 1
-            } else if (channel.b) {
-              k = 2
-            } else if (channel.a) {
-              k = 3
-            }
-            imageData.data[nr + 0] = imageData.data[nr + k]
-            imageData.data[nr + 1] = imageData.data[nr + k]
-            imageData.data[nr + 2] = imageData.data[nr + k]
-            imageData.data[nr + 3] = 255 // a
+        if (!(channel.r && channel.g && channel.b && channel.a)) {
+          for (let nr = 0; nr < imageData.data.length; nr += 4) {
+            imageData.data[nr + 0] = channel.a ? imageData.data[nr + 3] : (channel.r ? imageData.data[nr + 0] : 0)
+            imageData.data[nr + 1] = channel.a ? imageData.data[nr + 3] : (channel.g ? imageData.data[nr + 1] : 0)
+            imageData.data[nr + 2] = channel.a ? imageData.data[nr + 3] : (channel.b ? imageData.data[nr + 2] : 0)
+            imageData.data[nr + 3] = 255
           }
         }
         const newImage = { data: this.imgDataToUrl(imageData), label: image.label }
@@ -66,6 +47,27 @@ export default boot(({ app }) => {
         const newImage = { data: this.imgDataToUrl(imageData), label: image.label }
         callback(newImage)
       })
+    },
+    combineImages (image1, image2, func, callback) {
+      if (!image1 || !image2) {
+        callback(null)
+        return
+      }
+      const img1 = new Image()
+      img1.src = image1.data
+      const img2 = new Image()
+      img2.src = image2.data
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      img1.onload = () => {
+        canvas.width = img1.width
+        canvas.height = img1.height
+        ctx.drawImage(img1, 0, 0, img1.width, img1.height)
+        ctx.globalCompositeOperation = func
+        ctx.drawImage(img2, 0, 0, img2.width, img2.height)
+        const newImage = { data: this.imgDataToUrl(ctx.getImageData(0, 0, img1.width, img1.height)), label: image1.label + '-' + image2.label }
+        callback(newImage)
+      }
     },
     getImgGradient (image, callback, gradient) {
       if (!image) {

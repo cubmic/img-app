@@ -28,6 +28,7 @@ const itemTypeDefs = [
       { allow: ['image'], type: 'image', color: 'color', label: 'Color', key: 'color', value: null }
     ],
     outputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'color' },
       { type: 'image', color: 'red', label: 'Red', key: 'red' },
       { type: 'image', color: 'green', label: 'Green', key: 'green' },
       { type: 'image', color: 'blue', label: 'Blue', key: 'blue' },
@@ -106,6 +107,58 @@ const itemTypeDefs = [
     id: 7,
     group: 'Image',
     width: 350,
+    label: 'Mixer',
+    color: '#9BD',
+    icon: 'call_merge',
+    component: 'ImageMixer',
+    inputs: [
+      { allow: ['image'], type: 'image', color: 'color', label: 'Color', key: 'color1', value: null },
+      { allow: ['image'], type: 'image', color: 'color', label: 'Color', key: 'color2', value: null },
+      {
+        allow: ['select'],
+        type: 'select',
+        color: 'select',
+        label: 'Function',
+        key: 'func',
+        value: { label: 'Source Over', value: 'source-over' },
+        options: [
+          { label: 'Source Over', value: 'source-over' },
+          { label: 'Source In', value: 'source-in' },
+          { label: 'Source Out', value: 'source-out' },
+          { label: 'Source Atop', value: 'source-atop' },
+          { label: 'Destination Over', value: 'destination-over' },
+          { label: 'Destination In', value: 'destination-in' },
+          { label: 'Destination Out', value: 'destination-out' },
+          { label: 'Destination Atop', value: 'destination-atop' },
+          { label: 'Lighter', value: 'lighter' },
+          { label: 'Copy', value: 'copy' },
+          { label: 'Xor', value: 'xor' },
+          { label: 'Multiply', value: 'multiply' },
+          { label: 'Screen', value: 'screen' },
+          { label: 'Overlay', value: 'overlay' },
+          { label: 'Darken', value: 'darken' },
+          { label: 'Lighten', value: 'lighten' },
+          { label: 'Color Dodge', value: 'color-dodge' },
+          { label: 'Color Burn', value: 'color-burn' },
+          { label: 'Hard Light', value: 'hard-light' },
+          { label: 'Soft Light', value: 'soft-light' },
+          { label: 'Difference', value: 'difference' },
+          { label: 'Exclusion', value: 'exclusion' },
+          { label: 'Hue', value: 'hue' },
+          { label: 'Saturation', value: 'saturation' },
+          { label: 'Color', value: 'color' },
+          { label: 'Luminosity', value: 'luminosity' }
+        ]
+      }
+    ],
+    outputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'color' }
+    ]
+  },
+  {
+    id: 8,
+    group: 'Image',
+    width: 350,
     label: 'Gradient',
     color: '#9BD',
     icon: 'gradient',
@@ -129,7 +182,7 @@ const itemTypeDefs = [
     ]
   },
   {
-    id: 8,
+    id: 9,
     group: 'Number',
     width: 200,
     label: 'Integer',
@@ -144,7 +197,7 @@ const itemTypeDefs = [
     ]
   },
   {
-    id: 9,
+    id: 10,
     group: 'Number',
     width: 200,
     label: 'Float',
@@ -159,7 +212,7 @@ const itemTypeDefs = [
     ]
   },
   {
-    id: 10,
+    id: 11,
     group: 'Number',
     width: 200,
     label: 'Math',
