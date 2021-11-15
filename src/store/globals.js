@@ -131,7 +131,6 @@ const itemTypeDefs = [
           { label: 'Destination Out', value: 'destination-out' },
           { label: 'Destination Atop', value: 'destination-atop' },
           { label: 'Lighter', value: 'lighter' },
-          { label: 'Copy', value: 'copy' },
           { label: 'Xor', value: 'xor' },
           { label: 'Multiply', value: 'multiply' },
           { label: 'Screen', value: 'screen' },
@@ -243,6 +242,22 @@ const itemTypeDefs = [
     ],
     outputs: [
       { type: 'float', color: 'float', label: 'Float', key: 'number' }
+    ]
+  },
+  {
+    id: 12,
+    group: 'Paint',
+    width: 300,
+    label: 'Math',
+    color: '#ADA',
+    icon: 'star_rate',
+    component: 'PaintKaleidoscope',
+    inputs: [
+      { allow: ['integer'], type: 'integer', color: 'number', label: 'Repeat', key: 'repeat', value: null },
+      { allow: ['array'], type: 'array', color: 'array', label: 'Points', key: 'points', value: null }
+    ],
+    outputs: [
+      { type: 'image', color: 'color', label: 'Color', key: 'color' }
     ]
   }
 ]

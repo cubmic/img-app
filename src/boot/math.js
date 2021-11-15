@@ -90,7 +90,22 @@ const methods = {
     return radians * (180 / Math.PI)
   },
   degreesToRadians (degrees) {
-    return degrees / (180 / Math.PI)
+    return degrees / (Math.PI / 180)
+  },
+  distanceBetween (p1, p2) {
+    return Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2))
+  },
+  degreesBetween (p1, p2) {
+    return ((((Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180) / Math.PI) - 90) + 360) % 360
+  },
+  angleBetween (p1, p2) {
+    return Math.atan2(p2.y - p1.y, p2.x - p1.x)
+  },
+  addPos (p1, p2) {
+    return { x: p1.x + p2.x, y: p1.y + p2.y }
+  },
+  subtractPos (p1, p2) {
+    return { x: p1.x - p2.x, y: p1.y - p2.y }
   },
   animate (start, end, duration = 1.0, ease = 'linear', fps = 30, callback, completed) {
     const now = Date.now()

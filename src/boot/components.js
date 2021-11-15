@@ -25,6 +25,8 @@ import ImageCrop from 'src/components/Items/ImageCrop.vue'
 import NumberInput from 'src/components/Items/NumberInput.vue'
 import NumberMath from 'src/components/Items/NumberMath.vue'
 
+import PaintKaleidoscope from 'src/components/Items/PaintKaleidoscope.vue'
+
 export default boot(({ app }) => {
   app.component('IconButton', IconButton)
   app.component('JsonUploadButton', JsonUploadButton)
@@ -50,4 +52,6 @@ export default boot(({ app }) => {
 
   app.component('NumberInput', NumberInput)
   app.component('NumberMath', NumberMath)
+
+  app.component('PaintKaleidoscope', PaintKaleidoscope)
 })
