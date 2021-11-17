@@ -1,6 +1,6 @@
 <template>
   <div style="position:relative">
-    <canvas ref="plot" :width="width" :height="height" style="border:1px solid #000000;" @click="addPoint">
+    <canvas ref="plot" :width="width" :height="height" style="border:1px solid #000000; border-radius:50%" @click="addPoint">
     </canvas>
     <div
       v-for="(point, index) in points" :key="index"
@@ -49,6 +49,21 @@ export default defineComponent({
         }, 0)
       },
       immediate: true
+    },
+    fill () {
+      setTimeout(() => {
+        this.drawCanvas()
+      }, 0)
+    },
+    lineWidth () {
+      setTimeout(() => {
+        this.drawCanvas()
+      }, 0)
+    },
+    separate () {
+      setTimeout(() => {
+        this.drawCanvas()
+      }, 0)
     }
   },
   computed: {
@@ -74,19 +89,47 @@ export default defineComponent({
       const c = this.$refs.plot
       const ctx = c.getContext('2d')
       ctx.clearRect(0, 0, this.width, this.height)
-      ctx.beginPath() // to clear also for new path
-      ctx.moveTo(this.points[0].x + 10, this.points[0].y + 10)
-      for (let r = 0; r < this.repeat; r++) {
-        for (let i = 0; i < this.points.length; i++) {
-          const distance = this.$math.distanceBetween(this.$math.addPos(this.points[i], { x: 10, y: 10 }), this.center)
-          const angle = this.$math.angleBetween(this.$math.addPos(this.points[i], { x: 10, y: 10 }), this.center)
-          const x = this.center.x + distance * Math.cos(r * this.step + angle + Math.PI)
-          const y = this.center.y + distance * Math.sin(r * this.step + angle + Math.PI)
-          ctx.lineTo(x, y)
+      if (this.points.length > 0 && this.repeat > 0) {
+        ctx.moveTo(this.points[0].x + 10, this.points[0].y + 10)
+        ctx.beginPath() // to clear also for new path
+        ctx.lineWidth = this.lineWidth
+        ctx.lineCap = 'round'
+        for (let r = 0; r < this.repeat; r++) {
+          if (this.separate) {
+            ctx.moveTo(this.points[0].x + 10, this.points[0].y + 10)
+            ctx.beginPath()
+          }
+          for (let i = 0; i < this.points.length; i++) {
+            const distance = this.$math.distanceBetween(this.$math.addPos(this.points[i], { x: 10, y: 10 }), this.center)
+            const angle = this.$math.angleBetween(this.$math.addPos(this.points[i], { x: 10, y: 10 }), this.center)
+            const x = this.center.x + distance * Math.cos(r * this.step + angle + Math.PI)
+            const y = this.center.y + distance * Math.sin(r * this.step + angle + Math.PI)
+            ctx.lineTo(x, y)
+          }
+          if (this.separate) {
+            ctx.closePath()
+            ctx.stroke()
+            if (this.fill) {
+              ctx.fill()
+            }
+          }
         }
+        ctx.closePath()
+        ctx.stroke()
+        if (this.fill) {
+          ctx.fill()
+        }
+        const imageData = ctx.getImageData(0, 0, this.width, this.height)
+        const image = {
+          data: this.$utils.imgDataToUrl(imageData),
+          label: 'image',
+          width: this.width,
+          height: this.height
+        }
+        this.out.color(image)
+      } else {
+        this.out.color(null)
       }
-      ctx.lineTo(this.points[0].x + 10, this.points[0].y + 10)
-      ctx.stroke()
     }
   }
 })

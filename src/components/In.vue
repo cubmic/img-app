@@ -13,6 +13,7 @@
         </div>
         <div class="col" @mousedown.stop>
           <Form-image v-model="value" v-if="data.type === 'image'" />
+          <Form-toggle v-model="value" v-if="data.type === 'boolean'" :label="data.label" />
           <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" :label="data.label" />
           <Form-input v-model="value" v-if="data.type === 'float'" type="float" :label="data.label" />
           <Form-select v-model="value" v-if="data.type === 'select'" :type="data.type" :options="data.options" :label="data.label" />

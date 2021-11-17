@@ -7,6 +7,7 @@ import Gradient from 'src/components/Gradient.vue'
 import FormInput from 'src/components/FormInput.vue'
 import FormSelect from 'src/components/FormSelect.vue'
 import FormImage from 'src/components/FormImage.vue'
+import FormToggle from 'src/components/FormToggle.vue'
 
 import In from 'src/components/In.vue'
 import Out from 'src/components/Out.vue'
@@ -35,6 +36,7 @@ export default boot(({ app }) => {
   app.component('FormInput', FormInput)
   app.component('FormSelect', FormSelect)
   app.component('FormImage', FormImage)
+  app.component('FormToggle', FormToggle)
 
   app.component('In', In)
   app.component('Out', Out)
