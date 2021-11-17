@@ -1,13 +1,15 @@
 <template>
-  <div style="position:relative">
-    <canvas ref="plot" :width="width" :height="height" style="border:1px solid #000000; border-radius:50%" @click="addPoint">
-    </canvas>
-    <div
-      v-for="(point, index) in points" :key="index"
-      class="dot"
-      :style="`left:${point.x}px; top:${point.y}px`"
-      v-drag="dragDefs(index)"
-    />
+  <div class="row justify-center">
+    <div style="position:relative">
+      <canvas ref="plot" :width="width" :height="height" class="q-color-picker__header-bg" style="border-radius:50%" @click="addPoint">
+      </canvas>
+      <div
+        v-for="(point, index) in points" :key="index"
+        class="dot"
+        :style="`left:${point.x}px; top:${point.y}px`"
+        v-drag="dragDefs(index)"
+      />
+    </div>
   </div>
 </template>
 

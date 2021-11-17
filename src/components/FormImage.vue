@@ -1,5 +1,5 @@
 <template>
-  <q-file dense outlined v-model="img" bg-color="grey-4">
+  <q-file dense outlined v-model="img" bg-color="grey-4" class="image-select">
     <template v-slot:prepend>
       <img :src="modelValue.data" height="30" v-if="modelValue" />
     </template>
@@ -9,6 +9,13 @@
     </template>
   </q-file>
 </template>
+
+<style>
+.image-select .q-field__native div {
+  text-overflow: ellipsis;
+  word-break: normal;
+}
+</style>
 
 <script>
 import { defineComponent } from 'vue'
