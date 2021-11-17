@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/cubmic/img-app/compare/v0.5.0...v0.5.1) (2021-11-17)
+
+
+### Features
+
+* add image mixer ([a78f5d0](https://github.com/cubmic/img-app/commit/a78f5d05616647ef57c528f00ba9c8ee09827fe1))
+* add Kaleidoscope ([4be5eeb](https://github.com/cubmic/img-app/commit/4be5eebfc617f719592ab4f9d27935814fe9d2b4))
+* add standard-version ([c555138](https://github.com/cubmic/img-app/commit/c5551382b6f6ff6c2075300aac00f66fc40bd345))
+* add toolbar ([1ea74c6](https://github.com/cubmic/img-app/commit/1ea74c619ff06beeeef28f64a8755c3e95f5cba5))
+* better spline ([b383537](https://github.com/cubmic/img-app/commit/b383537e8067e9b9347cfadda4bd3ea5adaacb54))
+* complete kaleidoscope ([553d5f0](https://github.com/cubmic/img-app/commit/553d5f0c1a020a233a9f927b8c5be5e4b6b03bb8))
+* connection type handling ([305ac16](https://github.com/cubmic/img-app/commit/305ac16873821dcebbe21d10034ccdf8a5e415cb))
+* different width ([dc1a642](https://github.com/cubmic/img-app/commit/dc1a6422c8b3b57e87356c91914cf2148f592ee4))
+* extend math ([31cf873](https://github.com/cubmic/img-app/commit/31cf8737c420c5e42483d9eec32bcf0fc3ab25d8))
+
+
+### Bug Fixes
+
+* allow & type ([cadc504](https://github.com/cubmic/img-app/commit/cadc5040ce863b27bdb9abd008b1001ce2a94b20))
+* float operations ([13dc85e](https://github.com/cubmic/img-app/commit/13dc85e7af6ff16fc5a9c2a42e1720d7d0bbecef))
+* forward drag state to parent ([2ffa2a7](https://github.com/cubmic/img-app/commit/2ffa2a7d4fafcc276ba5084f76afd46b8fb1cfcc))
+* style ([12deae8](https://github.com/cubmic/img-app/commit/12deae86b9b9df88b72c3206b16c116180cbae0c))
+* to float ([9bc7ce8](https://github.com/cubmic/img-app/commit/9bc7ce8d5fbe5b8e2e2af63c497f26049c8f4ec3))
+
 ## [0.5.0](https://github.com/cubmic/img-app/compare/v0.0.2...v0.5.0) (2021-11-04)
 
 ### 0.0.2 (2021-11-04)
