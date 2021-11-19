@@ -1,7 +1,14 @@
 <template>
   <div class="row justify-center">
     <div style="position:relative">
-      <canvas ref="plot" :width="width" :height="height" class="q-color-picker__header-bg" style="border-radius:50%" @click="addPoint">
+      <canvas
+        ref="plot"
+        :width="size"
+        :height="size"
+        class="q-color-picker__header-bg"
+        :style="`width:${previewSize}px; height:${previewSize}px; border-radius:50%`"
+        @click="addPoint"
+      >
       </canvas>
       <div
         v-for="(point, index) in points" :key="index"
@@ -27,8 +34,7 @@ export default defineComponent({
   },
   data () {
     return {
-      width: 200,
-      height: 200,
+      previewSize: 200,
       dragDefs: index => {
         return {
           drag: (pos) => {
@@ -66,20 +72,31 @@ export default defineComponent({
       setTimeout(() => {
         this.drawCanvas()
       }, 0)
+    },
+    radius () {
+      setTimeout(() => {
+        this.drawCanvas()
+      }, 0)
     }
   },
   computed: {
     center () {
-      return { x: this.width / 2, y: this.height / 2 }
+      return { x: this.radius, y: this.radius }
     },
     step () {
       return Math.max(0, 2 * Math.PI / this.repeat)
+    },
+    size () {
+      return this.radius * 2
     }
   },
   methods: {
+    zoom (nr) {
+      return (nr + 10) * this.size / this.previewSize
+    },
     addPoint (event) {
       const points = this.points ? JSON.parse(JSON.stringify(this.points)) : []
-      const point = { x: event.layerX - event.target.offsetLeft - 10, y: event.layerY - event.target.offsetTop - 10 }
+      const point = { x: event.layerX - event.target.offsetLeft, y: event.layerY - event.target.offsetTop }
       points.push(point)
       this.points = points
       this.drawCanvas()
@@ -90,20 +107,22 @@ export default defineComponent({
     drawCanvas () {
       const c = this.$refs.plot
       const ctx = c.getContext('2d')
-      ctx.clearRect(0, 0, this.width, this.height)
-      if (this.points.length > 0 && this.repeat > 0) {
-        ctx.moveTo(this.points[0].x + 10, this.points[0].y + 10)
+      ctx.clearRect(0, 0, this.size, this.size)
+      if (this.points.length > 0 && this.repeat > 0 && this.radius > 0) {
+        const p1 = { x: this.zoom(this.points[0].x), y: this.zoom(this.points[0].y) }
+        ctx.moveTo(p1.x, p1.y)
         ctx.beginPath() // to clear also for new path
         ctx.lineWidth = this.lineWidth
         ctx.lineCap = 'round'
         for (let r = 0; r < this.repeat; r++) {
           if (this.separate) {
-            ctx.moveTo(this.points[0].x + 10, this.points[0].y + 10)
+            ctx.moveTo(p1.x, p1.y)
             ctx.beginPath()
           }
           for (let i = 0; i < this.points.length; i++) {
-            const distance = this.$math.distanceBetween(this.$math.addPos(this.points[i], { x: 10, y: 10 }), this.center)
-            const angle = this.$math.angleBetween(this.$math.addPos(this.points[i], { x: 10, y: 10 }), this.center)
+            const p = { x: this.zoom(this.points[i].x), y: this.zoom(this.points[i].y) }
+            const distance = this.$math.distanceBetween(p, this.center)
+            const angle = this.$math.angleBetween(p, this.center)
             const x = this.center.x + distance * Math.cos(r * this.step + angle + Math.PI)
             const y = this.center.y + distance * Math.sin(r * this.step + angle + Math.PI)
             ctx.lineTo(x, y)
@@ -121,12 +140,12 @@ export default defineComponent({
         if (this.fill) {
           ctx.fill()
         }
-        const imageData = ctx.getImageData(0, 0, this.width, this.height)
+        const imageData = ctx.getImageData(0, 0, this.size, this.size)
         const image = {
           data: this.$utils.imgDataToUrl(imageData),
           label: 'image',
-          width: this.width,
-          height: this.height
+          width: this.size,
+          height: this.size
         }
         this.out.color(image)
       } else {

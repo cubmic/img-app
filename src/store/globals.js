@@ -253,7 +253,8 @@ const itemTypeDefs = [
     icon: 'star_rate',
     component: 'PaintKaleidoscope',
     inputs: [
-      { allow: ['integer'], type: 'integer', color: 'number', label: 'Repeat', key: 'repeat', value: null },
+      { allow: ['integer'], type: 'integer', color: 'integer', label: 'Repeat', key: 'repeat', value: 1 },
+      { allow: ['integer'], type: 'integer', color: 'integer', label: 'Radius', key: 'radius', value: 100 },
       { allow: ['array'], type: 'array', color: 'array', label: 'Points', key: 'points', value: [] },
       { allow: ['boolean'], type: 'boolean', color: 'boolean', label: 'Fill', key: 'fill', value: false },
       { allow: ['boolean'], type: 'boolean', color: 'boolean', label: 'Separate', key: 'separate', value: false },
