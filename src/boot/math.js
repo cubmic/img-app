@@ -34,7 +34,7 @@ const EasingFunctions = {
   easeOutBack: t => { const c1 = 1.70158; const c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2) }
 }
 
-const methods = {
+const $math = {
   floatOperations (a, b, op) {
     const fa = ('' + a).replace(/^[^.]*./, '').length
     const fb = ('' + b).replace(/^[^.]*./, '').length
@@ -120,25 +120,25 @@ const methods = {
       startTime: now,
       endTime: now + duration * 1000 // durtion in milisec
     }
-    methods.animateLoop(props)
+    $math.animateLoop(props)
   },
   animateLoop (props) {
     const now = Date.now()
     if (now < props.endTime) {
-      const value = methods.invlerp(props.startTime, props.endTime, now)
+      const value = $math.invlerp(props.startTime, props.endTime, now)
       if (props.callback) {
         if (typeof props.start === 'object') {
           const obj = {}
           for (const key of Object.keys(props.start)) {
-            obj[key] = methods.lerp(props.start[key], props.end[key], props.ease(value))
+            obj[key] = $math.lerp(props.start[key], props.end[key], props.ease(value))
           }
           props.callback(obj, value)
         } else {
-          props.callback(methods.lerp(props.start, props.end, props.ease(value)), value)
+          props.callback($math.lerp(props.start, props.end, props.ease(value)), value)
         }
       }
       setTimeout(() => {
-        methods.animateLoop(props)
+        $math.animateLoop(props)
       }, props.frame)
     } else {
       if (props.callback) {
@@ -152,5 +152,7 @@ const methods = {
 }
 
 export default boot(({ app }) => {
-  app.config.globalProperties.$math = methods
+  app.config.globalProperties.$math = $math
 })
+
+export { $math }
