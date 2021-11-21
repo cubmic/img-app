@@ -16,6 +16,23 @@
         :style="`left:${point.x}px; top:${point.y}px`"
         v-drag="dragDefs(index)"
       />
+      <!-- info -->
+      <q-btn icon="info" size="md" round flat padding="none" :style="`position:absolute; left:${previewSize*0.87}px; top:${previewSize*0.87}px`">
+        <q-popup-proxy>
+          <q-card>
+            <q-card-section class="q-pa-xs" style="white-space:pre;">
+              {{ $t('kaleidoskope.info') }}
+            </q-card-section>
+            <q-card-section class="q-pa-xs q-pt-none">
+              <div class="row q-col-gutter-sm">
+                <div>
+                  <q-btn :label="$t('btn.close')" v-close-popup />
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-popup-proxy>
+      </q-btn>
     </div>
   </div>
 </template>
@@ -44,6 +61,19 @@ export default defineComponent({
               this.points = points
               this.drawCanvas()
             }, 0)
+          },
+          end: (vm, moveDelta, moveDistance, actualPos) => {
+            const previewHalfSize = this.previewSize / 2
+            const distance = this.$math.distanceBetween(
+              { x: actualPos.x + 10, y: actualPos.y + 10 },
+              { x: previewHalfSize, y: previewHalfSize }
+            )
+            if (distance > previewHalfSize) {
+              const points = JSON.parse(JSON.stringify(this.points))
+              points.splice(index, 1)
+              this.points = points
+              this.drawCanvas()
+            }
           }
         }
       }

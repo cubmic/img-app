@@ -1,19 +1,40 @@
 <template>
-  <div class="q-ma-sm q-mb-xl">
-    <div class="gradient q-color-picker__header-bg">
-      <div class="gradient" :style="gradient" ref="gradient" @click="addDot">
-        <div
-          v-for="item in localValue"
-          :key="item.id"
-          class="dot"
-          :ref="`dot-${item.id}`"
-          :style="`left:${this.percentToPos(item.percent)}px; background:${item.color}; border: 1px solid ${$utils.contrastColor(item.color)}`"
-          v-drag="dragDefs(item)"
-          @click.stop
-        >
-          <div class="line" :style="`background: ${$utils.contrastColor(item.color)}`" />
+  <div class="row q-col-gutter-sm q-ma-sm q-mb-xl">
+    <div class="col">
+      <div class="gradient q-color-picker__header-bg">
+        <div class="gradient" :style="gradient" ref="gradient" @click="addDot">
+          <div
+            v-for="item in localValue"
+            :key="item.id"
+            class="dot"
+            :ref="`dot-${item.id}`"
+            :style="`left:${this.percentToPos(item.percent)}px; background:${item.color}; border: 1px solid ${$utils.contrastColor(item.color)}`"
+            v-drag="dragDefs(item)"
+            @click.stop
+          >
+            <div class="line" :style="`background: ${$utils.contrastColor(item.color)}`" />
+          </div>
         </div>
       </div>
+    </div>
+    <!-- info -->
+    <div class="col-auto">
+      <q-btn icon="info" size="md" round flat padding="none">
+        <q-popup-proxy>
+          <q-card>
+            <q-card-section class="q-pa-xs" style="white-space:pre;">
+              {{ $t('gradient.info') }}
+            </q-card-section>
+            <q-card-section class="q-pa-xs q-pt-none">
+              <div class="row q-col-gutter-sm">
+                <div>
+                  <q-btn label="close" v-close-popup />
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-popup-proxy>
+      </q-btn>
     </div>
     <!-- color picker -->
     <q-popup-proxy v-model="dialogOpen" v-if="selectedItem">
@@ -24,13 +45,13 @@
         <q-card-section class="q-pa-xs q-pt-none">
           <div class="row q-col-gutter-sm">
             <div>
-              <q-btn label="cancel" @click="colorCancel()" />
+              <q-btn :label="$t('btn.cancel')" @click="colorCancel()" />
             </div>
             <div>
-              <q-btn label="change" @click="colorChange()" color="primary" />
-            </div>
+              <q-btn :label="$t('btn.change')" @click="colorChange()" color="primary" />
+            </div>'
             <div>
-              <q-btn label="delete" @click="colorDelete()" color="negative" />
+              <q-btn :label="$t('btn.delete')" @click="colorDelete()" color="negative" />
             </div>
           </div>
         </q-card-section>

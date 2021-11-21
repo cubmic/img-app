@@ -128,7 +128,7 @@ export const drag = {
             y: event.pageY - startMousePos.y
           }
           const moveDistance = distance(startMousePos, { x: event.pageX, y: event.pageY })
-          binding.value.end(vm, moveDelta, moveDistance)
+          binding.value.end(vm, moveDelta, moveDistance, actualPos)
         }
       }
       obj = null
