@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-gutter-xs items-center" style="height:45px">
+  <div class="row q-gutter-xs items-center" style="min-height:45px">
     <template v-if="connection">
       <div class="dot-bg">
         <div class="dot" :id="'k' + data.id" v-drop v-drag="dragDefs" ref="drag" style="cursor:move;" :class="dotClass + ` dot-${connection.color}`" />
@@ -11,10 +11,37 @@
         <div class="dot" :id="'k' + data.id" v-drop ref="drag" :class="dotClass + ` dot-${this.data.color}`" />
       </div>
       <div class="col" @mousedown.stop>
+
+        <!-- array -->
+        <div class="row q-col-gutter-xs" v-if="data.type === 'array'">
+          <div v-for="(item, index) in data.value" :key="index" class="col-auto">
+            <q-chip
+              @remove="removeArrayItemAtIndex(index)"
+              :label="index + 1"
+              removable
+              square
+              class="q-ma-none"
+              style="border:1px solid rgba(0, 0, 0, 0.24);"
+            />
+          </div>
+          <div class="col-auto">
+            <IconButton icon="add" color="positive" padding="xs" @click="addArrayItem()" />
+          </div>
+        </div>
+
+        <!-- image -->
         <Form-image v-model="value" v-if="data.type === 'image'" />
+
+        <!-- boolean -->
         <Form-toggle v-model="value" v-if="data.type === 'boolean'" :label="data.label" />
+
+        <!-- integer -->
         <Form-input v-model="value" v-if="data.type === 'integer'" type="integer" :label="data.label" />
+
+        <!-- float -->
         <Form-input v-model="value" v-if="data.type === 'float'" type="float" :label="data.label" />
+
+        <!-- select -->
         <Form-select v-model="value" v-if="data.type === 'select'" :type="data.type" :options="data.options" :label="data.label" />
       </div>
     </template>
@@ -70,6 +97,16 @@ export default defineComponent({
     ...mapMutations('globals', ['setInputWithId', 'updateConnections', 'delConnection']),
     getConnection () {
       return this.data
+    },
+    removeArrayItemAtIndex (index) {
+      const arrayCopy = JSON.parse(JSON.stringify(this.value))
+      arrayCopy.splice(index, 1)
+      this.value = arrayCopy
+    },
+    addArrayItem () {
+      const arrayCopy = JSON.parse(JSON.stringify(this.value))
+      arrayCopy.push(this.data.schema)
+      this.value = arrayCopy
     }
   }
 })

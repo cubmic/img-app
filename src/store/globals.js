@@ -171,9 +171,10 @@ const itemTypeDefs = [
         label: 'Gradient',
         key: 'gradient',
         value: [
-          { id: 1, color: '#000000ff', percent: 0 },
-          { id: 2, color: '#00000000', percent: 100 }
-        ]
+          { color: '#000000ff', percent: 0 },
+          { color: '#00000000', percent: 100 }
+        ],
+        schema: { color: '#000000ff', percent: 0 }
       }
     ],
     outputs: [
@@ -248,14 +249,14 @@ const itemTypeDefs = [
     id: 12,
     group: 'Paint',
     width: 300,
-    label: 'Math',
+    label: 'Kaleidoscope',
     color: '#ADA',
     icon: 'star_rate',
     component: 'PaintKaleidoscope',
     inputs: [
       { allow: ['integer'], type: 'integer', color: 'integer', label: 'Repeat', key: 'repeat', value: 1 },
       { allow: ['integer'], type: 'integer', color: 'integer', label: 'Radius', key: 'radius', value: 100 },
-      { allow: ['array'], type: 'array', color: 'array', label: 'Points', key: 'points', value: [] },
+      { allow: ['array'], type: 'array', color: 'array', label: 'Points', key: 'points', value: [], schema: { x: 100, y: 100 } },
       { allow: ['boolean'], type: 'boolean', color: 'boolean', label: 'Fill', key: 'fill', value: false },
       { allow: ['boolean'], type: 'boolean', color: 'boolean', label: 'Separate', key: 'separate', value: false },
       { allow: ['integer'], type: 'integer', color: 'integer', label: 'Line width', key: 'lineWidth', value: 1 }

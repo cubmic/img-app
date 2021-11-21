@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-gutter-xs items-center justify-end" style="height:45px">
+  <div class="row q-gutter-xs items-center justify-end" style="min-height:45px">
     <span>{{ data.label }}</span>
     <div class="dot-bg" ref="dotbg" style="width:20px; height:20px; position:relative;">
       <div

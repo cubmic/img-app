@@ -56,10 +56,7 @@ export default defineComponent({
         return {
           drag: (pos) => {
             setTimeout(() => {
-              const points = JSON.parse(JSON.stringify(this.points))
-              points[index] = pos
-              this.points = points
-              this.drawCanvas()
+              this.updatePointAtIndex(index, pos)
             }, 0)
           },
           end: (vm, moveDelta, moveDistance, actualPos) => {
@@ -69,10 +66,7 @@ export default defineComponent({
               { x: previewHalfSize, y: previewHalfSize }
             )
             if (distance > previewHalfSize) {
-              const points = JSON.parse(JSON.stringify(this.points))
-              points.splice(index, 1)
-              this.points = points
-              this.drawCanvas()
+              this.removePointAtIndex(index)
             }
           }
         }
@@ -107,6 +101,11 @@ export default defineComponent({
       setTimeout(() => {
         this.drawCanvas()
       }, 0)
+    },
+    points () {
+      setTimeout(() => {
+        this.drawCanvas()
+      }, 0)
     }
   },
   computed: {
@@ -121,15 +120,27 @@ export default defineComponent({
     }
   },
   methods: {
-    zoom (nr) {
-      return (nr + 10) * this.size / this.previewSize
-    },
     addPoint (event) {
       const points = this.points ? JSON.parse(JSON.stringify(this.points)) : []
-      const point = { x: event.layerX - event.target.offsetLeft, y: event.layerY - event.target.offsetTop }
+      const point = { x: event.layerX - event.target.offsetLeft - 10, y: event.layerY - event.target.offsetTop - 10 }
       points.push(point)
       this.points = points
       this.drawCanvas()
+    },
+    updatePointAtIndex (index, pos) {
+      const points = JSON.parse(JSON.stringify(this.points))
+      points[index] = pos
+      this.points = points
+      this.drawCanvas()
+    },
+    removePointAtIndex (index) {
+      const points = JSON.parse(JSON.stringify(this.points))
+      points.splice(index, 1)
+      this.points = points
+      this.drawCanvas()
+    },
+    zoom (nr) {
+      return (nr + 10) * this.size / this.previewSize
     },
     updateConnection () {
       this.drawCanvas()
